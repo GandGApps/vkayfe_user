@@ -1,0 +1,1 @@
+export {EditMyDetailsScreen} from './EditMyDetailsScreen'

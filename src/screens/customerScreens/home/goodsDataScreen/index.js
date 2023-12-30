@@ -1,0 +1,1 @@
+export {GoodsDataScreen} from './GoodsDataScreen'

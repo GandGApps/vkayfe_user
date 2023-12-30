@@ -1,0 +1,1 @@
+export {ApplicationsDataScreen} from './AplicationsDataScreen'

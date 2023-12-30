@@ -1,0 +1,1 @@
+export {DeleteShopScreen} from './DeleteShopScreen'

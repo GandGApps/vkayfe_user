@@ -1,0 +1,1 @@
+export {LoremScreen} from './LoremScreen'

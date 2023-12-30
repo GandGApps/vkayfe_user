@@ -1,0 +1,1 @@
+export {AplicationsScreen} from './AplicationsScreen'
