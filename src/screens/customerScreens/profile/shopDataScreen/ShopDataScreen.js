@@ -2,7 +2,7 @@ import React from "react";
 import { styles } from "./styles";
 import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 
-import place from "../../../../assets/images/place.png";
+import place from "../../../../assets/images/wing.png";
 import { AppButton, BackButton } from "../../../../components";
 import { Colors, CreateShopName, DeleteShopName, globalStyles } from "../../../../constants";
 
@@ -32,7 +32,7 @@ export const ShopDataScreen = ({ navigation, route }) => {
               style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.weightLight, globalStyles.titleTextSmall, styles.IdText]}>ID: {shop._id}</Text>
           </View>
         </View>
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <ScrollView contentContainerStyle={styles.scrollView} bounces={false}>
           <Text
             style={[globalStyles.titleText, globalStyles.titleTextSmall, styles.inputBigText, styles.proText, globalStyles.textAlignLeft]}>Про
             нас</Text>

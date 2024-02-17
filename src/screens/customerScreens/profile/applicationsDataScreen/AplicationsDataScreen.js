@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {styles} from "./styles";
-import {FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
 import {BaseUrl, Colors, globalStyles, MessagesName, ShopName} from "../../../../constants";
 import messageIcon from "../../../../assets/images/chatIcon.png";
 
@@ -8,17 +8,17 @@ import {
     ApplicationsChangeForm,
     BackButton,
     HomeFormData,
-    AppButton
+    AppButton, globalHeight
 } from "../../../../components";
 import backIcon from "../../../../assets/images/rightIcon.png";
 import axiosInstance from "../../../../networking/axiosInstance";
 import store from "../../../../store";
 import {useSelector} from "react-redux";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const ApplicationsDataScreen = ({navigation, route}) => {
     const store = useSelector((s)=>s.customer)
     const item = route.params.item;
-    console.log(item)
     const messageFunc = async () => {
         try {
             const response = await axiosInstance.get(`/chat/is-created?seller_id=${item.store_id.seller_user_id}`)
@@ -33,10 +33,16 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
             console.log(e)
         }
     }
+    console.log(item)
     return (
-        <ScrollView contentContainerStyle={[globalStyles.scrollContainer]}>
+        <ScrollView contentContainerStyle={[globalStyles.scrollContainer,
+
+        ]} bounces={false}>
             <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.blueBackground}/>
-            <View style={styles.headerContainer}>
+            <View style={[styles.headerContainer,
+                Platform.OS === 'ios'  &&{paddingTop: (getStatusBarHeight(true) + globalHeight(5))}
+
+            ]}>
                 <View style={styles.headerPadding}>
                     <BackButton
                         text={"Заказ"}
@@ -52,7 +58,7 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
                         style={[globalStyles.titleText, globalStyles.weightLight, globalStyles.titleTextSmall, globalStyles.textAlignRight, item.state && ({color: "#E38920"})]}>{item.state}</Text>
                 </View>
                 <View style={[styles.headerTextContainer, styles.headerPadding]}>
-                    {item?.goods.map((it) => <Text
+                    {item?.count.map((it) => <Text
                         style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.contentStyleText]}>x{it.count} {it.title}</Text>)}
                 </View>
                 <View style={styles.headerBorderWidth}>
@@ -94,13 +100,13 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
                         <View style={styles.countryView}>
                             <Text
                                 style={[globalStyles.titleText, globalStyles.weightLight, globalStyles.titleTextSmall, globalStyles.textAlignLeft]}>Адрес</Text>
-                            <Text>{item.delivery_address}</Text>
+                            <Text>{item?.addressAll ? item?.addressAll :  item?.count[0].addressAll} {item?.count[0].address}</Text>
                         </View>
                         <View style={styles.countryView}>
                             <Text
                                 style={[globalStyles.titleText, globalStyles.weightLight, globalStyles.titleTextSmall, globalStyles.textAlignLeft]}>Имя
                                 получателя</Text>
-                            <Text>{item.username} user name</Text>
+                            <Text>{item?.name}</Text>
                         </View>
                     </View>
                 </View>
@@ -121,7 +127,7 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
                     <Image source={messageIcon} style={styles.messageIcon}/>
                 </TouchableOpacity>
             </View>
-            {item.goods.map((item, index) => {
+            {item.count.map((item, index) => {
                 return (
                     <ApplicationsChangeForm
                         item={item}

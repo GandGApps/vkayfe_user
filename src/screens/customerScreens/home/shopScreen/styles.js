@@ -84,6 +84,8 @@ export const styles = StyleSheet.create({
         height: globalHeight(16),
         resizeMode: "contain",
         marginRight: globalWidth(9),
+        tintColor:'#0BC5BA'
+
     },
     placeContainer: {
         flexDirection: "row",

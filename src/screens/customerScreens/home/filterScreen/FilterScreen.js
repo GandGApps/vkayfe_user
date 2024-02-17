@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
-import {AppButton, FilterData, FilterForm, BackButton, AppInput} from "../../../../components";
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import {AppButton, FilterData, FilterForm, BackButton, AppInput, globalHeight} from "../../../../components";
+import {View, Text, TouchableOpacity, ScrollView, Image, Platform} from "react-native";
 
 import closeIcon from "../../../../assets/images/closeIcon.png";
 import {CategoryName, globalStyles, HomeName, HomeScreenName, SearchName} from "../../../../constants";
 import axiosInstance from "../../../../networking/axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const FilterScreen = ({ navigation,route }) => {
   let dispatch = useDispatch();
@@ -146,7 +147,10 @@ export const FilterScreen = ({ navigation,route }) => {
   };
 
   return (
-      <View style={styles.container}>
+      <View style={[styles.container,
+        Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(20))}
+
+      ]}>
         <View>
           <View style={styles.headerContainer}>
             <BackButton
@@ -193,7 +197,7 @@ export const FilterScreen = ({ navigation,route }) => {
               <View style={styles.containerCategory}>
                 <Text
                     style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.titleCategory, globalStyles.weightBold, globalStyles.titleTextSmall]}>Подкатегория</Text>
-                <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                <ScrollView bounces={false} showsHorizontalScrollIndicator={false} horizontal={true}>
                   {subCategory.map((item, index) => {
                     return (
                         <FilterForm

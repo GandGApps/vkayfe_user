@@ -15,19 +15,18 @@ import {
     FormCategoryHorizontal,
     Loading,
     AppInput,
-    ArciveModal
+    ArciveModal, globalHeight
 } from "../../../../components";
 import {FormGoods} from "../../../../components";
-import {Alert, FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
-
-import mask from "../../../../assets/images/mask.png";
+import {Alert, FlatList, Image, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import axiosInstance from "../../../../networking/axiosInstance";
-import place from "../../../../assets/images/place.png";
+import place from "../../../../assets/images/wing.png";
 import search from "../../../../assets/images/search.png";
 import FilterIcon from "../../../../assets/images/filter.png";
 import topBottom from "../../../../assets/images/topBottom.png";
 import back from "../../../../assets/images/backIcon.png";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const HomeScreen = ({navigation}) => {
     const store = useSelector((st) => st.customer);
@@ -238,10 +237,14 @@ export const HomeScreen = ({navigation}) => {
     }
 
     return (
-        <View style={globalStyles.container}>
-            <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+        <View style={[globalStyles.container,
+            Platform.OS === 'ios' &&{marginTop: - (getStatusBarHeight(true) +6)}
+        ]}>
+            <ScrollView contentContainerStyle={globalStyles.scrollContainer} bounces={false}>
                 <StatusBar barStyle="dark-content" backgroundColor={Colors.blueBackground}/>
-                <View style={styles.headerContainer}>
+                <View style={[styles.headerContainer,
+                    Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(65))}
+                ]}>
                     <View style={[styles.headerInput]}>
                         {searchFlag ?
                             <TouchableOpacity style={styles.backCont} onPress={deleteFilterFunc}>
@@ -295,8 +298,9 @@ export const HomeScreen = ({navigation}) => {
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.HeaderFooter}>
                                         <Image source={place} style={styles.winIconStyle}/>
-                                        <Text
-                                            style={[styles.headerFooterText, globalStyles.titleText, globalStyles.titleTextSmall4, styles.cityT]}>Адрес {store.city} {store.address}</Text>
+                                        <Text numberOfLines={2}
+                                            style={[styles.headerFooterText, globalStyles.titleText, globalStyles.titleTextSmall4,globalStyles.textAlignLeft, styles.cityT]}>Адрес {store.city} {store.address}  </Text>
+
                                     </TouchableOpacity>
                                 </View>
 
@@ -317,11 +321,12 @@ export const HomeScreen = ({navigation}) => {
                                 </View>
                                 <View>
                                     <TouchableOpacity style={styles.HeaderFooter}
-                                                      onPress={() => navigation.navigate(MapsScreenName)}>
+                                                      onPress={() => navigation.navigate("maps name")}>
                                         <Image source={place} style={styles.winIconStyle}/>
-                                        <Text
+
+                                        <Text numberOfLines={2}
                                             style={[styles.headerFooterText, globalStyles.titleText, globalStyles.titleTextSmall]}>Адрес
-                                            доставки: {store.city} / {store.address}</Text>
+                                            доставки: {store.city} / {store.address} </Text>
                                     </TouchableOpacity>
                                     <View style={styles.headerContent}>
                                         <Text
@@ -335,6 +340,7 @@ export const HomeScreen = ({navigation}) => {
                                     </View>
                                     <View style={styles.filterCont}>
                                         <ScrollView
+                                            bounces={false}
                                             showsHorizontalScrollIndicator={false}
                                             horizontal>
                                             {categoryData.map((item, index) => {

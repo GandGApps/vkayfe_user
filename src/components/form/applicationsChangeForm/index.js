@@ -12,7 +12,7 @@ export const ApplicationsChangeForm = ({ item,navigation ,index}, ) => {
         <Image source={{uri : BaseUrl + '/' + item.photo_list[0]}} style={styles.imgForm}/>
         <View style={styles.textCont}>
           <Text style={[globalStyles.titleText,globalStyles.weightLight,globalStyles.titleTextSmall,globalStyles.textAlignLeft]}>{item.title}</Text>
-          <Text style={[globalStyles.titleText,globalStyles.weightBold,globalStyles.titleTextSmall,globalStyles.textAlignLeft,styles.priceText]}>{item.price.$numberDecimal
+          <Text style={[globalStyles.titleText,globalStyles.weightBold,globalStyles.titleTextSmall,globalStyles.textAlignLeft,styles.priceText]}>{item.price?.$numberDecimal ? item.price.$numberDecimal : item.price
           } р</Text>
         </View>
       </View>

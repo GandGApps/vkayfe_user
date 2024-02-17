@@ -79,9 +79,9 @@ export const GoodsDataScreen = ({navigation, route}) => {
             console.log(e)
         }
     }
-
+    console.log(data)
     return (
-        <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+        <ScrollView contentContainerStyle={globalStyles.scrollContainer} bounces={false}>
             <View style={styles.cont}>
                 <View>
                     <LinearGradient
@@ -134,9 +134,7 @@ export const GoodsDataScreen = ({navigation, route}) => {
                                     marginHorizontal: 8,
                                     backgroundColor: 'rgba(255, 255, 255, 0.92)'
                                 }}
-                                inactiveDotStyle={{
-                                    // Define styles for inactive dots here
-                                }}
+                                inactiveDotStyle={{                             }}
                                 inactiveDotOpacity={0.4}
                                 inactiveDotScale={0.6}
                             />
@@ -174,11 +172,9 @@ export const GoodsDataScreen = ({navigation, route}) => {
 
                             <Text
                                 style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.weightLight, globalStyles.titleTextSmall]}>Стоимость
-                                доставки: <Text style={styles.grayText}>{data.store_id.comission} р</Text></Text>
+                                доставки: <Text style={styles.grayText}>{data.store_id.distance.$numberDecimal} р</Text></Text>
                         </View>
-
                         <View>
-
                             <Text
                                 style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.titleTextSmall, styles.ops]}>Описание</Text>
                             <Text

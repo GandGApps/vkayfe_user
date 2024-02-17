@@ -1,6 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {styles} from "./styles";
-import {Alert, Dimensions, FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
+import {
+    Alert,
+    Dimensions,
+    FlatList,
+    Image,
+    Platform,
+    ScrollView,
+    StatusBar,
+    Text,
+    TouchableOpacity,
+    View
+} from "react-native";
 import WebView from "react-native-webview";
 
 import DatePicker from "react-native-date-picker";
@@ -8,7 +19,7 @@ import {
     AppButton,
     AppInput,
     ChooseImage,
-    FormCategory, globalHeight, globalWidth,
+    FormCategory, globalHeight,
     Loading,
     MultipleImage,
     TrushForm
@@ -28,6 +39,8 @@ import korz from "../../../../assets/images/korz.png";
 import {Marker, Polyline, YaMap} from "react-native-yamap";
 import wing from "../../../../assets/images/wing.png";
 import axios from "axios";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -65,16 +78,18 @@ export const AddScreen = ({navigation, route}) => {
     const [dateTime, setDateTime] = useState("");
     const [addressAll, setAddressAll] = useState('')
     const storePlace = data[0]?.user.city + ' ' + data[0]?.user.address
-    const userPlace = store.city + ' ' + store.address
+    const [userPlace, setUserPlace] = useState(storePlace)
     const [url, setUrl] = useState("");
     const [ref, setRef] = useState(null);
     const [value, setValue] = useState('')
     const [postcard, setPostCard] = useState('')
     const [allCount, setAllCount] = useState(0)
+    const newDate = new Date();
+    newDate.setFullYear(newDate.getFullYear() + 1);
     const stateLoad = route?.params?.st
     const onPressFunc = () => {
         if (Object.keys(data).length) {
-            if ( name && phone && dateDate && dateTime && addressAll && km) {
+            if (name && phone && dateDate && dateTime && addressAll && km) {
                 axiosFunc()
             } else if (!name) {
                 setError('Укажите Имя')
@@ -103,32 +118,24 @@ export const AddScreen = ({navigation, route}) => {
         });
     };
 
-    const countryChangeFuncEnd = (it) => {
-        var str = it.GeoObject.Point.pos;
-        var stringArray = str.split(/(\s+)/);
-        setLocationEnd({
-            lat: +stringArray[2],
-            lon: +stringArray[0],
-            zoom: 9,
-            name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2].name,
-            address: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[3].name + '' + it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4].name
-        });
-    };
+
     const startDataYandex = () => {
         axios.get(`https://geocode-maps.yandex.ru/1.x?apikey=da4e12cb-3403-409e-948c-c34e4dfaafaa&geocode=${userPlace}&format=json`).then((res) => {
             countryChangeFunc(res.data.response.GeoObjectCollection.featureMember[0]);
         })
             .catch((e) => {
-                // Alert.alert(
-                //     "",
-                //     "не найдено",
-                // );
-                console.log(e, "ff");
+                console.log(e, "ff,'fffff");
             });
     };
 
     useEffect(() => {
-        if (addressAll.length > 5) {
+        if (userPlace) {
+            startDataYandex()
+        }
+    }, [userPlace])
+
+    useEffect(() => {
+        if (addressAll.length > 4) {
             let timer = setTimeout(() => {
                 searchDataYandex(store.city + " " + addressAll);
             }, 500)
@@ -137,11 +144,17 @@ export const AddScreen = ({navigation, route}) => {
     }, [addressAll])
 
     const searchDataYandex = (st) => {
+        console.log(st)
         axios.get(`https://geocode-maps.yandex.ru/1.x?apikey=da4e12cb-3403-409e-948c-c34e4dfaafaa&geocode=${st}&format=json`).then((res) => {
-            let loc = res.data.response.GeoObjectCollection.featureMember[0].GeoObject.name + ' ' + res.data.response.GeoObjectCollection.featureMember[0].GeoObject.description
-            axios.get(`https://maps.googleapis.com/maps/api/directions/json?destination=${loc}&origin=${storePlace}&key=AIzaSyDGnTNMKk7nklAM7Z3dWTV5_JV_auarQVs`).then((res) => {
+            let loc = res.data.response.GeoObjectCollection.featureMember.length === 1 ?
+                res.data.response.GeoObjectCollection.featureMember[0].GeoObject.description + ' ' +  res.data.response.GeoObjectCollection.featureMember[0].GeoObject.name
+                :
+                res.data.response.GeoObjectCollection.featureMember[1].GeoObject.description + ' ' +  res.data.response.GeoObjectCollection.featureMember[1].GeoObject.name
+            axios.get(`https://maps.googleapis.com/maps/api/directions/json?destination=${loc}&origin=${userPlace}&key=AIzaSyDGnTNMKk7nklAM7Z3dWTV5_JV_auarQVs`).then((res) => {
                 let data = res.data.routes[0].legs[0];
-                const k = data.distance.text.replace(/[^0-9\.]+/g, "");
+                console.log(data.distance,userPlace,loc,Math.floor(data.distance.value/1000))
+                // const k = +data.distance.text.match(/\d+/)[0];
+                const k = Math.ceil(data.distance.value/1000)
                 setKm(k)
                 let polylineRes = [
                     {
@@ -179,26 +192,17 @@ export const AddScreen = ({navigation, route}) => {
                 );
                 console.log(e, "ff");
             });
-
-
     };
-
-    useEffect(() => {
-        startDataYandex()
-        // getValue()
-    }, [])
 
     const getValue = async () => {
         try {
             const response = await axiosInstance.post(`/orders/for_payment`);
             setValue(response.data.full_amount.$numberDecimal)
-
-            return  response.data.full_amount.$numberDecimal
+            return response.data.full_amount.$numberDecimal
         } catch (e) {
             console.log(e);
         }
     };
-    console.log(addressAll)
     const axiosFunc = async () => {
         setLoading(true)
 
@@ -212,7 +216,7 @@ export const AddScreen = ({navigation, route}) => {
                 time: dateTime,
                 comment,
                 addressAll: addressAll,
-                delivery: +km
+                delivery: km
             }
             if (promoFlag) {
                 data.promocode = promoCode
@@ -221,7 +225,7 @@ export const AddScreen = ({navigation, route}) => {
                 data.postcard = postcard
             }
             const response = await axiosInstance.post('/orders', data)
-            const value  = await getValue()
+            const value = await getValue()
             paymentFunc(value)
             // navigation.navigate(HomeScreenName)
             setLoading(false)
@@ -235,7 +239,6 @@ export const AddScreen = ({navigation, route}) => {
     }
 
     const paymentFunc = async (value) => {
-        console.log(value)
         try {
             const response = await axiosInstance.post("/orders/payment", {value: value});
             setUrl(response.data.data);
@@ -264,7 +267,7 @@ export const AddScreen = ({navigation, route}) => {
             const response = await axiosInstance.get('/goods/banner')
             setBanner(response.data.banner)
         } catch (e) {
-            console.log(e)
+            console.log(e,'banner')
         }
     }
 
@@ -290,6 +293,7 @@ export const AddScreen = ({navigation, route}) => {
             const response = await axiosInstance.get('/carts')
             if (Object.keys(response.data).length) {
                 setData(response.data)
+                setUserPlace(response.data[0]?.items[0]?.store_id.city + ' ' + response.data[0]?.items[0]?.store_id.address)
                 let sum = 0
                 for (let i = 0; i < response.data.length; i++) {
                     sum += response.data[i].items[0].good_id?.price * response.data[i].items[0].count
@@ -319,38 +323,43 @@ export const AddScreen = ({navigation, route}) => {
                 console.log(e)
             }
             navigation.goBack()
-        } else {
-
+        } else if (event?.nativeEvent?.code === -6 || event?.nativeEvent?.code === -1004) {
+            navigation.goBack()
         }
     }
-    const newDate = new Date();
-    newDate.setFullYear(newDate.getFullYear() + 1);
+
     return (
-        <View style={globalStyles.container}>
+        <View style={[globalStyles.container,
+            Platform.OS === 'ios' && !url &&{marginTop: - (getStatusBarHeight(true) +6)}
+        ]}>
             {Object.keys(data).length ?
                 url ?
                     <WebView
                         ref={setRef} source={{uri: url}}
-                        style={{flex: 1}}
-                        error={({}) =>{
-                            successFunc()
-
-                        }}
-
+                        style={{flex: 1,marginTop:Platform.OS === 'ios' ? 20 : 0}}
                         onError={event => {
                             successFunc(event)
+                        }}
+                        goBack={() => {
+                            navigation.goBack()
                         }}
                         onLoadEnd={event => {
                             successFunc(event)
                         }}
                     />
                     :
-                    <View style={globalStyles.container}>
-                        <ScrollView contentContainerStyle={globalStyles.scrollContainer}
+                    <View style={[globalStyles.container,
+                    ]}>
+                        <ScrollView bounces={false} contentContainerStyle={globalStyles.scrollContainer}
                                     canCancelContentTouches={isCanCancelContentTouches}
                                     scrollEnabled={isCanCancelContentTouches}>
-                            <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.blueBackground}/>
-                            <View style={styles.headerContainer}>
+                            <StatusBar barStyle="dark-content" hidden={false} backgroundColor={[Colors.blueBackground,
+
+                            ]}/>
+                            <View style={[styles.headerContainer,
+                                Platform.OS === 'ios' && !url &&{paddingTop: (getStatusBarHeight(true) + globalHeight(30))}
+
+                            ]}>
                                 <Text style={styles.addText}>Корзина</Text>
                                 <View style={styles.cameraContainer}>
                                     <Text
@@ -363,14 +372,14 @@ export const AddScreen = ({navigation, route}) => {
                                             <View style={styles.shopCont}>
                                                 <Image source={{
                                                     uri: BaseUrl + '/' +
-                                                        data[0]?.items[0]?.store_id.logo_url
+                                                        data[0]?.items[0]?.store_id?.logo_url
                                                 }} style={styles.imgShop}/>
                                                 <View style={styles.contShp}>
                                                     <Text
                                                         style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.titleTextSmall, globalStyles.weightLight]}>Магазин</Text>
                                                     <Text
                                                         style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.ops]}>
-                                                        {data[0]?.items[0]?.store_id.title}</Text>
+                                                        {data[0]?.items[0]?.store_id?.title}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -475,7 +484,7 @@ export const AddScreen = ({navigation, route}) => {
                                     <View style={styles.flatmateCont}>
                                         <View>
                                             <Text
-                                                style={[globalStyles.titleText, globalStyles.weightLight, globalStyles.titleTextSmall, globalStyles.textAlignLeft]}>Подьезд</Text>
+                                                style={[globalStyles.titleText, globalStyles.weightLight, globalStyles.titleTextSmall, globalStyles.textAlignLeft]}>Подъезд</Text>
                                             <AppInput
                                                 placeholder={''}
                                                 style={styles.inpSmall}
@@ -501,7 +510,6 @@ export const AddScreen = ({navigation, route}) => {
                                                 style={styles.inpSmall}
                                                 keyboardType={'numeric'}
                                                 onChangeText={(e) => onChangeFunc(e, setAddress2)}
-
                                             />
                                         </View>
                                     </View>
@@ -546,7 +554,6 @@ export const AddScreen = ({navigation, route}) => {
                                             placeholder={'Телефон'}
                                             keyboardType={'numeric'}
                                             onChangeText={(e) => onChangeFunc(e, setPhone)}
-
                                         />
                                     </View>
                                     <View>
@@ -576,11 +583,7 @@ export const AddScreen = ({navigation, route}) => {
                                 marginVertical: globalHeight(20)
                             }}>
                                 <YaMap
-                                    userLocationIcon={{uri: "https://www.clipartmax.com/png/middle/180-1801760_pin-png.png"}}
                                     initialRegion={location}
-                                    // showUserPosition={false}
-                                    // rotateGesturesEnabled={false}
-                                    // zoomEnabled={false}
                                     zoomGesturesEnabled={false}
                                     scrollGesturesEnabled={false}
                                     nightMode={false}
@@ -599,13 +602,13 @@ export const AddScreen = ({navigation, route}) => {
                                     }
                                     <Marker
                                         point={location}
-                                        scale={2}
+                                        scale={.02}
                                         source={wing}
                                     />
                                     {locationEnd ?
                                         <Marker
                                             point={locationEnd}
-                                            scale={2}
+                                            scale={.02}
                                             source={wing}
                                         />
                                         :
@@ -620,13 +623,15 @@ export const AddScreen = ({navigation, route}) => {
                             locale={"ru"}
                             is24hourSource={"locale"}
                             mode={dateNum ? "time" : "date"}
+                            title={dateNum ? 'Выберите время' : 'Выберите дату'}
+                            confirmText="OK" // Set your confirm button text here
+                            cancelText="Отмена" // Set your cancel button text here
                             format={'MMM'}
                             showIcon={false} // Disable the calendar icon
                             minimumDate={dateNum ? null : new Date()}
                             maximumDate={dateNum ? null : newDate}
                             date={date}
                             onConfirm={(date) => {
-
                                 if (dateNum) {
                                     const hours = date.getHours();
                                     const minutes = date.getMinutes();
@@ -645,7 +650,7 @@ export const AddScreen = ({navigation, route}) => {
                                     const d = "" + dd
                                     const ddd = d.length === 1 ? `0${d}` : d
                                     let yy = new Date().getFullYear();
-                                    let myDateString =yy + '-'  + mmm + '-' + ddd   ; //(US)
+                                    let myDateString = yy + '-' + mmm + '-' + ddd; //(US)
                                     setDateDate(myDateString)
                                 }
                                 setError('')
@@ -657,7 +662,10 @@ export const AddScreen = ({navigation, route}) => {
                         />
                     </View>
                 :
-                <View style={[styles.contNoData, {opacity: loading ? 0 : 1}]}>
+                <View style={[styles.contNoData, {opacity: loading ? 0 : 1},
+                    Platform.OS === 'ios' &&{paddingTop: (getStatusBarHeight(true) + globalHeight(30))}
+
+                ]}>
                     <Text
                         style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.titleTextBig, styles.pustaText]}>Корзина</Text>
                     <View>

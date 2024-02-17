@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {styles} from "./styles";
-import {FlatList, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
 import {Colors, globalStyles} from "../../../../constants";
 import {
     ApplicationsData_,
     ApplicationsForm, BackButton,
     FilterData,
     FilterForm,
-    FormSubCategory, ShopDataForm,
+    FormSubCategory, globalWidth, ShopDataForm,
     ShopFavorite
 } from "../../../../components";
 import axiosInstance from "../../../../networking/axiosInstance";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 
 export const AplicationsScreen = ({navigation}) => {
@@ -49,10 +50,16 @@ export const AplicationsScreen = ({navigation}) => {
     }
 
 
-    return (<View style={[globalStyles.container]}>
+    return (<View style={[globalStyles.container,
+        Platform.OS === 'ios' &&{marginTop: - (getStatusBarHeight(true) +6)}
+    ]}>
         <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.blueBackground}/>
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
+        <View style={[styles.container,
+
+        ]}>
+            <View style={[styles.headerContainer,
+                Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalWidth(50))}
+            ]}>
                 {/*<Text*/}
                 {/*    style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.weightBold, globalStyles.titleTextBig, styles.textZakaz]}>Избранное</Text>*/}
                 <BackButton

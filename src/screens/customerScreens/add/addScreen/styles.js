@@ -80,8 +80,8 @@ export const styles = StyleSheet.create({
         borderBottomColor: Colors.borderGray,
     },
     contAdd: {
-        paddingVertical: globalHeight(20),
-        paddingHorizontal: globalWidth(20)
+        paddingTop: globalHeight(10),
+        paddingHorizontal: globalWidth(20),
     },
     text: {
         color: Colors.gray
@@ -97,6 +97,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: globalWidth(20),
+        marginTop:globalWidth(10)
     },
     textCont: {
         marginHorizontal: globalWidth(20),
@@ -122,25 +123,28 @@ export const styles = StyleSheet.create({
         marginRight:globalWidth(20),
     },
     inputBig: {
-        paddingTop: 0,
         borderWidth: 1,
-        paddingBottom: 0,
         marginBottom: globalHeight(50),
         textAlignVertical: "top",
         height: globalHeight(139),
         borderRadius:8,
-        marginTop:globalHeight(10)
+        marginTop:globalHeight(10),
+        paddingHorizontal:globalHeight(10),
+        paddingTop:globalHeight(10),
+        paddingBottom:globalHeight(5),
     },
     contShp:{
         marginLeft:globalWidth(5)
     },
     addressStyle:{
         marginHorizontal:0,
+        paddingLeft:0
     },
     pustaText:{
         fontSize:globalWidth(25),
         marginVertical:globalHeight(20),
-        marginHorizontal:globalWidth(20)
+        marginHorizontal:globalWidth(20),
+
     },
     contNoData:{
         flex:1,

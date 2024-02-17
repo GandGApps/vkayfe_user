@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import { globalHeight, globalWidth } from "../../../../components";
 import { Colors } from "../../../../constants";
 
@@ -9,7 +9,7 @@ let height = Dimensions.get("window").height;
 export const styles = StyleSheet.create({
 
   headerContainer: {
-    paddingTop: globalHeight(38),
+    paddingTop: Platform.OS === 'ios' ?  0 : globalHeight(38),
     paddingBottom: globalHeight(22),
     backgroundColor: Colors.blueBackground,
     paddingHorizontal: globalWidth(20),
@@ -53,6 +53,8 @@ export const styles = StyleSheet.create({
     height: globalHeight(16),
     resizeMode: "contain",
     marginRight: globalWidth(9),
+    tintColor:'#0BC5BA'
+
   },
   shopName: {
     marginBottom: globalHeight(15),

@@ -12,6 +12,7 @@ import {
   SET_SHOP_DELETE,
 } from "../../../../constants";
 import { removeTokens } from "../../../../utils";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const MyDetailsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export const MyDetailsScreen = ({ navigation }) => {
 
   const logOutFunc = async () => {
     await removeTokens();
+    await AsyncStorage.removeItem("fcmToken");
     dispatch({
       type: SET_CUSTOMER_DELETE,
     });
@@ -38,8 +40,10 @@ export const MyDetailsScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.contentMyDetailsAll}>
+    <ScrollView contentContainerStyle={styles.container} bounces={false}>
+      <View style={[styles.contentMyDetailsAll,
+
+      ]}>
         <View>
           <BackButton
             text={"Мои данные"}

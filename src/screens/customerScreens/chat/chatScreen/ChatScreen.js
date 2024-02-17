@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { styles } from "./styles";
-import { FlatList, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import {FlatList, Platform, StatusBar, Text, TouchableOpacity, View} from "react-native";
 import { Colors, globalStyles } from "../../../../constants";
-import { ChatData_, FinancialForm } from "../../../../components";
+import {ChatData_, FinancialForm, globalHeight} from "../../../../components";
 import { ChatForm } from "../../../../components/form/chatForm";
 import axiosInstance from "../../../../networking/axiosInstance";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 
 export const ChatScreen = ({ navigation }) => {
@@ -23,6 +24,7 @@ export const ChatScreen = ({ navigation }) => {
   const axiosFunc = async () => {
     try {
       const response = await axiosInstance.get(`/chat/im`);
+      console.log(response)
       const filterArr = response.data.filter((it) => it.priority === "admin");
       setData(response.data);
       changeStateFunc('За сегодня',response.data);
@@ -55,9 +57,14 @@ export const ChatScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.container}>
+    <View style={[globalStyles.container,
+      Platform.OS === 'ios'  &&{marginTop: -(getStatusBarHeight(true) + 5)}
+    ]}>
       <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.blueBackground} />
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer,
+        Platform.OS === 'ios'  &&{paddingTop: (getStatusBarHeight(true) + globalHeight(50))}
+
+      ]}>
         <Text
           style={[globalStyles.titleText, globalStyles.textAlignLeft, globalStyles.weightBold, globalStyles.titleTextBig]}>Сообщения</Text>
         <View style={[globalStyles.row, styles.headerFooter]}>

@@ -1,9 +1,10 @@
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import { Alert, PermissionsAndroid } from "react-native";
+import {Alert, PermissionsAndroid, Platform} from "react-native";
 import { openPicker } from "@baronha/react-native-multiple-image-picker";
 
 
 export const requestCameraPermission = async () => {
+
   try {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -28,10 +29,10 @@ export const requestCameraPermission = async () => {
 export function ChooseImage(callBack) {
     Alert.alert(
         "",
-        "ChooseScreen a download method.",
+        "Добавьте фотографии из галереи или сделайте новое фото",
         [
             {
-                text: "Open library", onPress: () => {
+                text: "Открыть галерею", onPress: () => {
                     launchImageLibrary(
                         {
                             mediaType: "photo",
@@ -47,15 +48,15 @@ export function ChooseImage(callBack) {
                 },
             },
             {
-                text: "Take a photo", onPress: async () => {
-                    if (await requestCameraPermission()) {
+                text: "сделать фото", onPress: async () => {
+                    if (Platform.OS === "ios") {
                         await launchCamera(
                             {
                                 storageOptions: { privateDirectory: true },
-                                cropping:true,
+                                cropping: true,
                                 mediaType: "photo",
                                 includeBase64: true,
-                                quality:1
+                                quality: 1,
 
                             },
                             (response) => {
@@ -65,7 +66,25 @@ export function ChooseImage(callBack) {
                             },
                         );
                     } else {
-                        await requestCameraPermission();
+                        if (await requestCameraPermission()) {
+                            await launchCamera(
+                                {
+                                    storageOptions: { privateDirectory: true },
+                                    cropping: true,
+                                    mediaType: "photo",
+                                    includeBase64: true,
+                                    quality: 1,
+
+                                },
+                                (response) => {
+                                    if (!response.didCancel) {
+                                        callBack(response);
+                                    }
+                                },
+                            );
+                        } else {
+                            await requestCameraPermission();
+                        }
                     }
                 },
             },

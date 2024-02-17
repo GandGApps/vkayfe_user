@@ -4,13 +4,15 @@ import {useDispatch} from "react-redux";
 import {checkStore, checkUser, setStore, setTokens} from "../../../utils";
 import axiosInstance from "../../../networking/axiosInstance";
 import {globalStyles, MapsScreenName, SET_CUSTOMER, SET_SHOP, SignupName, VerifyPhoneName} from "../../../constants";
-import {Image, ScrollView, Text, TouchableOpacity, View, Alert} from "react-native";
-import {AppButton, AppInput, Loading} from "../../../components";
+import {Image, ScrollView, Text, TouchableOpacity, View, Alert, Dimensions, Platform} from "react-native";
+import {AppButton, AppInput, globalWidth, Loading} from "../../../components";
 import wing from "../../../assets/images/wing.png";
 import axios from "axios";
-import place from "../../../assets/images/place.png";
+import place from "../../../assets/images/wing.png";
 import closeIcon from "../../../assets/images/closeIcon.png";
 import {YaMap, Marker} from "react-native-yamap";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const MapsScreen = ({navigation}) => {
     const [countryText, setCountryText] = useState("");
@@ -50,7 +52,6 @@ export const MapsScreen = ({navigation}) => {
             return () => clearTimeout(timer);
         }
     }, [addressText]);
-
     const onChangeTextFunc = (e, set) => {
         setFlag1(true)
         set(e);
@@ -86,42 +87,13 @@ export const MapsScreen = ({navigation}) => {
         }
     };
 
-    const countryChangeFunc = async (it,state) => {
-        var str = it.GeoObject.Point.pos;
-        var stringArray = str.split(/(\s+)/);
-        if(!state){
-            await axiosFunc({
-                lat: +stringArray[2],
-                lon: +stringArray[0],
-                zoom: 8,
-                name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2].name,
-                address:it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[3].name + ' ' + it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4].name    })
-        } else {
-            setLocation({
-                lat: +stringArray[2],
-                lon: +stringArray[0],
-                zoom: 8,
-                name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2].name,
-                address:it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[3].name + ' ' + it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4].name
-            });
-            setSelectedCountry({
-                lat: +stringArray[2],
-                lon: +stringArray[0],
-                zoom: 8,
-                name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2].name,
-                address:it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[3].name + ' ' + it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4].name    });
-        }
-    };
+
 
     const axiosFunc = async (location) => {
-        console.log(location)
-        console.log({city: location?.name,address:location?.address})
         await setStore(location);
         setLoading(true)
         try {
-            console.log({city: location?.name,address:location?.address})
             const response = await axiosInstance.put(`/users/get-geo`, {city: location?.name,address:location?.address} );
-            console.log(response)
              usersGet(location)
         } catch (e) {
             setLoading(false)
@@ -147,12 +119,6 @@ export const MapsScreen = ({navigation}) => {
         setAddressText(it.GeoObject.name);
         var str = it.GeoObject.Point.pos;
         var stringArray = str.split(/(\s+)/);
-            // await axiosFunc({
-            //     lat: +stringArray[2],
-            //     lon: +stringArray[0],
-            //     zoom: 8,
-            //     name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2].name,
-            //     address:it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[3].name + ' ' + it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4].name    })
             setLocation({
                 ...location, lat: +stringArray[2],
                 lon: +stringArray[0],
@@ -193,9 +159,9 @@ export const MapsScreen = ({navigation}) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,
+            Platform.OS === 'ios' &&{marginTop: - (getStatusBarHeight(true) +6)}]}>
             <YaMap
-                userLocationIcon={{uri: "https://www.clipartmax.com/png/middle/180-1801760_pin-png.png"}}
                 initialRegion={location}
                 showUserPosition={false}
                 rotateGesturesEnabled={false}
@@ -209,13 +175,14 @@ export const MapsScreen = ({navigation}) => {
                 }}>
                 <Marker
                     point={location}
-                    scale={1.2}
+                    scale={.05}
                     source={wing}
                 />
             </YaMap>
             {flag ?
                 Object.keys(data).length ?
-                    <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+                    <View style={{flex:5,height:Dimensions.get("window").height}}>
+                    <ScrollView bounces={false} contentContainerStyle={globalStyles.scrollContainer}>
                         <View style={styles.viewSearch}>
                             <Image source={place} style={styles.placeIcon} />
                             <AppInput
@@ -248,8 +215,10 @@ export const MapsScreen = ({navigation}) => {
                             );
                         })}
                     </ScrollView>
-                    :
-                    <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+                    </View>
+                        :
+                    <View style={{flex:5,height:Dimensions.get("window").height}}>
+                    <ScrollView bounces={false} contentContainerStyle={globalStyles.scrollContainer}>
                         <View style={styles.viewSearch}>
                             <Image source={place} style={styles.placeIcon} />
                             <AppInput
@@ -284,10 +253,11 @@ export const MapsScreen = ({navigation}) => {
                             );
                         })}
                     </ScrollView>
+                    </View>
                 :
-            <>
+            <View style={{backgroundColor:'white',width:'100%',alignItems:'center'}}>
 
-                <View>
+                <View >
                     <Image source={place} style={styles.placeIcon} />
                     <AppInput
                         placeholder={"Введите Город"}
@@ -297,7 +267,7 @@ export const MapsScreen = ({navigation}) => {
                     />
 
                 </View>
-                <View>
+                <View >
                     <Image source={place} style={styles.placeIcon} />
                     <AppInput
                         placeholder={"Введите адрес"}
@@ -311,7 +281,7 @@ export const MapsScreen = ({navigation}) => {
                     stylesContainer={styles.btn}
                     onPress={() => finish()}
                 />
-            </>
+            </View>
             }
             <Loading loading={loading}/>
         </View>

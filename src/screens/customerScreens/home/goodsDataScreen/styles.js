@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import {Colors} from "../../../../constants";
 import {globalHeight, globalWidth} from "../../../../components";
 
@@ -9,7 +9,7 @@ let height = Dimensions.get("window").height;
 export const styles = StyleSheet.create({
     content: {
         paddingHorizontal: globalWidth(22),
-        paddingTop: globalHeight(37)
+        paddingTop: globalHeight(20)
     },
     cont: {
         justifyContent: 'space-between',
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     },
     textCont: {
         fontSize: globalWidth(25),
-        lineHeight: globalHeight(30)
+        lineHeight: 30
     },
     rowCont: {
         justifyContent: 'space-between',
@@ -97,7 +97,7 @@ export const styles = StyleSheet.create({
     },
     bckCont: {
         position: 'absolute',
-        top: globalHeight(30),
+        top:Platform.OS === 'ios' ? globalHeight(60) :  globalHeight(30),
         left: globalWidth(30),
         zIndex: 50
     },

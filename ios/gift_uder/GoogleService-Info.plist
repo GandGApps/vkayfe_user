@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAvBG3JTgEpZqAIw_762paXIl2_C_CrrW0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>358782134517</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.hovmel.podari.user</string>
+	<key>PROJECT_ID</key>
+	<string>vkaife-79326</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vkaife-79326.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:358782134517:ios:6c0f7c15d3c9c476dbbdbc</string>
+</dict>
+</plist>

@@ -39,10 +39,20 @@ import {
     MessagesName,
     LoremName
 } from "../constants";
+import io from "socket.io-client";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
+    const user = useSelector(st=>st.customer)
+    const [messages,setMessages] = useState(0)
+    const socket = io.connect(`http://194.58.121.218:3001/count/messages/buyer?buyer_id=${user._id}`);
+    socket.on('count', (data) => {
+        setMessages( data.count);
+    });
+
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
@@ -60,7 +70,7 @@ export default function TabNavigation() {
 
                     }
                     if (route.name === ApplicationsName) {
-                        imageSource = require("../assets/images/dontLike.png");
+                        imageSource = require("../assets/images/dontdont.png");
                         imageSourceActive = require("../assets/images/likeTab.png");
 
                     }
@@ -71,7 +81,7 @@ export default function TabNavigation() {
                     }
                     if (route.name === ChatName) {
                         imageSource = require("../assets/images/chatIcon.png");
-                        chatIcon = 4
+                        chatIcon = messages
                         imageSourceActive = require("../assets/images/chatIconActive.png");
                     }
                     if (route.name === ProfileName) {
@@ -373,8 +383,8 @@ const styles = StyleSheet.create({
         bottom: globalHeight(30)
     },
     image: {
-        height: globalWidth(33),
-        width: globalWidth(33),
+        height: globalWidth(31),
+        width: globalWidth(31),
         resizeMode: "contain",
     },
     textStyle: {

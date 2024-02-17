@@ -17,6 +17,7 @@ export const ApplicationsForm = ({ item,navigation }, index) => {
                 navigation.navigate(GoodsDataName, {
                     item: {
                         ...item.good_id,
+                        store_id:item.store_id,
                         photo_list: a,
                     },
                 });

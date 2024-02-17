@@ -1,5 +1,5 @@
 import { Colors } from "../../../constants";
-import { StyleSheet, Dimensions } from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import { globalHeight, globalWidth } from "../../../components";
 
 let width = Dimensions.get("window").width;
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
   backContainer: {
     zIndex: 1,
     position: "absolute",
-    top: globalHeight(20),
+    top: Platform.OS === 'ios' ? globalHeight(50) :   globalHeight(20),
   },
   linePink: {
     width: 82,
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
   },
   switchContainerText: {
     flexDirection: "row",
-    width: width - globalWidth(65),
+    width: Platform.OS === 'ios' ? width - globalWidth(55) :  width - globalWidth(65),
     flexWrap: "wrap",
   },
   formHeader: {

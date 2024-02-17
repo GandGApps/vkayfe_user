@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 import {styles} from "./styles";
 import {BaseUrl, Colors, FilterName, globalStyles, MapsScreenName, ReviewName} from "../../../../constants";
 
-import {FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
-import {AppButton, BackButton, FormGoods} from "../../../../components";
+import {FlatList, Image, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
+import {AppButton, BackButton, FormGoods, globalHeight} from "../../../../components";
 import axiosInstance from "../../../../networking/axiosInstance";
-import place from "../../../../assets/images/place.png";
+import place from "../../../../assets/images/wing.png";
 import taxi from "../../../../assets/images/taxi.png";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const ShopScreen = ({navigation, route}) => {
 
@@ -86,7 +87,10 @@ export const ShopScreen = ({navigation, route}) => {
     }
 
     return (
-        <ScrollView style={[globalStyles.scrollContainer,styles.scroll]}>
+        <ScrollView style={[globalStyles.scrollContainer,styles.scroll,
+            Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(20))}
+
+        ]} bounces={false}>
             <View style={styles.content}>
                 <View style={styles.container}>
                     <BackButton
@@ -180,7 +184,7 @@ export const ShopScreen = ({navigation, route}) => {
 
                 {active === 'Отзывы' && (
                     <View style={styles.viewReview}>
-                        <ScrollView>
+                        <ScrollView bounces={false}>
                             {reviewData.map((item, index) => {
                                 return (
                                     <View key={index} style={styles.reviewCont}>

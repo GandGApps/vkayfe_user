@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "358782134517",
+    "project_id": "vkaife-79326",
+    "storage_bucket": "vkaife-79326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358782134517:android:e73c8bc8a654761bdbbdbc",
+        "android_client_info": {
+          "package_name": "com.gift_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABCg_ObWu69mBVxAEfcO71ukUsGYs6Vag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358782134517:android:9e1bdf5b3b244179dbbdbc",
+        "android_client_info": {
+          "package_name": "com.gift_uder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABCg_ObWu69mBVxAEfcO71ukUsGYs6Vag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

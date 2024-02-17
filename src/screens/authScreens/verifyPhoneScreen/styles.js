@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import { globalHeight, globalWidth } from "../../../components";
 import { Colors } from "../../../constants";
 
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   },
   lineImg: {
     marginTop: -1,
-    height: height/2,
+    height: height/1.5,
     width: globalWidth(82)
   },
   formContainer: {
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   backContainer: {
     zIndex: 1,
     position: "absolute",
-    top: globalHeight(20),
+    top: Platform.OS === 'ios' ? globalHeight(50) :   globalHeight(20),
   },
   linePink: {
     width: 82,
@@ -109,8 +109,9 @@ export const styles = StyleSheet.create({
     height: globalWidth(40),
     lineHeight: 38,
     fontSize: 24,
-    borderBottomColor: Colors.borderGray,
+    borderColor: Colors.borderGray,
     borderBottomWidth:1,
+
     textAlign: 'center',
       color:'black'
   },

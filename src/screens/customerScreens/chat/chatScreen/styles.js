@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   headerFooter: {
     justifyContent: "space-between",
-    marginTop: globalWidth(43),
+    marginTop: globalWidth(20),
   },
   headerFooterText: {
     color: Colors.gray,

@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {styles} from "./styles";
-import {View, Text, TouchableOpacity, Image, FlatList, StatusBar} from "react-native";
-import {BackButton, CategoryData, FinancialData_, FinancialForm, FormCategory} from "../../../../components";
+import {View, Text, TouchableOpacity, Image, FlatList, StatusBar, Platform} from "react-native";
+import {
+    BackButton,
+    CategoryData,
+    FinancialData_,
+    FinancialForm,
+    FormCategory,
+    globalHeight
+} from "../../../../components";
 import {Colors, FilterName, FinancialFilterName, globalStyles} from "../../../../constants";
 import FilterIcon from "../../../../assets/images/filter.png";
 import axiosInstance from "../../../../networking/axiosInstance";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 
 export const FinancialReportScreen = ({navigation}) => {
@@ -29,7 +37,7 @@ export const FinancialReportScreen = ({navigation}) => {
             if(Object.keys(arr).length){
                 for (let i = 0; i < arr.length; i++) {
                     if (arr[i].status_id.name === "approved") {
-                        arr[i].status_id.title = "Заказан принят";
+                        arr[i].status_id.title = "Заказ принят";
                     }
                     else if (arr[i].status_id.name === "assembling") {
                         arr[i].status_id.title = "Заказан в сборке";
@@ -58,9 +66,15 @@ export const FinancialReportScreen = ({navigation}) => {
     }
 
     return (
-        <View style={globalStyles.container}>
+        <View style={[globalStyles.container,
+            Platform.OS === 'ios' &&{marginTop:  -(getStatusBarHeight(true) +5)}
+
+        ]}>
             <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.blueBackground}/>
-            <View style={styles.headerContainer}>
+            <View style={[styles.headerContainer,
+                Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(45))}
+
+            ]}>
                 <BackButton
                     navigation={navigation}
                     text={"Мои покупки"}

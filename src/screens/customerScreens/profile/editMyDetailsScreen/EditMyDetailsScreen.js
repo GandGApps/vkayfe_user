@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { styles } from "./styles";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { AppButton, AppInput, BackButton, Loading, validateEmail } from "../../../../components";
+import {Image, Platform, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {AppButton, AppInput, BackButton, globalHeight, Loading, validateEmail} from "../../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   EditMyDetailsName,
@@ -13,6 +13,8 @@ import {
 import { email } from "npm/lib/utils/read-user-info";
 import axiosInstance from "../../../../networking/axiosInstance";
 import {removeTokens} from "../../../../utils";
+import AsyncStorage from "@react-native-community/async-storage";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const EditMyDetailsScreen = ({ navigation }) => {
   const store = useSelector((st) => st.customer);
@@ -53,6 +55,7 @@ export const EditMyDetailsScreen = ({ navigation }) => {
   };
   const logOutFunc = async () => {
     await removeTokens();
+    await AsyncStorage.removeItem("fcmToken");
     dispatch({
       type: SET_CUSTOMER_DELETE,
     });
@@ -67,7 +70,10 @@ export const EditMyDetailsScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+    <ScrollView contentContainerStyle={[globalStyles.scrollContainer,
+      Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(15))}
+
+    ]} bounces={false}>
       <View style={styles.contentMyDetailsAll}>
         <View>
           <BackButton
@@ -82,15 +88,10 @@ export const EditMyDetailsScreen = ({ navigation }) => {
                 onChangeTextFunc(e, setName);
               }}
           />
-          <AppInput
-            placeholder={"phone"}
-            style={styles.input}
-            keyboardType={'phone-pad'}
-            defaultValue={store.phone_number}
-            onChangeText={(e) => {
-              onChangeTextFunc(e, setPhone);
-            }}
-          />
+
+          <View style={styles.contentMyDetails}>
+            <Text style={[globalStyles.titleText,globalStyles.weightLight,globalStyles.textAlignLeft,styles.contentMyDetailsText]}>{store.phone_number}</Text>
+          </View>
         </View>
         <View>
           <TouchableOpacity style={styles.accountStateChange} onPress={logOutFunc}>

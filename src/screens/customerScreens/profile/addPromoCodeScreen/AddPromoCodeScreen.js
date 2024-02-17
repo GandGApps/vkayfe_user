@@ -53,7 +53,7 @@ export const AddPromoCodeScreen = ({navigation, route}) => {
     }
 
     return (
-        <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+        <ScrollView contentContainerStyle={globalStyles.scrollContainer} bounces={false}>
             <StatusBar barStyle="dark-content" backgroundColor={Colors.blueBackground}/>
             <View style={[styles.content]}>
                 <View style={styles.cont}>

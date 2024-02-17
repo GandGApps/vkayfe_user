@@ -7,9 +7,11 @@ let height = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
   backBtnStyle: {
-    width: globalWidth(22),
-    height: globalHeight(28),
-    resizeMode:'contain'
+
+      resizeMode:'contain',
+      width:globalWidth(19),
+      height:globalHeight(22)
+
   },
 
   text: {
@@ -21,6 +23,7 @@ export const styles = StyleSheet.create({
   container: {
     justifyContent: "space-between",
     marginHorizontal: globalWidth(20),
+
   },
   textDelete:{
     fontSize:globalWidth(10)

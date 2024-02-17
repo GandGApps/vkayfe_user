@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {checkUser, setTokens} from "../../../utils";
 import axiosInstance from "../../../networking/axiosInstance";
 import {Colors, globalStyles, LoremName, SET_CUSTOMER, SET_SHOP, SignupName, VerifyPhoneName} from "../../../constants";
-import {Image, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {Image, KeyboardAvoidingView, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
 import CheckBox from 'react-native-check-box'
 import {
     AppButton,
@@ -14,6 +14,7 @@ import {
     passwordValidate,
     validateEmail,
 } from "../../../components";
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 import line from "../../../assets/images/line.png";
 import pinkMonster from "../../../assets/images/pinkMonster.png";
@@ -21,6 +22,7 @@ import giftIconPink from "../../../assets/images/giftIconPink.png";
 import SwitchToggle from "react-native-switch-toggle";
 
 export const SignIn = ({navigation}) => {
+
     const [phone, setPhone] = useState("+7");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -47,16 +49,17 @@ export const SignIn = ({navigation}) => {
     const onPressFunc = () => {
         if (phone.length > 8 && status) {
             navigationFunc()
-        } else if(phone.length <= 8){
-            setError('неверный Телефон ');
+        } else if(phone.length <= 8 ){
+            setError('Неверный номер телефона');
         }else if(!status) {
             setError('Для продолжения необходимо согласиться с правилами и условиями');
         }
     }
-
     return (
-        <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
-            <View style={[styles.container, globalStyles.container]}>
+        <ScrollView style={[globalStyles.container,
+            Platform.OS === 'ios' &&{paddingTop: - (getStatusBarHeight(true) + 6)}
+            ]} bounces={false}>
+            <View style={[styles.container]}>
                 <View style={styles.headerContainer}>
                     <View style={styles.backContainer}>
                         <BackButton navigation={navigation}/>
@@ -78,12 +81,15 @@ export const SignIn = ({navigation}) => {
                                     value={phone}
                                     defaultValue={phone}
                                     onChangeText={(e) => {
+                                        if(e.length <=12){
                                         onChangeTextFunc(e, setPhone);
-                                    }}
+                                    }}}
                                     style={styles.input}
                                 />
                             </View>
-                            <Text style={styles.error}>{error}</Text>
+                            <View style={{alignItems:'center'}}>
+                                <Text style={styles.error}>{error}</Text>
+                            </View>
                             <AppButton
                                 text={"Войти"}
                                 onPress={() => onPressFunc()}

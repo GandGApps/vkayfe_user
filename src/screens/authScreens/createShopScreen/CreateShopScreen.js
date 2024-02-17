@@ -132,7 +132,7 @@ export const CreateShopScreen = ({ navigation, route }) => {
 
 
   return (
-    <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+    <ScrollView contentContainerStyle={globalStyles.scrollContainer} bounces={false}>
       <View>
         {route?.params?.state && (
           <BackButton

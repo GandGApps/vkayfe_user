@@ -1,39 +1,37 @@
 import React, {useEffect, useState} from "react";
 import {styles} from "./styles";
-import {Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
-
+import {Image, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
 import rightIcon from "../../../../assets/images/rightIcon.png";
-import bottomIcon from "../../../../assets/images/bottomIcon.png";
-import shopIcon from "../../../../assets/images/shopIcon.png";
-import place from "../../../../assets/images/place.png";
+import place from "../../../../assets/images/wing.png";
 import {
-    BaseUrl,
     Colors,
-    CreateShopName,
     FinancialReportName, globalStyles,
-    MyDetailsScreenName,
     PromotionServicesName,
-    ShopDataName,
     EditMyDetailsName, LoremName
 } from "../../../../constants";
-import {ChangePasswordModal, ChangeShopModal, Loading} from "../../../../components";
+import {ChangePasswordModal, ChangeShopModal, globalHeight, Loading} from "../../../../components";
 import axiosInstance from "../../../../networking/axiosInstance";
 import {useSelector} from "react-redux";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const ProfileScreen = ({navigation}) => {
     const store = useSelector(st => st.customer);
     const [loading, setLoading] = useState(false);
 
-    const loadingFunc = (val) => setLoading(val);
     const navigationFunc = (nav) => {
         navigation.navigate(nav);
     };
 
     return (
-        <View style={globalStyles.container}>
-            <ScrollView contentContainerStyle={globalStyles.container}>
+        <View style={[globalStyles.container,
+            Platform.OS === 'ios' &&{marginTop:  -(getStatusBarHeight(true) +5)}
+        ]}>
+            <ScrollView bounces={false} contentContainerStyle={globalStyles.container}>
                 <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.blueBackground}/>
-                <View style={styles.headerContainer}>
+                <View style={[styles.headerContainer,
+                    Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(45))}
+
+                ]}>
                     {store?.full_name && (
                         <Text
                             style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.textAlignLeft, styles.shopName]}>{store.full_name}</Text>

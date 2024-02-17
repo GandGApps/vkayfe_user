@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import { globalHeight, globalWidth } from "../../../../components";
 import { Colors } from "../../../../constants";
 
@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   content:{
     flex:1,
     justifyContent:"space-between",
+    paddingTop:Platform.OS === 'ios' ? 30 : 0
   },
   podImg:{
     width:globalWidth(178),

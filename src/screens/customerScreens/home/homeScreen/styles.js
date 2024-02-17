@@ -40,14 +40,14 @@ export const styles = StyleSheet.create({
     headerContent: {
         flexDirection: "row",
         alignItems: "center",
-        paddingTop: globalHeight(27),
-        paddingBottom: globalHeight(17),
+        paddingTop: globalHeight(15),
+        paddingBottom: globalHeight(15),
         justifyContent: "space-between",
         marginBottom: globalHeight(20),
         borderBottomWidth: 1,
         borderTopWidth: 1,
         borderColor: Colors.borderGray,
-        marginVertical: globalHeight(17),
+        marginVertical: globalHeight(14),
         marginHorizontal: globalWidth(20)
 
     },
@@ -62,13 +62,14 @@ export const styles = StyleSheet.create({
     winIconStyle: {
         width: globalWidth(12),
         height: globalWidth(16),
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        tintColor:'#0BC5BA'
     },
     HeaderFooter: {
         flexDirection: "row",
         alignItems: "center",
+        justifyContent:'center',
         marginTop: globalHeight(10),
-        marginLeft: globalWidth(10)
     },
     formContainer: {
         flex: 1,
@@ -80,7 +81,7 @@ export const styles = StyleSheet.create({
         width: width - globalWidth(30),
     },
     filterCont: {
-        marginBottom: globalHeight(20)
+        marginBottom: globalHeight(10)
     },
     noneBtmWdth: {
         borderTopWidth: 0

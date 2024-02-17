@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { styles } from "./styles";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { CategoryData, FormCategory, BackButton } from "../../../../components";
+import {FlatList, Image, Platform, Text, TouchableOpacity, View} from "react-native";
+import {CategoryData, FormCategory, BackButton, globalHeight} from "../../../../components";
 
 import Goods from "../../../../assets/images/allGoodsIcon.png";
 import { globalStyles } from "../../../../constants";
 import axiosInstance from "../../../../networking/axiosInstance";
 import { useSelector } from "react-redux";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const CategoryScreen = ({ navigation, route }) => {
   let [category, setCategory] = useState([]);
@@ -36,7 +37,9 @@ export const CategoryScreen = ({ navigation, route }) => {
   };
 
   return (
-      <View style={styles.container}>
+      <View style={[styles.container,
+          Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(20))}
+      ]}>
         <BackButton
             text={"Категории"}
             navigation={navigation}

@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import { globalHeight, globalWidth } from "../../../../components";
 import { Colors } from "../../../../constants";
 
@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
   },
   headerPadding:{
     paddingHorizontal:globalWidth(20),
+    marginTop:Platform.OS === 'ios' ? globalWidth(20) : 0,
     paddingTop:globalHeight(13)
   },
   contentStyleText:{

@@ -8,7 +8,7 @@ export const FinancialReportDataScreen = ({ navigation, route }) => {
   const item = route.params.item;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} bounces={false}>
       <BackButton
         navigation={navigation}
       />

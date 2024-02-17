@@ -1,5 +1,5 @@
 import { Colors } from "../../../constants";
-import { StyleSheet, Dimensions } from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import { globalHeight, globalWidth } from "../../../components";
 
 let width = Dimensions.get("window").width;
@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
+
     justifyContent: "flex-end",
     alignItems: "center",
     marginTop:Platform.OS === 'ios' ? globalHeight(10) : 0
@@ -120,6 +121,8 @@ export const styles = StyleSheet.create({
     zIndex:10,
     left: globalWidth(0),
     bottom:globalHeight(15),
+    tintColor:'#0BC5BA'
+
   },
   viewSearch:{
     marginHorizontal:globalWidth(30),

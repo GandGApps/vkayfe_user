@@ -146,7 +146,7 @@ export const SignupScreen = ({ navigation, route }) => {
 
   return (
     <View style={globalStyles.container}>
-      <ScrollView contentContainerStyle={[styles.scrollContainer, globalStyles.scrollContainer]}>
+      <ScrollView contentContainerStyle={[styles.scrollContainer, globalStyles.scrollContainer]} bounces={false}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             {!Object.keys(user_data).length && (

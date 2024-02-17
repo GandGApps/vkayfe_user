@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {styles} from "./styles";
-import {ChooseName, CreateShopName, globalStyles, MapsScreenName, SET_CUSTOMER, SET_SHOP} from "../../../constants";
-import {Image, ScrollView, Text, View} from "react-native";
+import {ChooseName, CreateShopName, globalStyles, MapsScreenName, SET_CUSTOMER, SET_SHOP,SignInName} from "../../../constants";
+import {Image, Platform, ScrollView, StatusBar, Text, View} from "react-native";
 
 import giftImg from "../../../assets/images/gift.png";
 import {AppButton, AppForm, Loading} from "../../../components";
@@ -49,17 +49,19 @@ export const SplashScreen = ({navigation}) => {
             await axiosFunc(store);
         } else {
             setLoading(false);
-            navigation.navigate(ChooseName);
+            navigation.navigate(SignInName);
         }
     };
 
     const axiosFunc = async (store) => {
+        console.log('fff')
         try {
             const response = await axiosInstance.get("/users/profile/buyer");
             dispatch({
                 type: SET_CUSTOMER,
                 payload: response.data.user_data.user,
             });
+            console.log(response);
             if (store) {
                 navigation.replace("TabNavigation");
             } else {
@@ -67,13 +69,16 @@ export const SplashScreen = ({navigation}) => {
             }
             setLoading(false);
         } catch (e) {
-            setLoading(false);
             console.log(e);
+            setLoading(false);
         }
     };
 
     return (
-        <ScrollView contentContainerStyle={globalStyles.scrollContainer}>
+        <ScrollView contentContainerStyle={globalStyles.scrollContainer}       bounces={false}>
+            {Platform.OS === 'android' &&
+                <StatusBar hidden />
+            }
             <View style={[globalStyles.flexCenter, styles.splashContainer]}>
                 <View style={styles.headerContainer}>
                     <Image source={giftImg} style={styles.giftImg}/>

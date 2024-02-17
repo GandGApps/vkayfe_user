@@ -19,12 +19,11 @@ export const styles = StyleSheet.create({
   contentMyDetails: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderColorLight,
-    marginBottom: globalHeight(34),
     marginHorizontal: globalWidth(20),
   },
   contentMyDetailsText: {
     color: Colors.gray,
-    marginBottom: globalHeight(8),
+    marginBottom: globalHeight(4),
   },
 
   appBtnContainer: {
@@ -42,8 +41,8 @@ export const styles = StyleSheet.create({
   },
   input:{
     paddingVertical:0,
-    marginBottom: globalHeight(34),
-    paddingBottom: globalHeight(8),
+    marginBottom: globalHeight(25),
+    paddingBottom: globalHeight(4),
   },
   error:{
     marginLeft:20,

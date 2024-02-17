@@ -7,16 +7,15 @@ import {
     FormCategoryHorizontal,
     HomeFormData,
     Loading,
-    AppInput, BackButton, AppButton
+    AppInput, BackButton, AppButton, globalHeight
 } from "../../../../components";
 import {FormGoods} from "../../../../components";
-import {FlatList, Image, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View} from "react-native";
 
 import mask from "../../../../assets/images/mask.png";
-import {useDispatch, useSelector} from "react-redux";
 import axiosInstance from "../../../../networking/axiosInstance";
 import place from "../../../../assets/images/place.png";
-import search from "../../../../assets/images/search.png";
+import {getStatusBarHeight} from "react-native-status-bar-height";
 
 export const ReviewScreen = ({navigation, route}) => {
     const [review, setReview] = useState('')
@@ -52,7 +51,8 @@ export const ReviewScreen = ({navigation, route}) => {
     }
 
     return (
-        <View style={[globalStyles.container, styles.cont]}>
+        <View style={[globalStyles.container, styles.cont,        Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(30))}
+        ]}>
 
             <View>
                 <BackButton

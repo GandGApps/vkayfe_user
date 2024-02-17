@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     headerFooter: {
         justifyContent: "space-between",
         alignItems: 'center',
-        marginTop: globalWidth(43),
+        marginTop: globalWidth(30),
         paddingHorizontal: globalWidth(20),
 
     },

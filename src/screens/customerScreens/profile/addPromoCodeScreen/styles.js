@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from "react-native";
+import {StyleSheet, Dimensions, Platform} from "react-native";
 import {Colors} from "../../../../constants";
 import {globalHeight, globalWidth} from "../../../../components";
 
@@ -10,6 +10,8 @@ export const styles = StyleSheet.create({
     content: {
         flex: 1,
         justifyContent: "space-between",
+        paddingTop:Platform.OS === 'ios' ? 30 : 0
+
     },
     cont: {
         marginVertical: globalHeight(20)

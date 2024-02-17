@@ -1,13 +1,23 @@
-import { StyleSheet } from "react-native";
+import {Platform, StyleSheet} from "react-native";
 import { Colors } from "../colors";
 import { globalHeight, globalWidth } from "../../components";
+import {NativeModules} from 'react-native';
+
+// ...
+import { getStatusBarHeight } from "react-native-status-bar-height";
+
+const {StatusBarManager} = NativeModules;
+const height = StatusBarManager.HEIGHT;
 
 export const globalStyles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
+    backgroundColor:'white',
   },
   container: {
     flex: 1,
+    paddingTop:Platform.OS === 'ios' ? globalWidth(10) : 0
+
   },
   flexCenter: {
     flex: 1,

@@ -12,7 +12,25 @@ export const styles = StyleSheet.create({
     marginHorizontal: globalWidth(10),
     paddingHorizontal: globalWidth(4),
     marginVertical:globalHeight(5),
+
     borderRadius:8
+  },
+  content:{
+
+  },
+  left:{
+    alignItems:`flex-start`,
+    marginRight:globalWidth(40),
+    backgroundColor:'#136A8A',
+    borderRadius:8
+
+  },
+  right:{
+    alignItems:`flex-end`,
+    marginLeft:globalWidth(40),
+    backgroundColor:"gray",
+    borderRadius:8
+
   },
   chatScrool: {
     flex: 1,
@@ -40,18 +58,11 @@ export const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius:8,
     color: "black",
-    marginHorizontal:0
+    marginHorizontal:0,
+    paddingHorizontal:10
+
   },
-  left:{
-    alignItems:`flex-start`,
-    marginRight:globalWidth(40),
-    backgroundColor:'#136A8A'
-  },
-  right:{
-    alignItems:`flex-end`,
-    marginLeft:globalWidth(40),
-    backgroundColor:"gray",
-  },
+
   placeholderText: {
     marginVertical: globalHeight(5),
     marginHorizontal: globalHeight(5),
@@ -59,7 +70,7 @@ export const styles = StyleSheet.create({
     textAlign:'left'
   },
   backContainer:{
-    marginTop:Platform.OS === 'ios' ? globalWidth(25) : 5
+    marginTop:Platform.OS === 'ios' ? globalWidth(40) : 5
   },
   imgMsg:{
     width:globalWidth(200),

@@ -17,7 +17,10 @@ export const AddTrushScreen = ({navigation, route}) => {
     }
 
     const addFunc = () =>{
-        navigation.navigate(AddName)
+        navigation.reset({
+            index: 0,
+            routes: [{name:AddName}],
+        })
     }
     return (
         <View style={globalStyles.container}>
