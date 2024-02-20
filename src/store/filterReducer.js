@@ -1,11 +1,11 @@
-import { SET_FILTER_DELETE, SET_FILTER } from "../constants";
+import {SET_FILTER_DELETE, SET_FILTER} from '../constants';
 
 const filter = {
-  priceSort:{
+  priceSort: {
     priceDesc: false,
     priceAsc: false,
     newFirst: false,
-  }
+  },
 };
 
 const filterReducer = (state = filter, action) => {
@@ -16,7 +16,7 @@ const filterReducer = (state = filter, action) => {
         ...action.payload,
       };
     case SET_FILTER_DELETE:
-      return {}
+      return {};
     default:
       break;
   }

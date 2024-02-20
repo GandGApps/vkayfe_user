@@ -1,53 +1,53 @@
-import { Colors } from "../../../constants";
-import {StyleSheet, Dimensions, Platform} from "react-native";
-import { globalHeight, globalWidth } from "../../../components";
+import {Colors} from '../../../constants';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
+import {globalHeight, globalWidth} from '../../../components';
 
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
   },
   headerContainer: {
-    position: "relative",
+    position: 'relative',
   },
   switchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: globalHeight(30),
   },
   pinkMonster: {
     width: width,
     height: height / 2,
-    position: "relative",
+    position: 'relative',
   },
   touchCont: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   lineImg: {
     marginTop: -1,
-    height: height/2,
-    width: globalWidth(82)
+    height: height / 2,
+    width: globalWidth(82),
   },
   formContainer: {
     left: 0,
     right: 0,
-    alignItems: "center",
-    position: "absolute",
-    justifyContent: "center",
+    alignItems: 'center',
+    position: 'absolute',
+    justifyContent: 'center',
     top: height / 2 + globalHeight(-47),
   },
   backContainer: {
     zIndex: 1,
-    position: "absolute",
-    top: Platform.OS === 'ios' ? globalHeight(50) :   globalHeight(20),
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? globalHeight(50) : globalHeight(20),
   },
   linePink: {
     width: 82,
-    height: "100%",
+    height: '100%',
     borderWidth: 1,
   },
   linePinkContainer: {
@@ -56,14 +56,17 @@ export const styles = StyleSheet.create({
     height: height / 2,
   },
   switchContainerText: {
-    flexDirection: "row",
-    width: Platform.OS === 'ios' ? width - globalWidth(55) :  width - globalWidth(65),
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    width:
+      Platform.OS === 'ios' ? width - globalWidth(55) : width - globalWidth(65),
+    justifyContent: 'center',
+
+    flexWrap: 'wrap',
   },
   formHeader: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginTop: globalHeight(28),
   },
   giftIconPink: {
@@ -74,7 +77,7 @@ export const styles = StyleSheet.create({
     marginLeft: globalWidth(9),
   },
   SignInTextBold: {
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
     fontSize: globalWidth(13.5),
     lineHeight: globalHeight(19),
   },
@@ -87,19 +90,19 @@ export const styles = StyleSheet.create({
   input: {
     marginVertical: globalWidth(10),
   },
-  error:{
-    marginLeft:globalWidth(20),
-    fontSize:12,
-    marginBottom:globalWidth(5),
-    color:Colors.red
+  error: {
+    marginLeft: globalWidth(20),
+    fontSize: 12,
+    marginBottom: globalWidth(5),
+    color: Colors.red,
   },
   focusCell: {
     borderColor: '#000',
   },
   checkStyle: {
-    fontSize:globalWidth(13.5),
+    fontSize: globalWidth(13.5),
     lineHeight: globalHeight(19),
-    alignItems:'center',
+    alignItems: 'center',
   },
   chekedIc: {
     borderRadius: 25,

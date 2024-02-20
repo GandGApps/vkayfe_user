@@ -1,18 +1,17 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { globalHeight, globalWidth } from "../../../../components";
-import { Colors } from "../../../../constants";
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight, globalWidth} from '../../../../components';
+import {Colors} from '../../../../constants';
 
-
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
   },
   contentMyDetailsAll: {
-    flex:1,
-    justifyContent:'space-between'
+    flex: 1,
+    justifyContent: 'space-between',
   },
   stylesBack: {
     marginTop: globalWidth(14),
@@ -33,7 +32,7 @@ export const styles = StyleSheet.create({
   },
   btnPassword: {
     marginHorizontal: globalWidth(20),
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     marginBottom: globalHeight(16),
   },
   btnPasswordText: {
@@ -43,7 +42,7 @@ export const styles = StyleSheet.create({
   },
   appBtnContainer: {
     borderWidth: 1,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   appBtnText: {
     color: Colors.black,
@@ -55,7 +54,7 @@ export const styles = StyleSheet.create({
   },
   textUnderline: {
     fontSize: globalWidth(12),
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
   },
   accountStateChange: {
     paddingBottom: globalHeight(12),

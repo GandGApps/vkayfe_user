@@ -1,14 +1,13 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../../constants";
-import { globalHeight, globalWidth } from "../../index";
+import {StyleSheet, Dimensions} from 'react-native';
+import {Colors} from '../../../constants';
+import {globalHeight, globalWidth} from '../../index';
 
-
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   toggleSwitch: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   toggleContainer: {
     borderTopWidth: 1,
@@ -18,7 +17,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: globalWidth(-11),
   },
   imgFormCont: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   containerForm: {
     borderRadius: 8,
@@ -27,7 +26,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: globalWidth(8),
     paddingHorizontal: globalWidth(5),
     backgroundColor: Colors.white,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -53,21 +52,20 @@ export const styles = StyleSheet.create({
     marginBottom: globalHeight(7),
   },
   formFooterContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: globalHeight(22),
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     marginBottom: globalHeight(14),
   },
   likeIc: {
     width: globalWidth(20),
     height: globalHeight(20),
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   rowLikesContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems:'center'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-
 });

@@ -1,1 +1,1 @@
-export {OkayPromoScreen} from './OkayPromoScreen'
+export {OkayPromoScreen} from './OkayPromoScreen';

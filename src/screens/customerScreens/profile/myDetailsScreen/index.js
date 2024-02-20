@@ -1,1 +1,1 @@
-export {MyDetailsScreen} from './MyDetailsScreen'
+export {MyDetailsScreen} from './MyDetailsScreen';

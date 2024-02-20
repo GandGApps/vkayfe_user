@@ -1,1 +1,1 @@
-export {SignupScreen} from './SignupScreen'
+export {SignupScreen} from './SignupScreen';

@@ -1,1 +1,1 @@
-export {VerifyPhoneScreen} from './VerifyPhoneScreen'
+export {VerifyPhoneScreen} from './VerifyPhoneScreen';

@@ -1,1 +1,1 @@
-export {MapsScreen} from './MapsScreen'
+export {MapsScreen} from './MapsScreen';

@@ -1,1 +1,1 @@
-export {ChooseScreen} from './ChooseScreen'
+export {ChooseScreen} from './ChooseScreen';

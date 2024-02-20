@@ -1,2 +1,2 @@
-export {ChatScreen} from './chatScreen'
-export {MessagesScreen} from './messagesScreen'
+export {ChatScreen} from './chatScreen';
+export {MessagesScreen} from './messagesScreen';

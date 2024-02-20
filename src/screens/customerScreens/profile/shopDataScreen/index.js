@@ -1,1 +1,1 @@
-export {ShopDataScreen} from './ShopDataScreen'
+export {ShopDataScreen} from './ShopDataScreen';

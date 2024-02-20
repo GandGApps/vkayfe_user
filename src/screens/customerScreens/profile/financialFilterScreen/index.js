@@ -1,1 +1,1 @@
-export { FinancialFilterScreen } from "./FinancialFilterScreen";
+export {FinancialFilterScreen} from './FinancialFilterScreen';

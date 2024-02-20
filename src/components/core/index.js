@@ -1,4 +1,4 @@
-export { AppForm } from "./appForm";
-export { AppInput } from "./appInput";
-export { AppButton } from "./appButton";
-export { BackButton } from "./backButton";
+export {AppForm} from './appForm';
+export {AppInput} from './appInput';
+export {AppButton} from './appButton';
+export {BackButton} from './backButton';

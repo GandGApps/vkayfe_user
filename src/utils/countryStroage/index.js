@@ -1,19 +1,18 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export async function setCountry(Country) {
   try {
-    await AsyncStorage.setItem("Country", JSON.stringify(Country));
+    await AsyncStorage.setItem('Country', JSON.stringify(Country));
   } catch (error) {
     console.log(error.message);
     throw error;
   }
-
 }
 
 export async function checkCountry() {
   try {
-    const a = await AsyncStorage.getItem("Country");
-    return JSON.parse(a)
+    const a = await AsyncStorage.getItem('Country');
+    return JSON.parse(a);
   } catch (error) {
     console.log(error.message);
     throw error;
@@ -22,10 +21,9 @@ export async function checkCountry() {
 
 export async function removeStore() {
   try {
-    await AsyncStorage.removeItem("Country");
+    await AsyncStorage.removeItem('Country');
     return true;
-  }
-  catch(exception) {
+  } catch (exception) {
     return false;
   }
 }

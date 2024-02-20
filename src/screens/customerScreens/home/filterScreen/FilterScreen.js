@@ -1,62 +1,82 @@
-import React, { useEffect, useState } from "react";
-import { styles } from "./styles";
-import {AppButton, FilterData, FilterForm, BackButton, AppInput, globalHeight} from "../../../../components";
-import {View, Text, TouchableOpacity, ScrollView, Image, Platform} from "react-native";
+import React, {useEffect, useState} from 'react';
+import {styles} from './styles';
+import {
+  AppButton,
+  FilterData,
+  FilterForm,
+  BackButton,
+  AppInput,
+  globalHeight,
+} from '../../../../components';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Platform,
+} from 'react-native';
 
-import closeIcon from "../../../../assets/images/closeIcon.png";
-import {CategoryName, globalStyles, HomeName, HomeScreenName, SearchName} from "../../../../constants";
-import axiosInstance from "../../../../networking/axiosInstance";
-import { useDispatch, useSelector } from "react-redux";
-import {getStatusBarHeight} from "react-native-status-bar-height";
+import closeIcon from '../../../../assets/images/closeIcon.png';
+import {
+  CategoryName,
+  globalStyles,
+  HomeName,
+  HomeScreenName,
+  SearchName,
+} from '../../../../constants';
+import axiosInstance from '../../../../networking/axiosInstance';
+import {useDispatch, useSelector} from 'react-redux';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-export const FilterScreen = ({ navigation,route }) => {
+export const FilterScreen = ({navigation, route}) => {
   let dispatch = useDispatch();
-  const filterStore = useSelector((st) => st.filter);
-  const user = useSelector((st)=>st.customer)
-  const [minPrice, setMinPrice] = useState(0)
-  const [maxPrice, setMaxPrice] = useState(0)
+  const filterStore = useSelector(st => st.filter);
+  const user = useSelector(st => st.customer);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
   const [sort, setSort] = useState([
     {
       id: 1,
-      name: "В наличии",
+      name: 'В наличии',
       check: false,
-      key: "stock",
+      key: 'stock',
     },
     {
       id: 2,
-      name: "По дате публикации убыв",
+      name: 'По дате публикации убыв',
       check: false,
-      key: "newFirst",
+      key: 'newFirst',
     },
     {
       id: 3,
-      name: "По дате публикации возр",
+      name: 'По дате публикации возр',
       check: false,
-      key: "oldFirst",
+      key: 'oldFirst',
     },
     {
       id: 4,
-      name: "По убыванию цены",
+      name: 'По убыванию цены',
       check: false,
-      key: "priceDesc",
+      key: 'priceDesc',
     },
     {
       id: 5,
-      name: "По возрастанию цены",
+      name: 'По возрастанию цены',
       check: false,
-      key: "priceAsc",
+      key: 'priceAsc',
     },
     {
       id: 6,
-      name: "По Кол-ву меньш",
+      name: 'По Кол-ву меньш',
       check: false,
-      ley: "countAsc",
+      ley: 'countAsc',
     },
     {
       id: 7,
-      name: "По кол.ву больш",
+      name: 'По кол.ву больш',
       check: false,
-      key: "countDesc",
+      key: 'countDesc',
     },
   ]);
   let [subCategory, setSubCategory] = useState([]);
@@ -64,14 +84,17 @@ export const FilterScreen = ({ navigation,route }) => {
 
   useEffect(() => {
     if (Object.keys(filterStore).length) {
-      if(filterStore.price_from){
-        setMinPrice(filterStore.price_from)
+      if (filterStore.price_from) {
+        setMinPrice(filterStore.price_from);
       }
-      if(filterStore.price_to){
-        setMaxPrice(filterStore.price_to)
+      if (filterStore.price_to) {
+        setMaxPrice(filterStore.price_to);
       }
       if (filterStore.category_id) {
-        checkSubCategory({ _id: filterStore.category_id, title: filterStore.category_name }).then(r => {
+        checkSubCategory({
+          _id: filterStore.category_id,
+          title: filterStore.category_name,
+        }).then(r => {
           for (let i = 0; i < r.length; i++) {
             for (let j = 0; j < filterStore.sub_id.length; j++) {
               if (filterStore.sub_id[j] === r[i]._id) {
@@ -85,9 +108,9 @@ export const FilterScreen = ({ navigation,route }) => {
     }
   }, [filterStore]);
 
-  let checkSubCategory = async (item) => {
+  let checkSubCategory = async item => {
     try {
-      let response = await axiosInstance.get(`/sub-categories`, {
+      let response = await axiosInstance.get('/sub-categories', {
         params: {
           category_id: item._id,
         },
@@ -101,18 +124,18 @@ export const FilterScreen = ({ navigation,route }) => {
       return data;
     } catch (e) {
       setCategory(item);
-      console.log(e,'fffff');
+      console.log(e, 'fffff');
     }
   };
 
-  let checkFilterSub = (index) => {
+  let checkFilterSub = index => {
     subCategory[index].check = !subCategory[index].check;
     setSubCategory([...subCategory]);
   };
 
   let filter = () => {
-    let subcategoryText = "";
-    let sortText = "";
+    let subcategoryText = '';
+    let sortText = '';
     let stock = false;
     let sub_id = [];
     subCategory.map((data, index) => {
@@ -120,7 +143,7 @@ export const FilterScreen = ({ navigation,route }) => {
         if (index === 0) {
           subcategoryText = subcategoryText + data._id;
         } else {
-          subcategoryText = subcategoryText + "," + data._id;
+          subcategoryText = subcategoryText + ',' + data._id;
         }
         sub_id.push(data._id);
       }
@@ -132,131 +155,205 @@ export const FilterScreen = ({ navigation,route }) => {
       subcategory: subcategoryText,
       sub_id,
       price_from: minPrice,
-      price_to: maxPrice
+      price_to: maxPrice,
     };
     dispatch({
-      type: "SET_FILTER",
+      type: 'SET_FILTER',
       payload: data,
     });
-    if(route.params?.state){
+    if (route.params?.state) {
       navigation.navigate(SearchName);
-    }else {
+    } else {
       navigation.navigate(HomeScreenName);
-
     }
   };
 
   return (
-      <View style={[styles.container,
-        Platform.OS === 'ios' &&{paddingTop:  (getStatusBarHeight(true) + globalHeight(20))}
-
+    <View
+      style={[
+        styles.container,
+        Platform.OS === 'ios' && {
+          paddingTop: getStatusBarHeight(true) + globalHeight(20),
+        },
       ]}>
-        <View>
-          <View style={styles.headerContainer}>
-            <BackButton
-                navigation={navigation}
-                text={"Фильтры"}
-                deleteAll={() => {
-                  dispatch({
-                    type: "SET_FILTER_DELETE",
-                  });
-                  for (let i = 0; i < sort.length; i++) {
-                    sort[i].check = false;
-                  }
-                  setSort([...sort]);
-                  setCategory({});
-                  setSubCategory([]);
-                  navigation.navigate(HomeScreenName);
-                }}
-            />
-          </View>
-
-          <View style={styles.containerCategory}>
-            <Text
-                style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.titleCategory, globalStyles.weightBold, globalStyles.titleTextSmall]}>Выберите
-              категорию</Text>
-            <TouchableOpacity onPress={() => navigation.navigate(CategoryName, { checkSubCategory: checkSubCategory })}>
-              <View style={styles.category}>
-                {category.title ?
-                    <Text
-                        style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.weightLight]}>{category.title}</Text>
-                    :
-                    <Text style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.weightLight]}>Выберите
-                      категорию</Text>
-                }
-                <TouchableOpacity onPress={() =>{
-                  setCategory({})
-                  setSubCategory([])
-                }}>
-                  <Image source={closeIcon} style={styles.closeIcon} />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {Object.keys(subCategory).length ?
-              <View style={styles.containerCategory}>
-                <Text
-                    style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.titleCategory, globalStyles.weightBold, globalStyles.titleTextSmall]}>Подкатегория</Text>
-                <ScrollView bounces={false} showsHorizontalScrollIndicator={false} horizontal={true}>
-                  {subCategory.map((item, index) => {
-                    return (
-                        <FilterForm
-                            check={checkFilterSub}
-                            item={item}
-                            index={index}
-                            key={index}
-                        />
-                    );
-                  })}
-                </ScrollView>
-              </View>
-              : null}
-
-          <View style={styles.containerCategory}>
-            <Text
-                style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.titleCategory, globalStyles.weightBold, globalStyles.titleTextSmall]}>Адрес доставки</Text>
-            <TouchableOpacity enabled={false}>
-              <View style={styles.category}>
-                    <Text
-                        style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.weightLight]}>{user.city}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.containerCategory}>
-            <Text
-                style={[globalStyles.titleText, globalStyles.textAlignLeft, styles.titleCategory, globalStyles.weightBold, globalStyles.titleTextSmall]}>Цена за 1шт.</Text>
-            <View style={styles.containerInput}>
-              <View>
-                <Text  style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.weightLight,globalStyles.textAlignLeft]}>От</Text>
-                <AppInput
-                    style={styles.inpSmall}
-                    keyboardType={'numeric'}
-                    onChangeText={(e) => setMinPrice(e)}
-                    value={minPrice}
-                />
-              </View>
-              <View>
-                <Text  style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.weightLight,globalStyles.textAlignLeft]}>до</Text>
-                <AppInput
-                    style={styles.inpSmall}
-                    keyboardType={'numeric'}
-                    onChangeText={(e) => setMaxPrice(e)}
-                    value={maxPrice}
-                />
-              </View>
-            </View>
-
-          </View>
-
-        </View>
-        <View>
-          <AppButton
-              text={"Применить"}
-              stylesContainer={styles.containerBtn}
-              onPress={filter}
+      <View>
+        <View style={styles.headerContainer}>
+          <BackButton
+            navigation={navigation}
+            text={'Фильтры'}
+            deleteAll={() => {
+              dispatch({
+                type: 'SET_FILTER_DELETE',
+              });
+              for (let i = 0; i < sort.length; i++) {
+                sort[i].check = false;
+              }
+              setSort([...sort]);
+              setCategory({});
+              setSubCategory([]);
+              navigation.navigate(HomeScreenName);
+            }}
           />
         </View>
+
+        <View style={styles.containerCategory}>
+          <Text
+            style={[
+              globalStyles.titleText,
+              globalStyles.textAlignLeft,
+              styles.titleCategory,
+              globalStyles.weightBold,
+              globalStyles.titleTextSmall,
+            ]}>
+            Выберите категорию
+          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(CategoryName, {
+                checkSubCategory: checkSubCategory,
+              })
+            }>
+            <View style={styles.category}>
+              {category.title ? (
+                <Text
+                  style={[
+                    globalStyles.titleText,
+                    globalStyles.titleTextSmall,
+                    globalStyles.weightLight,
+                  ]}>
+                  {category.title}
+                </Text>
+              ) : (
+                <Text
+                  style={[
+                    globalStyles.titleText,
+                    globalStyles.titleTextSmall,
+                    globalStyles.weightLight,
+                  ]}>
+                  Выберите категорию
+                </Text>
+              )}
+              <TouchableOpacity
+                onPress={() => {
+                  setCategory({});
+                  setSubCategory([]);
+                }}>
+                <Image source={closeIcon} style={styles.closeIcon} />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {Object.keys(subCategory).length ? (
+          <View style={styles.containerCategory}>
+            <Text
+              style={[
+                globalStyles.titleText,
+                globalStyles.textAlignLeft,
+                styles.titleCategory,
+                globalStyles.weightBold,
+                globalStyles.titleTextSmall,
+              ]}>
+              Подкатегория
+            </Text>
+            <ScrollView
+              bounces={false}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}>
+              {subCategory.map((item, index) => {
+                return (
+                  <FilterForm
+                    check={checkFilterSub}
+                    item={item}
+                    index={index}
+                    key={index}
+                  />
+                );
+              })}
+            </ScrollView>
+          </View>
+        ) : null}
+
+        <View style={styles.containerCategory}>
+          <Text
+            style={[
+              globalStyles.titleText,
+              globalStyles.textAlignLeft,
+              styles.titleCategory,
+              globalStyles.weightBold,
+              globalStyles.titleTextSmall,
+            ]}>
+            Адрес доставки
+          </Text>
+          <TouchableOpacity enabled={false}>
+            <View style={styles.category}>
+              <Text
+                style={[
+                  globalStyles.titleText,
+                  globalStyles.titleTextSmall,
+                  globalStyles.weightLight,
+                ]}>
+                {user.city}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.containerCategory}>
+          <Text
+            style={[
+              globalStyles.titleText,
+              globalStyles.textAlignLeft,
+              styles.titleCategory,
+              globalStyles.weightBold,
+              globalStyles.titleTextSmall,
+            ]}>
+            Цена за 1шт.
+          </Text>
+          <View style={styles.containerInput}>
+            <View>
+              <Text
+                style={[
+                  globalStyles.titleText,
+                  globalStyles.titleTextSmall,
+                  globalStyles.weightLight,
+                  globalStyles.textAlignLeft,
+                ]}>
+                От
+              </Text>
+              <AppInput
+                style={styles.inpSmall}
+                keyboardType={'numeric'}
+                onChangeText={e => setMinPrice(e)}
+                value={minPrice}
+              />
+            </View>
+            <View>
+              <Text
+                style={[
+                  globalStyles.titleText,
+                  globalStyles.titleTextSmall,
+                  globalStyles.weightLight,
+                  globalStyles.textAlignLeft,
+                ]}>
+                до
+              </Text>
+              <AppInput
+                style={styles.inpSmall}
+                keyboardType={'numeric'}
+                onChangeText={e => setMaxPrice(e)}
+                value={maxPrice}
+              />
+            </View>
+          </View>
+        </View>
       </View>
+      <View>
+        <AppButton
+          text={'Применить'}
+          stylesContainer={styles.containerBtn}
+          onPress={filter}
+        />
+      </View>
+    </View>
   );
 };

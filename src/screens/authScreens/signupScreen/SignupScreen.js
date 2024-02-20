@@ -1,5 +1,5 @@
-import { styles } from "./styles";
-import React, { useEffect, useState } from "react";
+import {styles} from './styles';
+import React, {useEffect, useState} from 'react';
 import {
   Colors,
   globalStyles,
@@ -8,8 +8,8 @@ import {
   SET_SHOP_DELETE,
   SignInName,
   WaitingName,
-} from "../../../constants";
-import axiosInstance from "../../../networking/axiosInstance";
+} from '../../../constants';
+import axiosInstance from '../../../networking/axiosInstance';
 import {
   Loading,
   numberValidate,
@@ -17,37 +17,37 @@ import {
   pendingData,
   phoneValidation,
   validateEmail,
-} from "../../../components";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { AppButton, AppForm, AppInput, BackButton } from "../../../components";
+} from '../../../components';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {AppButton, AppForm, AppInput, BackButton} from '../../../components';
 
-import line from "../../../assets/images/line.png";
-import pinkMonster from "../../../assets/images/pinkMonster.png";
-import giftIconPink from "../../../assets/images/giftIconPink.png";
-import { removeTokens, setTokens } from "../../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import SelectDropdown from "react-native-select-dropdown";
+import line from '../../../assets/images/line.png';
+import pinkMonster from '../../../assets/images/pinkMonster.png';
+import giftIconPink from '../../../assets/images/giftIconPink.png';
+import {removeTokens, setTokens} from '../../../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import SelectDropdown from 'react-native-select-dropdown';
 
-export const SignupScreen = ({ navigation, route }) => {
+export const SignupScreen = ({navigation, route}) => {
   let dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [phone, setPhone] = useState("+778");
-  const [password, setPassword] = useState("");
-  const [legalName, setLegalName] = useState("");
-  const [repPassword, setRepPassword] = useState("");
-  const [dropDownstate, setDropDownstate] = useState("");
-  const [currentAccount, setCurrentAccount] = useState("");
-  const [organizationInn, setOrganizationInn] = useState("");
-  const [organizationOgrn, setOrganizationOgrn] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [phone, setPhone] = useState('+778');
+  const [password, setPassword] = useState('');
+  const [legalName, setLegalName] = useState('');
+  const [repPassword, setRepPassword] = useState('');
+  const [dropDownstate, setDropDownstate] = useState('');
+  const [currentAccount, setCurrentAccount] = useState('');
+  const [organizationInn, setOrganizationInn] = useState('');
+  const [organizationOgrn, setOrganizationOgrn] = useState('');
   const [loading, setLoading] = useState(false);
   const [dataCategories, setDataCategories] = useState([
-    { name: "ИП", id: 1 },
-    { name: "ООО", id: 2 },
-    { name: "Самозанятый", id: 3 },
+    {name: 'ИП', id: 1},
+    {name: 'ООО', id: 2},
+    {name: 'Самозанятый', id: 3},
   ]);
-  const user_data = useSelector((st) => st.customer);
+  const user_data = useSelector(st => st.customer);
   useEffect(() => {
     if (Object.keys(user_data).length) {
       setName(user_data.name);
@@ -62,11 +62,11 @@ export const SignupScreen = ({ navigation, route }) => {
   }, [user_data]);
 
   const onChangeTextFunc = (e, set) => {
-    setError("");
+    setError('');
     set(e);
   };
 
-  const navigationFunc = async (nav) => {
+  const navigationFunc = async nav => {
     if (
       name &&
       password &&
@@ -97,42 +97,44 @@ export const SignupScreen = ({ navigation, route }) => {
     //   setError("The Рассчетный счет you’ve entered is incorrect.");
     // }
     else if (!name) {
-      setError("The Имя you’ve entered is incorrect.");
+      setError('The Имя you’ve entered is incorrect.');
     } else if (!password || password !== repPassword) {
-      setError("The Пароль you’ve entered is incorrect.");
+      setError('The Пароль you’ve entered is incorrect.');
     } else if (legalName.length <= 3) {
-      setError("The Юридическое название you’ve entered is incorrect.");
+      setError('The Юридическое название you’ve entered is incorrect.');
     } else if (!phone) {
-      setError("The Телефон you’ve entered is incorrect.");
+      setError('The Телефон you’ve entered is incorrect.');
     } else if (!validateEmail(email)) {
-      setError("The Email you’ve entered is incorrect.");
+      setError('The Email you’ve entered is incorrect.');
     } else if (organizationOgrn.length <= 3) {
-      setError("The ОГРН организации you’ve entered is incorrect.");
+      setError('The ОГРН организации you’ve entered is incorrect.');
     } else if (!dropDownstate) {
-      setError("The ИП / ООО/ Самозанятый you’ve entered is incorrect.");
+      setError('The ИП / ООО/ Самозанятый you’ve entered is incorrect.');
     } else if (organizationInn.length <= 3) {
-      setError("The ИНН организации you’ve entered is incorrect.");
+      setError('The ИНН организации you’ve entered is incorrect.');
     }
   };
 
   const axiosFunc = async (data, nav) => {
     setLoading(true);
     try {
-      const response = !Object.keys(user_data).length ? await axiosInstance.post("/users/register/seller", data) : await axiosInstance.put("/users/profile/seller", data);
+      const response = !Object.keys(user_data).length
+        ? await axiosInstance.post('/users/register/seller', data)
+        : await axiosInstance.put('/users/profile/seller', data);
       await setTokens(response.data.token);
       dispatch({
         type: SET_CUSTOMER,
         payload: response.data.user_data,
       });
-      navigation.replace(nav, { data: pendingData });
+      navigation.replace(nav, {data: pendingData});
       setLoading(false);
     } catch (e) {
-      console.log(e, "e");
+      console.log(e, 'e');
       setLoading(false);
     }
   };
   const loginPageFunc = async () => {
-    if(Object.keys(user_data).length){
+    if (Object.keys(user_data).length) {
       await removeTokens();
       dispatch({
         type: SET_CUSTOMER_DELETE,
@@ -146,7 +148,12 @@ export const SignupScreen = ({ navigation, route }) => {
 
   return (
     <View style={globalStyles.container}>
-      <ScrollView contentContainerStyle={[styles.scrollContainer, globalStyles.scrollContainer]} bounces={false}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.scrollContainer,
+          globalStyles.scrollContainer,
+        ]}
+        bounces={false}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             {!Object.keys(user_data).length && (
@@ -155,7 +162,7 @@ export const SignupScreen = ({ navigation, route }) => {
               </View>
             )}
             <Image source={pinkMonster} style={styles.pinkMonster} />
-            <View style={{ alignItems: "flex-end" }}>
+            <View style={{alignItems: 'flex-end'}}>
               <Image source={line} style={styles.lineImg} />
             </View>
           </View>
@@ -163,47 +170,50 @@ export const SignupScreen = ({ navigation, route }) => {
             <AppForm>
               <View style={styles.formHeader}>
                 <Image source={giftIconPink} style={styles.giftIconPink} />
-                <Text style={[styles.titleForm, globalStyles.titleText]}>Войти в учетную запись</Text>
+                <Text style={[styles.titleForm, globalStyles.titleText]}>
+                  Войти в учетную запись
+                </Text>
               </View>
               <View>
                 <View style={styles.inputContainer}>
                   <AppInput
-                    placeholder={"Имя"}
+                    placeholder={'Имя'}
                     style={styles.input}
                     value={name}
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setName);
-                    }} />
+                    }}
+                  />
                   <AppInput
                     style={styles.input}
-                    placeholder={"Email"}
+                    placeholder={'Email'}
                     value={email}
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setEmail);
                     }}
                   />
                   <AppInput
-                    placeholder={"Телефон"}
+                    placeholder={'Телефон'}
                     style={styles.input}
-                    keyboardType={"numeric"}
+                    keyboardType={'numeric'}
                     value={phone}
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setPhone);
                     }}
                   />
                   <AppInput
                     style={styles.input}
-                    placeholder={"Пароль"}
+                    placeholder={'Пароль'}
                     secureTextEntry
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setPassword);
                     }}
                   />
                   <AppInput
-                    placeholder={"Повторите пароль"}
+                    placeholder={'Повторите пароль'}
                     style={styles.input}
                     secureTextEntry
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setRepPassword);
                     }}
                   />
@@ -212,67 +222,79 @@ export const SignupScreen = ({ navigation, route }) => {
                       data={dataCategories}
                       buttonStyle={styles.btnStyleDrop}
                       dropdownStyle={styles.categoryInput}
-                      defaultButtonText={"ИП / ООО/ Самозанятый"}
+                      defaultButtonText={'ИП / ООО/ Самозанятый'}
                       rowTextStyle={styles.choosePhotoText}
-                      onSelect={(selectedItem) => {
+                      onSelect={selectedItem => {
                         setDropDownstate(selectedItem.name);
                       }}
-
-                      buttonTextAfterSelection={(selectedItem) => {
+                      buttonTextAfterSelection={selectedItem => {
                         return selectedItem.name;
                       }}
-                      rowTextForSelection={(selectedItem) => {
+                      rowTextForSelection={selectedItem => {
                         return selectedItem.name;
-                      }} />
+                      }}
+                    />
                   </View>
                   <AppInput
                     style={styles.input}
-                    placeholder={"Юридическое название"}
+                    placeholder={'Юридическое название'}
                     value={legalName}
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setLegalName);
                     }}
                   />
                   <AppInput
-                    placeholder={"ИНН организации"}
+                    placeholder={'ИНН организации'}
                     value={organizationInn}
                     style={styles.input}
-                    keyboardType={"numeric"}
-                    onChangeText={(e) => {
+                    keyboardType={'numeric'}
+                    onChangeText={e => {
                       onChangeTextFunc(e, setOrganizationInn);
                     }}
                   />
                   <AppInput
                     style={styles.input}
-                    placeholder={"ОГРН организации"}
+                    placeholder={'ОГРН организации'}
                     value={organizationOgrn}
-                    keyboardType={"numeric"}
-                    onChangeText={(e) => {
+                    keyboardType={'numeric'}
+                    onChangeText={e => {
                       onChangeTextFunc(e, setOrganizationOgrn);
                     }}
                   />
                   <AppInput
                     style={styles.input}
-                    placeholder={"Рассчетный счет (16 цифр) "}
-                    keyboardType={"numeric"}
+                    placeholder={'Рассчетный счет (16 цифр) '}
+                    keyboardType={'numeric'}
                     value={currentAccount}
-                    onChangeText={(e) => {
+                    onChangeText={e => {
                       onChangeTextFunc(e, setCurrentAccount);
                     }}
                   />
                 </View>
                 <Text style={styles.error}>{error}</Text>
                 <AppButton
-                  text={"Войти"}
+                  text={'Войти'}
                   onPress={() => navigationFunc(WaitingName)}
                 />
               </View>
               <View style={styles.footerContainer}>
-                <Text style={[globalStyles.titleText, globalStyles.titleTextSmall, globalStyles.weightLight]}>Есть
-                  аккаунт?</Text>
+                <Text
+                  style={[
+                    globalStyles.titleText,
+                    globalStyles.titleTextSmall,
+                    globalStyles.weightLight,
+                  ]}>
+                  Есть аккаунт?
+                </Text>
                 <TouchableOpacity onPress={() => loginPageFunc()}>
                   <Text
-                    style={[globalStyles.titleText, globalStyles.titleTextSmall, styles.SignInTextBold]}>Войти</Text>
+                    style={[
+                      globalStyles.titleText,
+                      globalStyles.titleTextSmall,
+                      styles.SignInTextBold,
+                    ]}>
+                    Войти
+                  </Text>
                 </TouchableOpacity>
               </View>
             </AppForm>
@@ -281,6 +303,5 @@ export const SignupScreen = ({ navigation, route }) => {
       </ScrollView>
       <Loading loading={loading} />
     </View>
-
   );
 };

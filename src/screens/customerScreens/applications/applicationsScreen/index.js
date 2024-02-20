@@ -1,1 +1,1 @@
-export {AplicationsScreen} from './AplicationsScreen'
+export {AplicationsScreen} from './AplicationsScreen';

@@ -1,23 +1,21 @@
-import {StyleSheet, Dimensions, Platform} from "react-native";
-import { globalHeight, globalWidth } from "../../../../components";
-import { Colors } from "../../../../constants";
+import {StyleSheet, Dimensions, Platform} from 'react-native';
+import {globalHeight, globalWidth} from '../../../../components';
+import {Colors} from '../../../../constants';
 
-
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
-
   headerContainer: {
-    paddingTop: Platform.OS === 'ios' ?  0 : globalHeight(38),
+    paddingTop: Platform.OS === 'ios' ? 0 : globalHeight(38),
     paddingBottom: globalHeight(22),
     backgroundColor: Colors.blueBackground,
     paddingHorizontal: globalWidth(20),
   },
   buttonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingLeft: globalWidth(35),
     paddingRight: globalWidth(20),
     paddingVertical: globalHeight(15),
@@ -34,7 +32,7 @@ export const styles = StyleSheet.create({
   RightIcon: {
     width: globalWidth(10),
     height: globalHeight(16),
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   activeTextHeader: {
     marginBottom: globalHeight(5),
@@ -51,10 +49,9 @@ export const styles = StyleSheet.create({
   placeIcon: {
     width: globalWidth(12),
     height: globalHeight(16),
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginRight: globalWidth(9),
-    tintColor:'#0BC5BA'
-
+    tintColor: '#0BC5BA',
   },
   shopName: {
     marginBottom: globalHeight(15),
@@ -65,11 +62,11 @@ export const styles = StyleSheet.create({
   bottomIcon: {
     width: globalWidth(6),
     height: globalHeight(8),
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginLeft: globalWidth(3),
   },
   changeShop: {
-    flexDirection: "row",
-    alignItems: "center",
-  }
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

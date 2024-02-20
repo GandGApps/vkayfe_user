@@ -1,7 +1,6 @@
-import {  SET_SHOP,SET_SHOP_DELETE } from "../constants";
+import {SET_SHOP, SET_SHOP_DELETE} from '../constants';
 
-const activeStore = {
-};
+const activeStore = {};
 
 const activeStoreReducer = (state = activeStore, action) => {
   switch (action.type) {
@@ -11,7 +10,7 @@ const activeStoreReducer = (state = activeStore, action) => {
         ...action.payload,
       };
     case SET_SHOP_DELETE:
-      return {}
+      return {};
     default:
       break;
   }

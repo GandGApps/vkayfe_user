@@ -1,1 +1,1 @@
-export {GoodsImgScreen} from './GoodsImgScreen'
+export {GoodsImgScreen} from './GoodsImgScreen';

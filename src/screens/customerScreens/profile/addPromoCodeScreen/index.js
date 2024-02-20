@@ -1,1 +1,1 @@
-export {AddPromoCodeScreen} from './AddPromoCodeScreen'
+export {AddPromoCodeScreen} from './AddPromoCodeScreen';

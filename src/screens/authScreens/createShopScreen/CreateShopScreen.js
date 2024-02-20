@@ -1,25 +1,31 @@
-import { styles } from "./styles";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axiosInstance from "../../../networking/axiosInstance";
-import cameraIcon from "../../../assets/images/cameraIcon.png";
-import { AppButton, AppInput, BackButton, ChooseImage, Loading } from "../../../components";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {styles} from './styles';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import axiosInstance from '../../../networking/axiosInstance';
+import cameraIcon from '../../../assets/images/cameraIcon.png';
+import {
+  AppButton,
+  AppInput,
+  BackButton,
+  ChooseImage,
+  Loading,
+} from '../../../components';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
-import closeIcon from "../../../assets/images/closeIcon.png";
-import { BaseUrl, globalStyles, SET_SHOP } from "../../../constants";
-import SelectDropdown from "react-native-select-dropdown";
+import closeIcon from '../../../assets/images/closeIcon.png';
+import {BaseUrl, globalStyles, SET_SHOP} from '../../../constants';
+import SelectDropdown from 'react-native-select-dropdown';
 
-export const CreateShopScreen = ({ navigation, route }) => {
+export const CreateShopScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const store = useSelector(st => st.customer);
   const shop = useSelector(st => st.activeStore);
   const routeShop = route?.params?.shop;
-  const [photo, setPhoto] = useState("");
-  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState('');
+  const [name, setName] = useState('');
   const [country, setCountry] = useState([]);
-  const [street, setStreet] = useState("");
-  const [proShop, setProShop] = useState("");
+  const [street, setStreet] = useState('');
+  const [proShop, setProShop] = useState('');
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +34,7 @@ export const CreateShopScreen = ({ navigation, route }) => {
   }, []);
   useEffect(() => {
     if (routeShop) {
-      setPhoto(BaseUrl + "/" + routeShop.logo_url);
+      setPhoto(BaseUrl + '/' + routeShop.logo_url);
       setName(routeShop.title);
       setStreet(routeShop.address);
       setSelectedCountry(route.city_id);
@@ -37,7 +43,7 @@ export const CreateShopScreen = ({ navigation, route }) => {
   }, []);
   const countryFetch = async () => {
     try {
-      const response = await axiosInstance.get("/cities/active");
+      const response = await axiosInstance.get('/cities/active');
       setCountry(response?.data?.cities);
     } catch (e) {
       console.log(e);
@@ -50,13 +56,12 @@ export const CreateShopScreen = ({ navigation, route }) => {
 
   const requestCameraPermission = () => {
     try {
-      ChooseImage(async (imageRes) => {
+      ChooseImage(async imageRes => {
         if (!imageRes.didCancel) {
           setPhoto(imageRes.assets[0]);
         }
       });
-    } catch (err) {
-    }
+    } catch (err) {}
   };
   const onPressFunc = async () => {
     if (photo && name && selectedCountry && street) {
@@ -64,24 +69,24 @@ export const CreateShopScreen = ({ navigation, route }) => {
       if (!routeShop) {
         try {
           const formData = new FormData();
-          formData.append("city_id", selectedCountry._id);
-          formData.append("address", street);
-          formData.append("title", name);
-          formData.append("about_store", proShop);
-          formData.append("logo", {
+          formData.append('city_id', selectedCountry._id);
+          formData.append('address', street);
+          formData.append('title', name);
+          formData.append('about_store', proShop);
+          formData.append('logo', {
             uri: photo.uri,
-            name: "avatar.jpg",
-            type: "image/jpg",
+            name: 'avatar.jpg',
+            type: 'image/jpg',
           });
-          const response = await axiosInstance.post("/stores/my", formData, {
+          const response = await axiosInstance.post('/stores/my', formData, {
             headers: {
-              "Content-Type": "multipart/form-data",
+              'Content-Type': 'multipart/form-data',
             },
           });
           if (!Object.keys(shop).length) {
             await activeShopFunc();
           }
-          navigation.replace("TabNavigation");
+          navigation.replace('TabNavigation');
           setLoading(false);
         } catch (e) {
           console.log(e);
@@ -90,24 +95,24 @@ export const CreateShopScreen = ({ navigation, route }) => {
       } else {
         try {
           const formData = new FormData();
-          formData.append("city_id", selectedCountry._id);
-          formData.append("id", routeShop._id);
-          formData.append("address", street);
-          formData.append("title", name);
-          formData.append("about_store", proShop);
+          formData.append('city_id', selectedCountry._id);
+          formData.append('id', routeShop._id);
+          formData.append('address', street);
+          formData.append('title', name);
+          formData.append('about_store', proShop);
           if (photo?.uri) {
-            formData.append("logo_img", {
+            formData.append('logo_img', {
               uri: photo.uri,
-              name: "avatar.jpg",
-              type: "image/jpg",
+              name: 'avatar.jpg',
+              type: 'image/jpg',
             });
           }
-          const response = await axiosInstance.put("/stores/my", formData, {
+          const response = await axiosInstance.put('/stores/my', formData, {
             headers: {
-              "Content-Type": "multipart/form-data",
+              'Content-Type': 'multipart/form-data',
             },
           });
-          navigation.replace("TabNavigation");
+          navigation.replace('TabNavigation');
           setLoading(false);
         } catch (e) {
           console.log(e);
@@ -119,7 +124,7 @@ export const CreateShopScreen = ({ navigation, route }) => {
 
   const activeShopFunc = async () => {
     try {
-      const response = await axiosInstance.get("/users/profile/seller");
+      const response = await axiosInstance.get('/users/profile/seller');
       const arr = response.data.storesList[0];
       dispatch({
         type: SET_SHOP,
@@ -130,29 +135,36 @@ export const CreateShopScreen = ({ navigation, route }) => {
     }
   };
 
-
   return (
-    <ScrollView contentContainerStyle={globalStyles.scrollContainer} bounces={false}>
+    <ScrollView
+      contentContainerStyle={globalStyles.scrollContainer}
+      bounces={false}>
       <View>
         {route?.params?.state && (
-          <BackButton
-            navigation={navigation}
-            stylesBack={styles.backBtn}
-          />
+          <BackButton navigation={navigation} stylesBack={styles.backBtn} />
         )}
         <View style={styles.cameraContainer}>
-          {photo ?
-            <Image source={{ uri: typeof photo === "object" ? photo.uri : photo }} style={styles.containerImg} />
-            :
+          {photo ? (
+            <Image
+              source={{uri: typeof photo === 'object' ? photo.uri : photo}}
+              style={styles.containerImg}
+            />
+          ) : (
             <View style={styles.cameraContent}>
               <Image source={cameraIcon} style={styles.cameraImg} />
               <Text
-                style={[globalStyles.titleText, styles.cameraText, globalStyles.titleTextSmall4, globalStyles.weightLight]}>Добавьте
-                фотографию или логотип магазина</Text>
+                style={[
+                  globalStyles.titleText,
+                  styles.cameraText,
+                  globalStyles.titleTextSmall4,
+                  globalStyles.weightLight,
+                ]}>
+                Добавьте фотографию или логотип магазина
+              </Text>
             </View>
-          }
+          )}
           <AppButton
-            text={"Загрузить"}
+            text={'Загрузить'}
             stylesContainer={styles.buttonContainer}
             onPress={() => requestCameraPermission()}
           />
@@ -160,7 +172,9 @@ export const CreateShopScreen = ({ navigation, route }) => {
             {photo && (
               <>
                 <Text style={styles.logoText}>{photo.type}</Text>
-                <TouchableOpacity style={styles.closeContainer} onPress={() => setPhoto("")}>
+                <TouchableOpacity
+                  style={styles.closeContainer}
+                  onPress={() => setPhoto('')}>
                   <Image source={closeIcon} style={styles.closeIcon} />
                 </TouchableOpacity>
               </>
@@ -169,9 +183,9 @@ export const CreateShopScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.contentContainer}>
           <AppInput
-            placeholder={"Название магазина"}
+            placeholder={'Название магазина'}
             style={styles.inputContainer}
-            onChangeText={(e) => onChangeTextFunc(e, setName)}
+            onChangeText={e => onChangeTextFunc(e, setName)}
             value={name}
           />
           <View style={styles.dropCont}>
@@ -179,29 +193,37 @@ export const CreateShopScreen = ({ navigation, route }) => {
               data={country}
               buttonStyle={styles.btnStyleDrop}
               dropdownStyle={styles.categoryInput}
-              defaultButtonText={"Город"}
+              defaultButtonText={'Город'}
               rowTextStyle={styles.choosePhotoText}
-              onSelect={(selectedItem) => {
+              onSelect={selectedItem => {
                 setSelectedCountry(selectedItem);
               }}
-              buttonTextAfterSelection={(selectedItem) => {
+              buttonTextAfterSelection={selectedItem => {
                 return selectedItem.city_name;
               }}
-              rowTextForSelection={(selectedItem) => {
+              rowTextForSelection={selectedItem => {
                 return selectedItem.city_name;
-              }} />
+              }}
+            />
           </View>
           <AppInput
-            placeholder={"Адрес"}
+            placeholder={'Адрес'}
             value={street}
             style={styles.inputContainer}
-            onChangeText={(e) => onChangeTextFunc(e, setStreet)}
+            onChangeText={e => onChangeTextFunc(e, setStreet)}
           />
           <View>
-            <Text style={[globalStyles.titleText, globalStyles.titleTextSmall4, styles.inputBigText]}>Про магазин</Text>
+            <Text
+              style={[
+                globalStyles.titleText,
+                globalStyles.titleTextSmall4,
+                styles.inputBigText,
+              ]}>
+              Про магазин
+            </Text>
             <AppInput
               style={styles.inputBig}
-              onChangeText={(e) => onChangeTextFunc(e, setProShop)}
+              onChangeText={e => onChangeTextFunc(e, setProShop)}
               value={proShop}
               editable
               numberOfLines={5}
@@ -210,7 +232,7 @@ export const CreateShopScreen = ({ navigation, route }) => {
           </View>
         </View>
         <AppButton
-          text={"Сохранить"}
+          text={'Сохранить'}
           stylesContainer={styles.btnStyle}
           onPress={onPressFunc}
         />

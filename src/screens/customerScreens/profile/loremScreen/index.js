@@ -1,1 +1,1 @@
-export {LoremScreen} from './LoremScreen'
+export {LoremScreen} from './LoremScreen';

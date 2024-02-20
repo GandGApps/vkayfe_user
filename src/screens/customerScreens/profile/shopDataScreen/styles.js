@@ -1,14 +1,13 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { globalHeight, globalWidth } from "../../../../components";
-import { Colors } from "../../../../constants";
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight, globalWidth} from '../../../../components';
+import {Colors} from '../../../../constants';
 
-
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   headerContainer: {
     paddingVertical: globalHeight(21),
@@ -17,24 +16,23 @@ export const styles = StyleSheet.create({
     borderColor: Colors.borderGray,
   },
   shopNameText: {
-
     fontSize: globalWidth(25),
     lineHeight: globalHeight(35),
     marginLeft: globalWidth(20),
   },
   placeContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop:globalHeight(11),
-    marginBottom:globalHeight(17)
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: globalHeight(11),
+    marginBottom: globalHeight(17),
   },
 
   placeIcon: {
     width: globalWidth(12),
     height: globalHeight(16),
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginRight: globalWidth(9),
-    tintColor:'#0BC5BA'
+    tintColor: '#0BC5BA',
   },
   IdText: {
     marginLeft: globalWidth(20),
@@ -45,34 +43,33 @@ export const styles = StyleSheet.create({
   },
   scrollView: {
     paddingHorizontal: globalWidth(20),
-    flexGrow:1
+    flexGrow: 1,
   },
   proText: {
     marginTop: globalHeight(26),
   },
-  dataText:{
-
+  dataText: {
     marginBottom: globalHeight(7),
   },
-  buttonRedContainer:{
-    backgroundColor:Colors.red,
-    width:globalWidth(170),
+  buttonRedContainer: {
+    backgroundColor: Colors.red,
+    width: globalWidth(170),
   },
-  buttonWhiteText:{
-    color:Colors.black
+  buttonWhiteText: {
+    color: Colors.black,
   },
-  buttonWhiteContainer:{
-    backgroundColor:'transparent',
-    borderWidth:1,
-    borderColor:Colors.titleColor,
-    width:globalWidth(170),
+  buttonWhiteContainer: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: Colors.titleColor,
+    width: globalWidth(170),
   },
-  footerContainer:{
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-around',
-    paddingVertical:globalHeight(20),
-    borderTopWidth:1,
-    borderTopColor:Colors.borderGray
-  }
+  footerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: globalHeight(20),
+    borderTopWidth: 1,
+    borderTopColor: Colors.borderGray,
+  },
 });

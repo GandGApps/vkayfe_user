@@ -1,9 +1,9 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { globalHeight, globalWidth } from "../../dimensions";
-import { Colors } from "../../../constants";
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight, globalWidth} from '../../dimensions';
+import {Colors} from '../../../constants';
 
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   modalContent: {
@@ -20,14 +20,14 @@ export const styles = StyleSheet.create({
     paddingVertical: globalHeight(20),
   },
   back_button_View: {
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     marginRight: globalWidth(20),
-    marginBottom:globalHeight(10)
+    marginBottom: globalHeight(10),
   },
   back_button: {
     width: globalHeight(20),
     height: globalHeight(20),
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   shopIcon: {
     width: globalWidth(50),
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: globalWidth(5),
   },
   containerHeaderText: {
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   magazine: {
     fontSize: globalHeight(12),
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
   placeIcon: {
     width: globalWidth(7),
     height: globalHeight(10),
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginRight: globalWidth(5),
   },
   placeText: {
@@ -54,21 +54,21 @@ export const styles = StyleSheet.create({
     marginBottom: globalHeight(8),
   },
   containerRight: {
-    position: "absolute",
+    position: 'absolute',
     right: globalWidth(10),
     top: globalHeight(12),
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
   },
   headerShop: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderColor: Colors.borderGray,
-    position: "relative",
+    position: 'relative',
   },
-  contentShop:{
-    width:'70%'
-  }
+  contentShop: {
+    width: '70%',
+  },
 });

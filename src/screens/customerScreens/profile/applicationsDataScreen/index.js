@@ -1,1 +1,1 @@
-export {ApplicationsDataScreen} from './AplicationsDataScreen'
+export {ApplicationsDataScreen} from './AplicationsDataScreen';

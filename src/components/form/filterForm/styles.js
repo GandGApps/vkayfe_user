@@ -1,10 +1,9 @@
-import { Colors } from "../../../constants";
-import { StyleSheet, Dimensions } from "react-native";
-import { globalHeight, globalWidth } from "../../index";
+import {Colors} from '../../../constants';
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight, globalWidth} from '../../index';
 
-
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   filterCategoryContainer: {

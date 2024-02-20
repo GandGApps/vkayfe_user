@@ -1,10 +1,10 @@
-import {Platform, StyleSheet} from "react-native";
-import { Colors } from "../colors";
-import { globalHeight, globalWidth } from "../../components";
+import {Platform, StyleSheet} from 'react-native';
+import {Colors} from '../colors';
+import {globalHeight, globalWidth} from '../../components';
 import {NativeModules} from 'react-native';
 
 // ...
-import { getStatusBarHeight } from "react-native-status-bar-height";
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const {StatusBarManager} = NativeModules;
 const height = StatusBarManager.HEIGHT;
@@ -12,22 +12,21 @@ const height = StatusBarManager.HEIGHT;
 export const globalStyles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    backgroundColor:'white',
+    backgroundColor: 'white',
   },
   container: {
     flex: 1,
-    paddingTop:Platform.OS === 'ios' ? globalWidth(10) : 0
-
+    paddingTop: Platform.OS === 'ios' ? globalWidth(10) : 0,
   },
   flexCenter: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   titleText: {
     color: Colors.titleColor,
-    fontWeight: "500",
+    fontWeight: '500',
     fontSize: globalWidth(18),
-    textAlign: "center",
+    textAlign: 'center',
     lineHeight: globalHeight(30),
   },
   titleTextBig: {
@@ -37,28 +36,28 @@ export const globalStyles = StyleSheet.create({
     fontSize: globalWidth(16),
   },
   textAlignLeft: {
-    textAlign: "left",
+    textAlign: 'left',
   },
   textAlignRight: {
-    textAlign: "right",
+    textAlign: 'right',
   },
   titleTextSmall4: {
     fontSize: globalWidth(14),
   },
-  weightBold:{
-    fontWeight: "600",
+  weightBold: {
+    fontWeight: '600',
   },
-  weightLight:{
-    fontWeight: "400",
+  weightLight: {
+    fontWeight: '400',
   },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  error:{
-    marginLeft:20,
-    fontSize:12,
-    marginVertical:5,
-    color:Colors.red
-  }
+  error: {
+    marginLeft: 20,
+    fontSize: 12,
+    marginVertical: 5,
+    color: Colors.red,
+  },
 });

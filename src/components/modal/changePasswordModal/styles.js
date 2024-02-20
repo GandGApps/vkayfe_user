@@ -1,15 +1,15 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { globalHeight, globalWidth } from "../../dimensions";
-import { Colors } from "../../../constants";
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight, globalWidth} from '../../dimensions';
+import {Colors} from '../../../constants';
 
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   modalContainer: {
     margin: 0,
     padding: 0,
-    alignItems: "center",
+    alignItems: 'center',
   },
   modalContent: {
     elevation: 10,
@@ -29,16 +29,16 @@ export const styles = StyleSheet.create({
     width: width - globalWidth(120),
   },
   back_button_View: {
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     marginRight: globalWidth(20),
   },
   back_button: {
     width: globalHeight(20),
     height: globalHeight(20),
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   content: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   error: {
     marginLeft: 20,

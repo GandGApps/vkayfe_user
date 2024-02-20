@@ -1,7 +1,6 @@
-import { SET_CUSTOMER, SET_CUSTOMER_DELETE } from "../constants";
+import {SET_CUSTOMER, SET_CUSTOMER_DELETE} from '../constants';
 
-const customer = {
-};
+const customer = {};
 
 const customerReducer = (state = customer, action) => {
   switch (action.type) {
@@ -11,7 +10,7 @@ const customerReducer = (state = customer, action) => {
         ...action.payload,
       };
     case SET_CUSTOMER_DELETE:
-      return {}
+      return {};
     default:
       break;
   }

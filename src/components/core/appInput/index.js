@@ -1,15 +1,31 @@
-import React from "react";
-import { styles } from "./styles";
-import { TextInput } from "react-native";
-import { Colors, globalStyles } from "../../../constants";
+import React from 'react';
+import {styles} from './styles';
+import {TextInput} from 'react-native';
+import {Colors, globalStyles} from '../../../constants';
 
-export function AppInput({ placeholder, style, onChangeText, secureTextEntry, numberOfLines, maxLength, editable, multiline, keyboardType, defaultValue, value, }) {
-
+export function AppInput({
+  placeholder,
+  style,
+  onChangeText,
+  secureTextEntry,
+  numberOfLines,
+  maxLength,
+  editable,
+  multiline,
+  keyboardType,
+  defaultValue,
+  value,
+}) {
   return (
     <TextInput
       placeholder={placeholder}
       placeholderTextColor={Colors.gray}
-      style={[globalStyles.weightLight,globalStyles.titleTextSmall,styles.input, { ...style }]}
+      style={[
+        globalStyles.weightLight,
+        globalStyles.titleTextSmall,
+        styles.input,
+        {...style},
+      ]}
       onChangeText={onChangeText}
       secureTextEntry={secureTextEntry}
       numberOfLines={numberOfLines}

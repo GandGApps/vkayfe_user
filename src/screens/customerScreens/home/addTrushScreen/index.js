@@ -1,1 +1,1 @@
-export {AddTrushScreen} from './AddTrushScreen'
+export {AddTrushScreen} from './AddTrushScreen';

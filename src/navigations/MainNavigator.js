@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Colors } from "../constants";
-import StackNavigation from "./StackNavigation";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import * as React from 'react';
+import {Colors} from '../constants';
+import StackNavigation from './StackNavigation';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 
 const MainNavigator = () => {
   return (

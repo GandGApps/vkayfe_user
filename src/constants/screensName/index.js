@@ -1,2 +1,2 @@
-export * from "./AuthScreensName";
-export * from "./customerScreensName";
+export * from './AuthScreensName';
+export * from './customerScreensName';

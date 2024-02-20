@@ -1,17 +1,16 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../../constants";
-import { globalHeight, globalWidth } from "../../index";
+import {StyleSheet, Dimensions} from 'react-native';
+import {Colors} from '../../../constants';
+import {globalHeight, globalWidth} from '../../index';
 
-
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
-  logoStyle:{
+  logoStyle: {
     width: width,
-    height:height/2.4
+    height: height / 2.4,
   },
-  contImg:{
-    position:'relative'
-  }
+  contImg: {
+    position: 'relative',
+  },
 });

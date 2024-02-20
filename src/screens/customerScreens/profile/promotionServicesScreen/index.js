@@ -1,1 +1,1 @@
-export  {PromotionServicesScreen} from './PromotionServicesScreen'
+export {PromotionServicesScreen} from './PromotionServicesScreen';

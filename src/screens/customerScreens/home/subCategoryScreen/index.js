@@ -1,1 +1,1 @@
-export {SubCategoryScreen} from './SubCategoryScreen'
+export {SubCategoryScreen} from './SubCategoryScreen';

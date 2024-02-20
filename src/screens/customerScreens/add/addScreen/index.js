@@ -1,1 +1,1 @@
-export {AddScreen} from './AddScreen'
+export {AddScreen} from './AddScreen';

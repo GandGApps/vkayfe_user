@@ -1,1 +1,1 @@
-export {FinancialReportDataScreen} from './FinancialReportDataScreen'
+export {FinancialReportDataScreen} from './FinancialReportDataScreen';

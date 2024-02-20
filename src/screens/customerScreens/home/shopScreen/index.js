@@ -1,1 +1,1 @@
-export {ShopScreen} from './ShopScreen'
+export {ShopScreen} from './ShopScreen';

@@ -1,1 +1,1 @@
-export {FilterScreen} from './FilterScreen'
+export {FilterScreen} from './FilterScreen';

@@ -1,21 +1,21 @@
-import { Colors } from "../../../constants";
-import { StyleSheet, Dimensions } from "react-native";
-import { globalHeight, globalWidth } from "../../../components";
+import {Colors} from '../../../constants';
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight, globalWidth} from '../../../components';
 
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   cameraContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: globalHeight(40),
   },
   cameraContent: {
     borderWidth: 1.6,
     borderRadius: 12,
-    alignItems: "center",
+    alignItems: 'center',
     borderColor: Colors.blue,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     width: globalWidth(229),
     height: globalWidth(229),
     backgroundColor: Colors.lightBlue,
@@ -36,8 +36,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: globalWidth(18),
   },
   imageNameContainer: {
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
     marginVertical: globalHeight(15),
   },
   closeIcon: {
@@ -47,12 +47,12 @@ export const styles = StyleSheet.create({
   logoText: {
     color: Colors.gray,
     fontSize: globalHeight(16),
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
     marginRight: globalWidth(12),
   },
   closeContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   inputContainer: {
     marginBottom: globalHeight(35),
@@ -69,36 +69,36 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     paddingBottom: 0,
     marginBottom: globalHeight(50),
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
     height: globalHeight(139),
-    borderRadius:8
+    borderRadius: 8,
   },
   inputBigText: {
     marginLeft: globalWidth(20),
     marginBottom: globalHeight(3),
-    textAlign:'left'
+    textAlign: 'left',
   },
   containerImg: {
     width: globalWidth(229),
     height: globalWidth(229),
-    borderRadius:12
+    borderRadius: 12,
   },
   choosePhotoText: {
     color: Colors.black,
     marginTop: 7,
   },
   btnStyleDrop: {
-    width: width-globalWidth(40),
-    backgroundColor: "transparent",
+    width: width - globalWidth(40),
+    backgroundColor: 'transparent',
     borderBottomWidth: 1,
     borderRadius: 6,
-    borderColor:Colors.borderGray,
+    borderColor: Colors.borderGray,
   },
-  dropCont:{
-    alignItems:'center',
+  dropCont: {
+    alignItems: 'center',
     marginBottom: globalHeight(35),
   },
-  backBtn:{
-    marginTop:globalHeight(20)
-  }
+  backBtn: {
+    marginTop: globalHeight(20),
+  },
 });

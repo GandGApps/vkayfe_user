@@ -1,1 +1,1 @@
-export {EditMyDetailsScreen} from './EditMyDetailsScreen'
+export {EditMyDetailsScreen} from './EditMyDetailsScreen';

@@ -1,7 +1,7 @@
-import * as React from "react";
-import TabNavigation from "./TabNavigation";
-import AuthNavigation from "./AuthNavigation";
-import {createStackNavigator} from "@react-navigation/stack";
+import * as React from 'react';
+import TabNavigation from './TabNavigation';
+import AuthNavigation from './AuthNavigation';
+import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
@@ -11,8 +11,8 @@ function StackNavigation() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="AuthNavigation" component={AuthNavigation}/>
-      <Stack.Screen name="TabNavigation" component={TabNavigation}/>
+      <Stack.Screen name="AuthNavigation" component={AuthNavigation} />
+      <Stack.Screen name="TabNavigation" component={TabNavigation} />
     </Stack.Navigator>
   );
 }

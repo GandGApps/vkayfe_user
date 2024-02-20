@@ -1,1 +1,1 @@
-export {MessagesScreen} from './MessagesScreen'
+export {MessagesScreen} from './MessagesScreen';

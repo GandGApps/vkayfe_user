@@ -1,1 +1,1 @@
-export {SaveEditProfileScreen} from './SaveEditProfileScreen'
+export {SaveEditProfileScreen} from './SaveEditProfileScreen';

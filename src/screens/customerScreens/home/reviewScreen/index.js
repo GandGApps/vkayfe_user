@@ -1,1 +1,1 @@
-export {ReviewScreen} from './ReviewScreen'
+export {ReviewScreen} from './ReviewScreen';
