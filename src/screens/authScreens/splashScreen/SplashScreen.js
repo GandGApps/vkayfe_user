@@ -62,14 +62,14 @@ export const SplashScreen = ({navigation}) => {
   };
 
   const axiosFunc = async store => {
-    console.log('fff');
+    // console.log('fff');
     try {
       const response = await axiosInstance.get('/users/profile/buyer');
       dispatch({
         type: SET_CUSTOMER,
         payload: response.data.user_data.user,
       });
-      console.log(response);
+      // console.log(response);
       if (store) {
         navigation.replace('TabNavigation');
       } else {
@@ -77,7 +77,7 @@ export const SplashScreen = ({navigation}) => {
       }
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       setLoading(false);
     }
   };

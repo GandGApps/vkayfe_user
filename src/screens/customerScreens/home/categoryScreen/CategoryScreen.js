@@ -36,7 +36,7 @@ export const CategoryScreen = ({navigation, route}) => {
       setCategory(response.data.categories);
       allGoodsFunc(response.data.categories);
     } catch (e) {
-      console.log(e.response);
+      // console.log(e.response);
     }
   };
 

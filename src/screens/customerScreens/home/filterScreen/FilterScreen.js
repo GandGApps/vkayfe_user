@@ -124,7 +124,7 @@ export const FilterScreen = ({navigation, route}) => {
       return data;
     } catch (e) {
       setCategory(item);
-      console.log(e, 'fffff');
+      // console.log(e, 'fffff');
     }
   };
 

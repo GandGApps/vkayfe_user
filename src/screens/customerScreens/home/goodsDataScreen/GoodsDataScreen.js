@@ -47,14 +47,14 @@ export const GoodsDataScreen = ({navigation, route}) => {
       setCount(`${+count + 1}`);
     }
   };
-  console.log(data, img);
+  // console.log(data, img);
   const minNumFunc = async () => {
     if (count > `${1}`) {
       setCount(`${+count - 1}`);
     }
   };
   const addFavoriteFunc = async () => {
-    console.log(data);
+    // console.log(data);
     const arr = data;
     if (!arr.is_favorite) {
       try {
@@ -69,22 +69,22 @@ export const GoodsDataScreen = ({navigation, route}) => {
         arr.is_favorite = true;
         setData({...arr});
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     } else {
       try {
         const response = await axiosInstance.delete(
           `/favorites?good_id=${arr._id}`,
         );
-        console.log(`/favorites?good_id=${arr._id}`, response);
+        // console.log(`/favorites?good_id=${arr._id}`, response);
 
         arr.is_favorite = false;
         setData({...arr});
       } catch (e) {
-        console.log(e, 'fff');
+        // console.log(e, 'fff');
       }
     }
-    console.log(arr);
+    // console.log(arr);
     setData({...arr});
   };
   const trashFunc = async () => {
@@ -97,10 +97,10 @@ export const GoodsDataScreen = ({navigation, route}) => {
       navigation.navigate(AddTrushName);
     } catch (e) {
       setError(e?.response?.data?.error);
-      console.log(e);
+      // console.log(e);
     }
   };
-  console.log(data);
+  // console.log(data);
   return (
     <ScrollView
       contentContainerStyle={globalStyles.scrollContainer}

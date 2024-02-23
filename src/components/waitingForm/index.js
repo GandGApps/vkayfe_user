@@ -33,7 +33,7 @@ export function WaitingForm({data, add, addFunc}) {
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      console.log(e);
+      // console.log(e);
     }
   };
 

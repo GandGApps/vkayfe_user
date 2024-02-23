@@ -15,7 +15,7 @@ export const GoodsImgScreen = ({navigation, route}) => {
   const data = route.params.data;
   const [fullData, setFullData] = useState(route.params.fullData);
   const [index, setIndex] = useState(1);
-  console.log(fullData);
+  // console.log(fullData);
   const addFavoriteFunc = async () => {
     const arr = fullData;
     if (!arr.is_favorite) {

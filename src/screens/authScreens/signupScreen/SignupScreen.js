@@ -129,7 +129,7 @@ export const SignupScreen = ({navigation, route}) => {
       navigation.replace(nav, {data: pendingData});
       setLoading(false);
     } catch (e) {
-      console.log(e, 'e');
+      // console.log(e, 'e');
       setLoading(false);
     }
   };

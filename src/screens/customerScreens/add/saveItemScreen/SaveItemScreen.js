@@ -15,7 +15,7 @@ export const SaveItemScreen = ({navigation, route}) => {
       const response = await axiosInstance.post('/carts/delete', obj);
       navigation.navigate(AddScreenName, {st: true});
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

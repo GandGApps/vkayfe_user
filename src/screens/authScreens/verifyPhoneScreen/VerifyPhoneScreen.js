@@ -60,7 +60,7 @@ async function setState() {
   try {
     await AsyncStorage.setItem('state', JSON.stringify(true));
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     throw error;
   }
 }
@@ -89,7 +89,7 @@ export const VerifyPhoneScreen = ({navigation, route}) => {
           '/users/register/buyer/confirm-number',
           data,
         );
-        console.log(response?.data.token);
+        // console.log(response?.data.token);
         await setTokens(response?.data.token);
         await setState();
         dispatch({
@@ -99,7 +99,7 @@ export const VerifyPhoneScreen = ({navigation, route}) => {
         await codeChecked();
       } catch (e) {
         setLoading(false);
-        console.log(e);
+        // console.log(e);
         setError('Неверный код');
       }
     } else {

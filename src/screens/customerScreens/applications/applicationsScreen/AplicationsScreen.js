@@ -40,20 +40,20 @@ export const AplicationsScreen = ({navigation}) => {
   const getStore = async () => {
     try {
       const response = await axiosInstance.get('/favorites');
-      console.log(response.data, 'f            console.log(response.data)\n');
+      // console.log(response.data, 'f            console.log(response.data)\n');
       setGood(response.data);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
   const getShop = async () => {
     try {
       const response = await axiosInstance.get('/favorites/stores');
-      console.log(response.data);
+      // console.log(response.data);
       setStore(response.data);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

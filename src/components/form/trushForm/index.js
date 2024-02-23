@@ -37,7 +37,6 @@ export function TrushForm({item, index, navigation, setAllCount, allCount}) {
           setAllCount(allCount - price);
         }
       } catch (e) {
-        console.log(e);
         if (e?.response?.data?.error) {
           Alert.alert('', e?.response?.data?.error);
         }
@@ -48,7 +47,7 @@ export function TrushForm({item, index, navigation, setAllCount, allCount}) {
         setCount(`${+count + 1}`);
         setAllCount(allCount + price);
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e?.response?.data?.error) {
           Alert.alert('', e?.response?.data?.error);
         }

@@ -46,6 +46,8 @@ export const MapsScreen = ({navigation}) => {
     lon: 37.618423,
     zoom: 7,
   });
+  const [selectedCity, setSelectedCity] = useState({});
+
 
   useEffect(() => {
     if (countryText.length > 2) {
@@ -73,11 +75,15 @@ export const MapsScreen = ({navigation}) => {
     set(e);
   };
   const searchDataYandex = st => {
+    let searchQuery = countryText;
+    if (countryText) {
+      searchQuery += ' ' + countryText;
+    }
+    searchQuery += ' ' + addressText;
+  
     axios
       .get(
-        `https://geocode-maps.yandex.ru/1.x?apikey=da4e12cb-3403-409e-948c-c34e4dfaafaa&geocode=${
-          countryText + ' ' + addressText
-        }&format=json`,
+        `https://geocode-maps.yandex.ru/1.x?apikey=da4e12cb-3403-409e-948c-c34e4dfaafaa&geocode=${searchQuery}&format=json`,
       )
       .then(res => {
         if (
@@ -92,9 +98,9 @@ export const MapsScreen = ({navigation}) => {
       .catch(e => {
         setCountry([]);
         Alert.alert('', 'не найдено');
-        console.log(e, 'ff');
       });
   };
+  
 
   const autocomplete = (data, st) => {
     setFlag(true);
@@ -116,7 +122,6 @@ export const MapsScreen = ({navigation}) => {
       usersGet(location);
     } catch (e) {
       setLoading(false);
-      console.log(e, 'fff');
     }
   };
   const usersGet = async () => {
@@ -130,7 +135,7 @@ export const MapsScreen = ({navigation}) => {
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      console.log(e, 'ff');
+      // console.log(e, 'ff');
     }
   };
   const addressFunc = (it, state) => {
@@ -154,8 +159,10 @@ export const MapsScreen = ({navigation}) => {
     });
   };
 
+  console.log(selectedCity.name,selectedCountry.address)
+
   const finish = async st => {
-    if (selectedCountry.name && selectedCountry.address) {
+    if (selectedCity.name && selectedCountry.address) {
       await axiosFunc(location);
     }
   };
@@ -172,14 +179,15 @@ export const MapsScreen = ({navigation}) => {
       zoom: 5,
       name: it.GeoObject.name,
     });
-    setSelectedCountry({
-      ...selectedCountry,
+    setSelectedCity({
       lat: +stringArray[2],
       lon: +stringArray[0],
       zoom: 5,
       name: it.GeoObject.name,
     });
+    setAddressText(''); // Сбросить адрес
   };
+  
 
   return (
     <View

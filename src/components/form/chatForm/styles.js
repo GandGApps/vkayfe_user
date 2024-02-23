@@ -21,6 +21,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: globalWidth(25),
     top: globalWidth(7),
-    zIndex: 10,
+    zIndex: 100,
   },
 });

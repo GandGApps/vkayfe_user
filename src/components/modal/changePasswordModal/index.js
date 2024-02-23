@@ -44,7 +44,7 @@ export function ChangePasswordModal(props) {
     } catch (e) {
       props.loadingFunc(false);
       props.modalFunc(true);
-      console.log(e);
+      // console.log(e);
     }
   };
 

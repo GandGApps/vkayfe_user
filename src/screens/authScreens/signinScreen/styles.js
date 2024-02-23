@@ -60,7 +60,6 @@ export const styles = StyleSheet.create({
     width:
       Platform.OS === 'ios' ? width - globalWidth(55) : width - globalWidth(65),
     justifyContent: 'center',
-
     flexWrap: 'wrap',
   },
   formHeader: {

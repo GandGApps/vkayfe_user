@@ -119,7 +119,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 10,
     left: globalWidth(0),
-    bottom: globalHeight(15),
+    bottom: globalHeight(10),
     tintColor: '#0BC5BA',
   },
   viewSearch: {

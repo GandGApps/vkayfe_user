@@ -58,12 +58,12 @@ export const SignIn = ({navigation}) => {
         '/users/register/buyer/call',
         data,
       );
-      console.log(response);
+      // console.log(response);
       navigation.navigate(VerifyPhoneName, {phone});
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      console.log(e);
+      // console.log(e);
     }
   };
   const onPressFunc = () => {

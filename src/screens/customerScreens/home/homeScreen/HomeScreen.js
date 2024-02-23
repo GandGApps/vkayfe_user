@@ -398,7 +398,7 @@ export const HomeScreen = ({navigation}) => {
               <View>
                 <View style={styles.headerTextContainer}>
                   <Image
-                    source={{uri: BaseUrl + '/' + banner}}
+                    source={{uri:banner}}
                     style={styles.mask}
                   />
                 </View>

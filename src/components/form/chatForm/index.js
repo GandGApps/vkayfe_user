@@ -4,6 +4,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {globalStyles, MessagesName} from '../../../constants';
 
 export const ChatForm = ({item, navigation, index}) => {
+
   return (
     <TouchableOpacity
       style={styles.chatContainer}

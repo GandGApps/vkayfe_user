@@ -60,4 +60,21 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 5,
     color: Colors.red,
   },
+  messageContainer: {
+ 
+    marginBottom: 5,
+    color: 'white',
+    padding: "1%",
+    position: 'relative'
+
+  },
+  messageText: {
+    fontSize: 16,
+
+  },
+  timeText: {
+    color: '#383838',
+    marginTop: 5,
+    fontSize: 12,
+  },
 });

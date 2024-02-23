@@ -126,6 +126,8 @@ export const AddScreen = ({navigation, route}) => {
     });
   };
 
+
+  console.log('addressAll',addressAll)
   const startDataYandex = () => {
     axios
       .get(
@@ -137,7 +139,7 @@ export const AddScreen = ({navigation, route}) => {
         );
       })
       .catch(e => {
-        console.log(e, "ff,'fffff");
+        // console.log(e, "ff,'fffff");
       });
   };
 
@@ -157,7 +159,7 @@ export const AddScreen = ({navigation, route}) => {
   }, [addressAll]);
 
   const searchDataYandex = st => {
-    console.log(st);
+    console.log( 'st',st);
     axios
       .get(
         `https://geocode-maps.yandex.ru/1.x?apikey=da4e12cb-3403-409e-948c-c34e4dfaafaa&geocode=${st}&format=json`,
@@ -181,12 +183,12 @@ export const AddScreen = ({navigation, route}) => {
           )
           .then(res => {
             let data = res.data.routes[0].legs[0];
-            console.log(
-              data.distance,
-              userPlace,
-              loc,
-              Math.floor(data.distance.value / 1000),
-            );
+            // console.log(
+            //   data.distance,
+            //   userPlace,
+            //   loc,
+            //   Math.floor(data.distance.value / 1000),
+            // );
             // const k = +data.distance.text.match(/\d+/)[0];
             const k = Math.ceil(data.distance.value / 1000);
             setKm(k);
@@ -211,22 +213,23 @@ export const AddScreen = ({navigation, route}) => {
           })
           .catch(e => {
             Alert.alert('', 'не найдено');
-            console.log(e, 'ff');
+            // console.log(e, 'ff');
           });
       })
       .catch(e => {
         Alert.alert('', 'не найдено');
-        console.log(e, 'ff');
+        // console.log(e, 'ff');
       });
   };
 
   const getValue = async () => {
     try {
       const response = await axiosInstance.post('/orders/for_payment');
+      console.log('get value ', response.data);
       setValue(response.data.full_amount.$numberDecimal);
       return response.data.full_amount.$numberDecimal;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
   const axiosFunc = async () => {
@@ -253,6 +256,9 @@ export const AddScreen = ({navigation, route}) => {
         data.postcard = postcard;
       }
       const response = await axiosInstance.post('/orders', data);
+      console.log('response', response.data);
+      console.log('DATA', data);
+
       const value = await getValue();
       paymentFunc(value);
       // navigation.navigate(HomeScreenName)
@@ -262,7 +268,7 @@ export const AddScreen = ({navigation, route}) => {
       if (e?.response?.data?.message) {
         setError(e?.response?.data?.message);
       }
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -271,9 +277,12 @@ export const AddScreen = ({navigation, route}) => {
       const response = await axiosInstance.post('/orders/payment', {
         value: value,
       });
+      console.log('payment func', value);
+      console.log('payment func', response.data);
+
       setUrl(response.data.data);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -297,7 +306,7 @@ export const AddScreen = ({navigation, route}) => {
       const response = await axiosInstance.get('/goods/banner');
       setBanner(response.data.banner);
     } catch (e) {
-      console.log(e, 'banner');
+      // console.log(e, 'banner');
     }
   };
 
@@ -311,7 +320,7 @@ export const AddScreen = ({navigation, route}) => {
         setPromoText('Неверный промокод');
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -346,7 +355,7 @@ export const AddScreen = ({navigation, route}) => {
       }
     } catch (e) {
       setLoading(false);
-      console.log(e, 'fff');
+      // console.log(e, 'fff');
     }
   };
 
@@ -359,7 +368,7 @@ export const AddScreen = ({navigation, route}) => {
       try {
         const response = axiosInstance.post('/orders/confirm');
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
       navigation.goBack();
     } else if (
@@ -781,10 +790,17 @@ export const AddScreen = ({navigation, route}) => {
               <View
                 style={{
                   flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
                   marginVertical: globalHeight(20),
                 }}>
+                <Text
+                  style={[
+                    globalStyles.titleText,
+                    globalStyles.titleTextSmall,
+                    globalStyles.textAlignLeft,
+                    styles.textCont,
+                  ]}>
+                  Карта
+                </Text>
                 <YaMap
                   initialRegion={location}
                   zoomGesturesEnabled={false}
@@ -793,6 +809,7 @@ export const AddScreen = ({navigation, route}) => {
                   mapType={'vector'}
                   style={{
                     width: '100%',
+                    marginHorizontal: '10%',
                     height: height / 2,
                   }}>
                   {points.length ? (

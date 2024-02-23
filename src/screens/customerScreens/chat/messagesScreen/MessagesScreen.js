@@ -100,6 +100,8 @@ export const MessagesScreen = ({navigation, route}) => {
       socketNew.emit('sendMessage', {text: mess});
     }
   };
+
+
   const ChatsFunc = () => {
     return chat.map((item, index) => {
       return (
@@ -158,19 +160,19 @@ export const MessagesScreen = ({navigation, route}) => {
                   }}
                   source={{uri: BaseUrl + item.text}}
                   style={styles.imgMsg}
+                  
                 />
               </TouchableOpacity>
             ) : (
-              <Text
-                style={[
-                  globalStyles.titleText,
-                  globalStyles.titleTextSmall,
-                  globalStyles.weightLight,
-                  styles.placeholderText,
-                  {color: 'white'},
-                ]}>
+              <View style={globalStyles.messageContainer}>
+              <Text style={[globalStyles.weightLight, globalStyles.titleTextBig, { color: "white" }]}>
                 {item.text}
               </Text>
+              <Text style={[globalStyles.timeText, globalStyles.weightLight, { display: 'flex', justifyContent : 'flex-end', 'textAlign' : 'right' , color : 'black'}]}>
+              {item.time.slice(3)}               </Text>
+            </View>
+            
+            
             )}
           </View>
         </View>

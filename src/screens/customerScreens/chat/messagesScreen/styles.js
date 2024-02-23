@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   placeHolderImageViewText: {
     marginHorizontal: globalWidth(10),
     paddingHorizontal: globalWidth(4),
-    marginVertical: globalHeight(5),
+    marginVertical: globalHeight(10),
 
     borderRadius: 8,
   },
@@ -33,29 +33,31 @@ export const styles = StyleSheet.create({
   chatPlusImg: {
     width: globalWidth(25),
     height: globalWidth(25),
-    marginHorizontal: globalWidth(5),
+    marginHorizontal: globalWidth(13),
   },
   chatIcon: {
     width: globalWidth(25),
     height: globalWidth(25),
     resizeMode: 'contain',
-    marginLeft: globalWidth(10),
+    marginLeft: globalWidth(20),
   },
   chatInputView: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: globalHeight(10),
+    marginBottom: globalHeight(25),
   },
   textInputChat: {
     backgroundColor: '#F7F7FC',
-    width: '80%',
+    width: '70%',
     borderWidth: 1,
     borderRadius: 8,
     color: 'black',
     marginHorizontal: 0,
     paddingHorizontal: 10,
   },
-
+  imageView: {
+    backgroundOverlay: 'rgba(0, 0, 0, 0)' // Прозрачный фон
+  },
   placeholderText: {
     marginVertical: globalHeight(5),
     marginHorizontal: globalHeight(5),
@@ -68,7 +70,11 @@ export const styles = StyleSheet.create({
   imgMsg: {
     width: globalWidth(200),
     height: globalWidth(200),
-    resizeMode: 'contain',
+    backgroundColor: 'transparent',
+    overlayColor: 'transparent',
+    borderRadius: 8,
+
+
   },
   placeHolderImageViewImg: {
     marginHorizontal: globalWidth(10),

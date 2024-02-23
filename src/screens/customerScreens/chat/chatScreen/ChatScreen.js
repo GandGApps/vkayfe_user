@@ -30,13 +30,13 @@ export const ChatScreen = ({navigation}) => {
   const axiosFunc = async () => {
     try {
       const response = await axiosInstance.get('/chat/im');
-      console.log(response);
+      // console.log(response.data);
       const filterArr = response.data.filter(it => it.priority === 'admin');
       setData(response.data);
       changeStateFunc('За сегодня', response.data);
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       setLoading(false);
     }
   };
@@ -61,6 +61,8 @@ export const ChatScreen = ({navigation}) => {
     }
     setActive(st);
   };
+
+  //  console.log('dataState',dataState)
 
   return (
     <View

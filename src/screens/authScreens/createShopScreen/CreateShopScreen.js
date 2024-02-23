@@ -46,7 +46,6 @@ export const CreateShopScreen = ({navigation, route}) => {
       const response = await axiosInstance.get('/cities/active');
       setCountry(response?.data?.cities);
     } catch (e) {
-      console.log(e);
     }
   };
 
@@ -89,7 +88,6 @@ export const CreateShopScreen = ({navigation, route}) => {
           navigation.replace('TabNavigation');
           setLoading(false);
         } catch (e) {
-          console.log(e);
           setLoading(false);
         }
       } else {
@@ -115,7 +113,6 @@ export const CreateShopScreen = ({navigation, route}) => {
           navigation.replace('TabNavigation');
           setLoading(false);
         } catch (e) {
-          console.log(e);
           setLoading(false);
         }
       }
@@ -131,7 +128,7 @@ export const CreateShopScreen = ({navigation, route}) => {
         payload: arr,
       });
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

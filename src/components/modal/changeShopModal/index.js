@@ -42,7 +42,7 @@ export function ChangeShopModal(props) {
     } catch (e) {
       props.loadingFunc(false);
       props.modalFunc(true);
-      console.log(e);
+      // console.log(e);
     }
   };
   return (
