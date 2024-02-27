@@ -44,6 +44,7 @@ export const MessagesScreen = ({navigation, route}) => {
   const url = 'ws://194.58.121.218:3001/chat/messages';
   const url1 = 'ws://194.58.121.218:3001/chat/user';
 
+
   useEffect(() => {
     setTokFunc();
   }, []);
@@ -55,7 +56,7 @@ export const MessagesScreen = ({navigation, route}) => {
     socketConnectFunc(token);
   };
   const socketConnectFunc = token => {
-    socketNew = io(state ? url : url1, {
+    socketNew = io(url1, {
       query: {
         token: token,
         seller_id: user.user_id,

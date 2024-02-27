@@ -21,6 +21,7 @@ import {
   ChooseImage,
   FormCategory,
   globalHeight,
+  globalWidth,
   Loading,
   MultipleImage,
   TrushForm,
@@ -55,11 +56,7 @@ export const AddScreen = ({navigation, route}) => {
   const [promoFlag, setPromoFlag] = useState(false);
   const [promoText, setPromoText] = useState('');
   const [banner, setBanner] = useState('');
-  const [location, setLocation] = useState({
-    lat: 55.751244,
-    lon: 37.618423,
-    zoom: 7,
-  });
+  const [location, setLocation] = useState(null);
   const [locationEnd, setLocationEnd] = useState(null);
   const [points, setPoints] = useState([]);
   const [delivery, setDelivery] = useState(0);
@@ -114,7 +111,7 @@ export const AddScreen = ({navigation, route}) => {
     setLocation({
       lat: +stringArray[2],
       lon: +stringArray[0],
-      zoom: 9,
+      zoom: 10,
       name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2]
         .name,
       address:
@@ -126,8 +123,6 @@ export const AddScreen = ({navigation, route}) => {
     });
   };
 
-
-  console.log('addressAll',addressAll)
   const startDataYandex = () => {
     axios
       .get(
@@ -137,6 +132,7 @@ export const AddScreen = ({navigation, route}) => {
         countryChangeFunc(
           res.data.response.GeoObjectCollection.featureMember[0],
         );
+
       })
       .catch(e => {
         // console.log(e, "ff,'fffff");
@@ -159,7 +155,6 @@ export const AddScreen = ({navigation, route}) => {
   }, [addressAll]);
 
   const searchDataYandex = st => {
-    console.log( 'st',st);
     axios
       .get(
         `https://geocode-maps.yandex.ru/1.x?apikey=da4e12cb-3403-409e-948c-c34e4dfaafaa&geocode=${st}&format=json`,
@@ -177,19 +172,27 @@ export const AddScreen = ({navigation, route}) => {
               ' ' +
               res.data.response.GeoObjectCollection.featureMember[1].GeoObject
                 .name;
+        
+        // Получаем город из адреса
+        const cityFromAddress =
+          res.data.response.GeoObjectCollection.featureMember.length === 1
+            ? res.data.response.GeoObjectCollection.featureMember[0].GeoObject
+                .description
+            : res.data.response.GeoObjectCollection.featureMember[1].GeoObject
+                .description;
+
+        if (!cityFromAddress.includes(store.city)) {
+          // Адрес находится в другом городе
+          Alert.alert('', 'Выбранный адрес находится в другом городе');
+          return;
+        }
+
         axios
           .get(
             `https://maps.googleapis.com/maps/api/directions/json?destination=${loc}&origin=${userPlace}&key=AIzaSyDGnTNMKk7nklAM7Z3dWTV5_JV_auarQVs`,
           )
           .then(res => {
             let data = res.data.routes[0].legs[0];
-            // console.log(
-            //   data.distance,
-            //   userPlace,
-            //   loc,
-            //   Math.floor(data.distance.value / 1000),
-            // );
-            // const k = +data.distance.text.match(/\d+/)[0];
             const k = Math.ceil(data.distance.value / 1000);
             setKm(k);
             let polylineRes = [
@@ -213,14 +216,13 @@ export const AddScreen = ({navigation, route}) => {
           })
           .catch(e => {
             Alert.alert('', 'не найдено');
-            // console.log(e, 'ff');
           });
       })
       .catch(e => {
         Alert.alert('', 'не найдено');
-        // console.log(e, 'ff');
       });
   };
+
 
   const getValue = async () => {
     try {
@@ -379,6 +381,15 @@ export const AddScreen = ({navigation, route}) => {
     }
   };
 
+
+  const [deliveryPrice,setDeliveryPrice] = useState();
+
+useEffect(() => {
+
+  if(km && delivery) {
+    setDeliveryPrice(km * delivery)
+  }
+}, [km,delivery])
   return (
     <View
       style={[
@@ -535,7 +546,7 @@ export const AddScreen = ({navigation, route}) => {
                       globalStyles.textAlignLeft,
                     ]}>
                     Доставка:{' '}
-                    <Text style={[globalStyles.weightBold]}>{delivery} р</Text>{' '}
+                    <Text style={[globalStyles.weightBold]}>{deliveryPrice ? deliveryPrice : delivery } р</Text>{' '}
                   </Text>
                 </View>
                 <View style={styles.cont}>
@@ -801,25 +812,27 @@ export const AddScreen = ({navigation, route}) => {
                   ]}>
                   Карта
                 </Text>
-                <YaMap
+                {location && (
+    <YaMap
                   initialRegion={location}
                   zoomGesturesEnabled={false}
                   scrollGesturesEnabled={false}
                   nightMode={false}
                   mapType={'vector'}
                   style={{
-                    width: '100%',
-                    marginHorizontal: '10%',
+                    marginHorizontal: globalWidth(20),
                     height: height / 2,
                   }}>
                   {points.length ? (
                     <Polyline points={points} strokeColor={'black'} />
                   ) : null}
-                  <Marker point={location} scale={0.02} source={wing} />
+                  <Marker point={location} scale={0.06} source={wing} />
                   {locationEnd ? (
                     <Marker point={locationEnd} scale={0.02} source={wing} />
                   ) : null}
                 </YaMap>
+                )}
+            
               </View>
             </ScrollView>
             <DatePicker
