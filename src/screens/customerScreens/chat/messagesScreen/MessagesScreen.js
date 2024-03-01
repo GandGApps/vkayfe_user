@@ -44,7 +44,6 @@ export const MessagesScreen = ({navigation, route}) => {
   const url = 'ws://194.58.121.218:3001/chat/messages';
   const url1 = 'ws://194.58.121.218:3001/chat/user';
 
-
   useEffect(() => {
     setTokFunc();
   }, []);
@@ -101,7 +100,6 @@ export const MessagesScreen = ({navigation, route}) => {
       socketNew.emit('sendMessage', {text: mess});
     }
   };
-
 
   const ChatsFunc = () => {
     return chat.map((item, index) => {
@@ -161,19 +159,32 @@ export const MessagesScreen = ({navigation, route}) => {
                   }}
                   source={{uri: BaseUrl + item.text}}
                   style={styles.imgMsg}
-                  
                 />
               </TouchableOpacity>
             ) : (
               <View style={globalStyles.messageContainer}>
-              <Text style={[globalStyles.weightLight, globalStyles.titleTextBig, { color: "white" }]}>
-                {item.text}
-              </Text>
-              <Text style={[globalStyles.timeText, globalStyles.weightLight, { display: 'flex', justifyContent : 'flex-end', 'textAlign' : 'right' , color : 'black'}]}>
-              {item.time.slice(3)}               </Text>
-            </View>
-            
-            
+                <Text
+                  style={[
+                    globalStyles.weightLight,
+                    globalStyles.titleTextBig,
+                    {color: 'white'},
+                  ]}>
+                  {item.text}
+                </Text>
+                <Text
+                  style={[
+                    globalStyles.timeText,
+                    globalStyles.weightLight,
+                    {
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      textAlign: 'right',
+                      color: 'black',
+                    },
+                  ]}>
+                  {item.time.slice(3)}{' '}
+                </Text>
+              </View>
             )}
           </View>
         </View>

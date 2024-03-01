@@ -23,4 +23,26 @@ export const styles = StyleSheet.create({
     top: globalWidth(7),
     zIndex: 100,
   },
+  messContainer: {
+    position: 'absolute',
+    right: globalWidth(25),
+    top: globalWidth(50),
+    zIndex: 100,
+  },
+  notNumber: {
+    fontSize: globalWidth(12),
+    fontWeight: '700',
+    color: '#213F50',
+  },
+  notNumberCont: {
+    width: globalWidth(15),
+    height: globalHeight(25),
+    backgroundColor: '#EF52B0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    position: 'absolute',
+    right: globalWidth(20),
+    bottom: globalHeight(30),
+  },
 });

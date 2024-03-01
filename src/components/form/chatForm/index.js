@@ -5,6 +5,10 @@ import {globalStyles, MessagesName} from '../../../constants';
 
 export const ChatForm = ({item, navigation, index}) => {
 
+
+  const time = item.time.slice(0, 5);
+
+
   return (
     <TouchableOpacity
       style={styles.chatContainer}
@@ -21,7 +25,7 @@ export const ChatForm = ({item, navigation, index}) => {
           globalStyles.textAlignLeft,
           styles.name,
         ]}>
-        {item.name}
+        {item.name} 
       </Text>
       <Text
         style={[
@@ -41,9 +45,15 @@ export const ChatForm = ({item, navigation, index}) => {
             globalStyles.titleTextSmall4,
             globalStyles.weightLight,
           ]}>
-          {item.time}
+          {time}
         </Text>
       </View>
+      {item.newMessCount ? (
+                <View style={styles.notNumberCont}>
+                  <Text style={styles.notNumber}>{item.newMessCount}</Text>
+                </View>
+              ) : null}
+      
     </TouchableOpacity>
   );
 };

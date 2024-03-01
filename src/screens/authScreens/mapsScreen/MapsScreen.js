@@ -147,14 +147,14 @@ export const MapsScreen = ({navigation}) => {
       ...location,
       lat: +stringArray[2],
       lon: +stringArray[0],
-      zoom: 12,
+      zoom: 10,
       address: it.GeoObject.name,
     });
     setSelectedCountry({
       ...selectedCountry,
       lat: +stringArray[2],
       lon: +stringArray[0],
-      zoom: 12,
+      zoom: 10,
       address: it.GeoObject.name,
     });
   };

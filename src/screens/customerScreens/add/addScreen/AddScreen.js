@@ -111,7 +111,7 @@ export const AddScreen = ({navigation, route}) => {
     setLocation({
       lat: +stringArray[2],
       lon: +stringArray[0],
-      zoom: 10,
+      zoom: 9,
       name: it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[2]
         .name,
       address:
@@ -121,6 +121,9 @@ export const AddScreen = ({navigation, route}) => {
         it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4]
           .name,
     });
+    // console.log('location',location)
+
+
   };
 
   const startDataYandex = () => {
@@ -132,7 +135,6 @@ export const AddScreen = ({navigation, route}) => {
         countryChangeFunc(
           res.data.response.GeoObjectCollection.featureMember[0],
         );
-
       })
       .catch(e => {
         // console.log(e, "ff,'fffff");
@@ -172,7 +174,7 @@ export const AddScreen = ({navigation, route}) => {
               ' ' +
               res.data.response.GeoObjectCollection.featureMember[1].GeoObject
                 .name;
-        
+
         // Получаем город из адреса
         const cityFromAddress =
           res.data.response.GeoObjectCollection.featureMember.length === 1
@@ -180,6 +182,10 @@ export const AddScreen = ({navigation, route}) => {
                 .description
             : res.data.response.GeoObjectCollection.featureMember[1].GeoObject
                 .description;
+
+                console.log('cityFromAddress',cityFromAddress)
+                console.log('loc',loc)
+
 
         if (!cityFromAddress.includes(store.city)) {
           // Адрес находится в другом городе
@@ -193,6 +199,8 @@ export const AddScreen = ({navigation, route}) => {
           )
           .then(res => {
             let data = res.data.routes[0].legs[0];
+                        console.log('res data', res)
+
             const k = Math.ceil(data.distance.value / 1000);
             setKm(k);
             let polylineRes = [
@@ -204,15 +212,18 @@ export const AddScreen = ({navigation, route}) => {
             setLocationEnd({
               lat: data.end_location.lat,
               lon: data.end_location.lng,
-              zoom: 9,
+              zoom: 10,
             });
             for (let i = 0; i < data.steps.length; i++) {
               polylineRes.push({
-                lat: data.steps[i].end_location.lat,
-                lon: data.steps[i].end_location.lng,
-              });
-            }
+                  lat: data.steps[i].end_location.lat,
+                  lon: data.steps[i].end_location.lng,
+              })
+          }
+            
             setPoints([...polylineRes]);
+            console.log('points', points)
+
           })
           .catch(e => {
             Alert.alert('', 'не найдено');
@@ -223,11 +234,10 @@ export const AddScreen = ({navigation, route}) => {
       });
   };
 
-
   const getValue = async () => {
     try {
       const response = await axiosInstance.post('/orders/for_payment');
-      console.log('get value ', response.data);
+      // console.log('get value ', response.data);
       setValue(response.data.full_amount.$numberDecimal);
       return response.data.full_amount.$numberDecimal;
     } catch (e) {
@@ -249,7 +259,7 @@ export const AddScreen = ({navigation, route}) => {
         time: dateTime,
         comment,
         addressAll: addressAll,
-        delivery: km,
+        delivery: km <= 5 ? 0 : km,
       };
       if (promoFlag) {
         data.promocode = promoCode;
@@ -258,8 +268,8 @@ export const AddScreen = ({navigation, route}) => {
         data.postcard = postcard;
       }
       const response = await axiosInstance.post('/orders', data);
-      console.log('response', response.data);
-      console.log('DATA', data);
+      // console.log('response post: /orders', response.data);
+      // console.log('DATA', data);
 
       const value = await getValue();
       paymentFunc(value);
@@ -269,6 +279,7 @@ export const AddScreen = ({navigation, route}) => {
       setLoading(false);
       if (e?.response?.data?.message) {
         setError(e?.response?.data?.message);
+        // console.log('axios func error');
       }
       // console.log(e);
     }
@@ -279,11 +290,13 @@ export const AddScreen = ({navigation, route}) => {
       const response = await axiosInstance.post('/orders/payment', {
         value: value,
       });
-      console.log('payment func', value);
-      console.log('payment func', response.data);
+      // console.log('response: /orders/payment',response.data )
+
 
       setUrl(response.data.data);
     } catch (e) {
+      // console.log('payment func error');
+
       // console.log(e);
     }
   };
@@ -366,30 +379,43 @@ export const AddScreen = ({navigation, route}) => {
     setOpen(true);
   };
   const successFunc = event => {
+    // console.log('successFunc event', event.nativeEvent.url)
     if (event?.nativeEvent?.url?.includes('success')) {
       try {
-        const response = axiosInstance.post('/orders/confirm');
+         const response = axiosInstance.post('/orders/confirm');
       } catch (e) {
+        // console.log('successFuncч func error');
+
         // console.log(e);
       }
-      navigation.goBack();
+        navigation.goBack();
     } else if (
       event?.nativeEvent?.code === -6 ||
       event?.nativeEvent?.code === -1004
     ) {
-      navigation.goBack();
+       navigation.goBack();
     }
   };
 
+  const [deliveryPrice, setDeliveryPrice] = useState();
 
-  const [deliveryPrice,setDeliveryPrice] = useState();
+   console.log('km', km)
+   console.log('deliveryPrice', deliveryPrice)
+   console.log('delivery', delivery)
 
-useEffect(() => {
+   console.log('location ', location)
+   console.log('location end ', locationEnd)
 
-  if(km && delivery) {
-    setDeliveryPrice(km * delivery)
-  }
-}, [km,delivery])
+
+
+
+  useEffect(() => {
+    if ( km > 5 && km && delivery) {
+      setDeliveryPrice(km * delivery);
+    }
+  }, [km, delivery]);
+
+  
   return (
     <View
       style={[
@@ -546,7 +572,9 @@ useEffect(() => {
                       globalStyles.textAlignLeft,
                     ]}>
                     Доставка:{' '}
-                    <Text style={[globalStyles.weightBold]}>{deliveryPrice ? deliveryPrice : delivery } р</Text>{' '}
+                    <Text style={[globalStyles.weightBold]}>
+                      {km > 5 ? deliveryPrice : 0} р
+                    </Text>{' '}
                   </Text>
                 </View>
                 <View style={styles.cont}>
@@ -813,26 +841,25 @@ useEffect(() => {
                   Карта
                 </Text>
                 {location && (
-    <YaMap
-                  initialRegion={location}
-                  zoomGesturesEnabled={false}
-                  scrollGesturesEnabled={false}
-                  nightMode={false}
-                  mapType={'vector'}
-                  style={{
-                    marginHorizontal: globalWidth(20),
-                    height: height / 2,
-                  }}>
-                  {points.length ? (
-                    <Polyline points={points} strokeColor={'black'} />
-                  ) : null}
-                  <Marker point={location} scale={0.06} source={wing} />
-                  {locationEnd ? (
-                    <Marker point={locationEnd} scale={0.02} source={wing} />
-                  ) : null}
-                </YaMap>
+                  <YaMap
+                    initialRegion={location}
+                    zoomGesturesEnabled={false}
+                    scrollGesturesEnabled={false}
+                    nightMode={false}
+                    mapType={'vector'}
+                    style={{
+                      marginHorizontal: globalWidth(20),
+                      height: height / 3,
+                    }}>
+                    {points.length ? (
+                      <Polyline points={points} strokeColor={'black'} />
+                    ) : null}
+                    <Marker point={location} scale={0.06} source={wing} />
+                    {locationEnd ? (
+                      <Marker point={locationEnd} scale={0.06} source={wing} />
+                    ) : null}
+                  </YaMap>
                 )}
-            
               </View>
             </ScrollView>
             <DatePicker
