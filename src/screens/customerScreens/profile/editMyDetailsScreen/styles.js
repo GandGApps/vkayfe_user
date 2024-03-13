@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
     marginBottom: globalHeight(39),
   },
   contentMyDetails: {
-    borderBottomWidth: 1,
     borderBottomColor: Colors.borderColorLight,
     marginHorizontal: globalWidth(20),
   },
@@ -33,7 +32,6 @@ export const styles = StyleSheet.create({
     color: Colors.black,
   },
   appBtnView: {
-    borderTopWidth: 1,
     paddingVertical: globalHeight(25),
     borderColor: Colors.borderGray,
   },

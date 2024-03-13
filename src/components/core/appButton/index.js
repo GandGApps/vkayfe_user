@@ -6,7 +6,7 @@ import {globalStyles} from '../../../constants';
 export function AppButton({text, stylesContainer, stylesText, onPress}) {
   return (
     <TouchableOpacity
-      style={[styles.containerButton, {...stylesContainer}]}
+      style={[styles.containerButton, {...stylesContainer},{marginBottom: 20}]}
       onPress={onPress}>
       <Text
         style={[

@@ -7,7 +7,8 @@ let height = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   inputBig: {
-    paddingTop: 0,
+    paddingLeft : 20,
+    paddingTop: 10,
     borderWidth: 1,
     paddingBottom: 0,
     marginBottom: globalHeight(50),

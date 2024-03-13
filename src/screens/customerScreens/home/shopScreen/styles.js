@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
     fontSize: globalWidth(25),
   },
   placeIcon: {
-    width: globalWidth(12),
+    width: globalWidth(16),
     height: globalHeight(16),
     resizeMode: 'contain',
     marginRight: globalWidth(9),
@@ -87,8 +87,6 @@ export const styles = StyleSheet.create({
   placeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: globalHeight(11),
-    marginBottom: globalHeight(17),
   },
   priceText: {
     marginBottom: globalWidth(8),
@@ -101,11 +99,10 @@ export const styles = StyleSheet.create({
   },
   viewReview: {
     justifyContent: 'space-between',
-    paddingVertical: globalHeight(20),
     height: height / 1.5,
   },
   nameUserReview: {
-    marginTop: globalHeight(30),
+    marginTop: globalHeight(10),
     marginBottom: globalHeight(5),
   },
   reviewCont: {

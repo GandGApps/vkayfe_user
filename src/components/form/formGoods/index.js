@@ -100,5 +100,7 @@ export function FormGoods({item, addFavoriteFunc, navigation, index}) {
         </Text>
       </View>
     </TouchableOpacity>
+
+    
   );
 }

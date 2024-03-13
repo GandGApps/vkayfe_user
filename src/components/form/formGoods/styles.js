@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: globalHeight(10),
     width: width / 2 - globalWidth(30),
-    marginHorizontal: globalWidth(8),
+    marginHorizontal: globalWidth(7),
     paddingHorizontal: globalWidth(5),
     backgroundColor: Colors.white,
     shadowColor: '#000',

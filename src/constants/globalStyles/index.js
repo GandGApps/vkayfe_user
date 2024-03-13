@@ -42,7 +42,7 @@ export const globalStyles = StyleSheet.create({
     textAlign: 'right',
   },
   titleTextSmall4: {
-    fontSize: globalWidth(14),
+    fontSize: globalWidth(16),
   },
   weightBold: {
     fontWeight: '600',

@@ -41,6 +41,7 @@ export const MessagesScreen = ({navigation, route}) => {
   const [token, setToken] = useState('');
   const user = route.params?.item;
   const state = route.params?.state;
+
   const url = 'ws://194.58.121.218:3001/chat/messages';
   const url1 = 'ws://194.58.121.218:3001/chat/user';
 
@@ -65,6 +66,14 @@ export const MessagesScreen = ({navigation, route}) => {
     });
     socketNew.on('connect', () => {
       socketNew.emit('getMessage');
+      console.log('token', token)
+      console.log('seller._id', user.seller_id)
+      console.log('buyer_id', user.user_id)
+      console.log('roomId',  user.chatID)
+      console.log('store', store)
+      console.log('user', user)
+
+
     });
 
     getMessageFunc();
@@ -182,7 +191,7 @@ export const MessagesScreen = ({navigation, route}) => {
                       color: 'black',
                     },
                   ]}>
-                  {item.time.slice(3)}{' '}
+          {item.time.slice(0,5)}
                 </Text>
               </View>
             )}

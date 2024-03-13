@@ -86,6 +86,13 @@ export const AddScreen = ({navigation, route}) => {
   const newDate = new Date();
   newDate.setFullYear(newDate.getFullYear() + 1);
   const stateLoad = route?.params?.st;
+
+  useEffect(() => {
+    if(data[0]?.user.address){
+      setAddressAll(data[0].user.address)
+    }
+
+  },[data[0]?.user.address])
   const onPressFunc = () => {
     if (Object.keys(data).length) {
       if (name && phone && dateDate && dateTime && addressAll && km) {
@@ -122,9 +129,18 @@ export const AddScreen = ({navigation, route}) => {
           .name,
     });
     // console.log('location',location)
-
-
   };
+
+  console.log('date', dateDate);
+  let components = dateDate.split('-');
+
+  // Получаем значения года, месяца и дня
+  let year = components[0];
+  let month = components[1];
+  let day = components[2];
+
+  // Форматируем дату в необходимый формат "день, месяц, год"
+  let formattedDate = day + '.' + month + '.' + year;
 
   const startDataYandex = () => {
     axios
@@ -146,6 +162,7 @@ export const AddScreen = ({navigation, route}) => {
       startDataYandex();
     }
   }, [userPlace]);
+
 
   useEffect(() => {
     if (addressAll.length > 4) {
@@ -183,9 +200,8 @@ export const AddScreen = ({navigation, route}) => {
             : res.data.response.GeoObjectCollection.featureMember[1].GeoObject
                 .description;
 
-                console.log('cityFromAddress',cityFromAddress)
-                console.log('loc',loc)
-
+        console.log('cityFromAddress', cityFromAddress);
+        console.log('loc', loc);
 
         if (!cityFromAddress.includes(store.city)) {
           // Адрес находится в другом городе
@@ -199,7 +215,6 @@ export const AddScreen = ({navigation, route}) => {
           )
           .then(res => {
             let data = res.data.routes[0].legs[0];
-                        console.log('res data', res)
 
             const k = Math.ceil(data.distance.value / 1000);
             setKm(k);
@@ -216,14 +231,13 @@ export const AddScreen = ({navigation, route}) => {
             });
             for (let i = 0; i < data.steps.length; i++) {
               polylineRes.push({
-                  lat: data.steps[i].end_location.lat,
-                  lon: data.steps[i].end_location.lng,
-              })
-          }
-            
-            setPoints([...polylineRes]);
-            console.log('points', points)
+                lat: data.steps[i].end_location.lat,
+                lon: data.steps[i].end_location.lng,
+              });
+            }
 
+            setPoints([...polylineRes]);
+            console.log('points', points);
           })
           .catch(e => {
             Alert.alert('', 'не найдено');
@@ -237,7 +251,7 @@ export const AddScreen = ({navigation, route}) => {
   const getValue = async () => {
     try {
       const response = await axiosInstance.post('/orders/for_payment');
-      // console.log('get value ', response.data);
+      console.log('/orders/for_payment');
       setValue(response.data.full_amount.$numberDecimal);
       return response.data.full_amount.$numberDecimal;
     } catch (e) {
@@ -290,13 +304,11 @@ export const AddScreen = ({navigation, route}) => {
       const response = await axiosInstance.post('/orders/payment', {
         value: value,
       });
-      // console.log('response: /orders/payment',response.data )
-
+      console.log('/orders/payment');
 
       setUrl(response.data.data);
     } catch (e) {
       // console.log('payment func error');
-
       // console.log(e);
     }
   };
@@ -382,40 +394,35 @@ export const AddScreen = ({navigation, route}) => {
     // console.log('successFunc event', event.nativeEvent.url)
     if (event?.nativeEvent?.url?.includes('success')) {
       try {
-         const response = axiosInstance.post('/orders/confirm');
+        const response = axiosInstance.post('/orders/confirm');
       } catch (e) {
         // console.log('successFuncч func error');
-
         // console.log(e);
       }
-        navigation.goBack();
+      navigation.goBack();
     } else if (
       event?.nativeEvent?.code === -6 ||
       event?.nativeEvent?.code === -1004
     ) {
-       navigation.goBack();
+      navigation.goBack();
     }
   };
 
   const [deliveryPrice, setDeliveryPrice] = useState();
 
-   console.log('km', km)
-   console.log('deliveryPrice', deliveryPrice)
-   console.log('delivery', delivery)
+  console.log('km', km);
+  console.log('deliveryPrice', deliveryPrice);
+  console.log('delivery', delivery);
 
-   console.log('location ', location)
-   console.log('location end ', locationEnd)
-
-
-
+  console.log('location ', location);
+  console.log('location end ', locationEnd);
 
   useEffect(() => {
-    if ( km > 5 && km && delivery) {
+    if (km > 5 && km && delivery) {
       setDeliveryPrice(km * delivery);
     }
   }, [km, delivery]);
 
-  
   return (
     <View
       style={[
@@ -661,6 +668,7 @@ export const AddScreen = ({navigation, route}) => {
                     </Text>
                     <AppInput
                       placeholder={'Адрес'}
+                      value={addressAll}
                       style={styles.addressStyle}
                       onChangeText={e => onChangeFunc(e, setAddressAll)}
                     />
@@ -754,7 +762,7 @@ export const AddScreen = ({navigation, route}) => {
                             globalStyles.textAlignLeft,
                             globalStyles.titleTextSmall,
                           ]}>
-                          {dateDate ? dateDate : '00-00-00'}
+                          {dateDate ? formattedDate : '00-00-00'}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -829,17 +837,8 @@ export const AddScreen = ({navigation, route}) => {
               <View
                 style={{
                   flex: 1,
-                  marginVertical: globalHeight(20),
+                  backgroundColor: '#F4FCFF',
                 }}>
-                <Text
-                  style={[
-                    globalStyles.titleText,
-                    globalStyles.titleTextSmall,
-                    globalStyles.textAlignLeft,
-                    styles.textCont,
-                  ]}>
-                  Карта
-                </Text>
                 {location && (
                   <YaMap
                     initialRegion={location}
@@ -849,7 +848,7 @@ export const AddScreen = ({navigation, route}) => {
                     mapType={'vector'}
                     style={{
                       marginHorizontal: globalWidth(20),
-                      height: height / 3,
+                      height: height / 2.5,
                     }}>
                     {points.length ? (
                       <Polyline points={points} strokeColor={'black'} />

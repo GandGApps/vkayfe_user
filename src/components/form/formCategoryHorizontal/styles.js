@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   containerForm: {
     alignItems: 'center',
     borderRadius: 100,
-    marginHorizontal: globalWidth(7.5),
+    marginHorizontal: globalWidth(8.5),
   },
   img: {
     width: globalWidth(86),
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   title: {
-    width: globalWidth(90),
+    width: globalWidth(120),
     textAlign: 'center',
   },
   pcs: {
