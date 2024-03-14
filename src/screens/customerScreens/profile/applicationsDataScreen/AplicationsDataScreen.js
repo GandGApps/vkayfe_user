@@ -35,15 +35,25 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 export const ApplicationsDataScreen = ({navigation, route}) => {
   const store = useSelector(s => s.customer);
   const item = route.params.item;
+
+  console.log('item',item)
+  console.log('store',store)
+
+  console.log('user_id', item?.user_id?._id)
+  console.log('seller_id',item.store_id.seller_user_id  )
+
+
   const messageFunc = async () => {
     try {
       const response = await axiosInstance.get(
         `/chat/is-created?seller_id=${item.store_id.seller_user_id}`,
       );
+      console.log('chat id ', response?.data?.chatID )
+
       navigation.navigate(MessagesName, {
         item: {
           user_id: item?.user_id?._id,
-          seller_id: store._id,
+          seller_id: item.store_id.seller_user_id,
           chatID: response?.data?.chatID,
         },
       });
@@ -51,7 +61,6 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
       console.log(e);
     }
   };
-  console.log(item);
   return (
     <ScrollView
       contentContainerStyle={[globalStyles.scrollContainer]}

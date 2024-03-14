@@ -59,7 +59,7 @@ export const MessagesScreen = ({navigation, route}) => {
     socketNew = io(url1, {
       query: {
         token: token,
-        seller_id: user.user_id,
+        seller_id: user.seller_id._id ? user.seller_id._id : user.seller_id,
         buyer_id: store._id,
         roomId: user.chatID,
       },
@@ -67,8 +67,8 @@ export const MessagesScreen = ({navigation, route}) => {
     socketNew.on('connect', () => {
       socketNew.emit('getMessage');
       console.log('token', token)
-      console.log('seller._id', user.seller_id)
-      console.log('buyer_id', user.user_id)
+      console.log('seller._id', user.seller_id._id)
+      console.log('buyer_id', store._id)
       console.log('roomId',  user.chatID)
       console.log('store', store)
       console.log('user', user)
