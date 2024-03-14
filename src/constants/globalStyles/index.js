@@ -65,7 +65,7 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 5,
     color: 'white',
     padding: "1%",
-    position: 'relative'
+    position: 'relative',
 
   },
   messageText: {

@@ -15,20 +15,16 @@ export const styles = StyleSheet.create({
   },
   content: {},
   left: {
-    alignItems: 'flex-start',
     paddingLeft: '1%',
     paddingTop : '1%',
     minWidth : globalWidth(60),
-    marginRight: globalWidth(40),
     backgroundColor: '#136A8A',
     borderRadius: 8,
   },
   right: {
-    alignItems: 'flex-end',
     paddingLeft: '1%',
     paddingTop : '1%',
     minWidth : globalWidth(60),
-    marginLeft: globalWidth(40),
     backgroundColor: 'gray',
     borderRadius: 8,
   },
@@ -71,7 +67,8 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
   },
   backContainer: {
-    marginTop: Platform.OS === 'ios' ? globalWidth(40) : 5,
+    marginTop: Platform.OS === 'ios' ? globalWidth(60) : 5,
+    marginBottom: 10,
   },
   imgMsg: {
     width: globalWidth(200),

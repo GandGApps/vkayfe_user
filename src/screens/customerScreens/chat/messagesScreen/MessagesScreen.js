@@ -41,7 +41,7 @@ export const MessagesScreen = ({navigation, route}) => {
   const [token, setToken] = useState('');
   const user = route.params?.item;
   const state = route.params?.state;
-
+  const [textWidth, setTextWidth] = useState(0);
   const url = 'ws://194.58.121.218:3001/chat/messages';
   const url1 = 'ws://194.58.121.218:3001/chat/user';
 
@@ -177,7 +177,11 @@ export const MessagesScreen = ({navigation, route}) => {
                     globalStyles.weightLight,
                     globalStyles.titleTextBig,
                     {color: 'white'},
-                  ]}>
+                  ]}
+                  onLayout={(event) => {
+                    setTextWidth(event.nativeEvent.layout.width);
+                  }}
+                  >
                   {item.text}
                 </Text>
                 <Text
@@ -186,6 +190,7 @@ export const MessagesScreen = ({navigation, route}) => {
                     globalStyles.weightLight,
                     {
                       display: 'flex',
+                      alignItems: 'flex-end',
                       justifyContent: 'flex-end',
                       textAlign: 'right',
                       color: 'black',
