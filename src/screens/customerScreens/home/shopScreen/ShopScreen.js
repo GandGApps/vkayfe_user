@@ -5,6 +5,7 @@ import {
   Colors,
   FilterName,
   globalStyles,
+  imageUrl,
   MapsScreenName,
   ReviewName,
 } from '../../../../constants';
@@ -138,7 +139,7 @@ export const ShopScreen = ({navigation, route}) => {
         </View>
         <View style={styles.shopCont}>
           <Image
-            source={{uri: BaseUrl + '/' + shop.logo_url}}
+            source={{uri: imageUrl + '/' + shop.logo_url}}
             style={styles.imgShop}
           />
           <View>

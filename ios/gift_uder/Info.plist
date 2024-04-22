@@ -7,7 +7,7 @@
 		<string>com.example.gift_uder</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>gift_uder</string>
 	<key>CFBundleExecutable</key>

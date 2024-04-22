@@ -37,6 +37,7 @@ export const FinancialReportScreen = ({navigation}) => {
   const getBanner = async () => {
     try {
       const response = await axiosInstance.get('/goods/banner');
+      console.log('get banner', response.data)
       setBanner(response.data.banner);
     } catch (e) {
       console.log(e);
@@ -45,29 +46,31 @@ export const FinancialReportScreen = ({navigation}) => {
   const getBuyer = async () => {
     try {
       const response = await axiosInstance.get('/orders/buyer');
+      console.log('get buyer', response.data)
+
       const arr = response.data;
       if (Object.keys(arr).length) {
         for (let i = 0; i < arr.length; i++) {
           if (arr[i].status_id.name === 'approved') {
             arr[i].status_id.title = 'Заказ принят';
           } else if (arr[i].status_id.name === 'assembling') {
-            arr[i].status_id.title = 'Заказан в сборке';
+            arr[i].status_id.title = 'Заказ в сборке';
           } else if (arr[i].status_id.name === 'accepted') {
             arr[i].status_id.title = 'Ожидает подтверждения';
           } else if (arr[i].status_id.name === 'pending') {
             arr[i].status_id.title = 'Ожидают подтверждения';
           } else if (arr[i].status_id.name === 'in_transit') {
-            arr[i].status_id.title = 'Заказан в пути';
+            arr[i].status_id.title = 'Заказ в пути';
           } else if (arr[i].status_id.name === 'completed') {
-            arr[i].status_id.title = 'Заказан завершен';
+            arr[i].status_id.title = 'Заказ завершен';
           } else if (arr[i].status_id.name === 'cancelled') {
-            arr[i].status_id.title = 'Заказан отменен';
+            arr[i].status_id.title = 'Заказ отменен';
           }
         }
       }
       setData([...arr]);
     } catch (e) {
-      console.log(e);
+      console.log("getBuyer ",e);
     }
   };
 

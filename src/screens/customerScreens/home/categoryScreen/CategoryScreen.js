@@ -79,6 +79,7 @@ export const CategoryScreen = ({navigation, route}) => {
         </View>
         <FlatList
           data={category}
+          ListFooterComponent={<View style={{height: 400}} />}
           renderItem={({item, index}) => {
             return (
               <FormCategory

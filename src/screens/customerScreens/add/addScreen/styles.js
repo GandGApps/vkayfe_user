@@ -99,6 +99,10 @@ export const styles = StyleSheet.create({
     marginHorizontal: globalWidth(20),
     marginTop: globalHeight(10),
   },
+  OpenerCont: {
+    marginHorizontal: globalWidth(-80),
+    marginTop: globalHeight(10),
+  },
   flatmateContCont: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -171,13 +175,17 @@ export const styles = StyleSheet.create({
     width: globalWidth(85),
     height: globalHeight(85),
     marginTop: globalHeight(13),
-    marginBottom: globalHeight(37),
+    resizeMode: 'contain',
+  },
+  imgForm2: {
+    width: globalWidth(85),
+    height: globalHeight(85),
+    marginTop: globalHeight(5),
     resizeMode: 'contain',
   },
   applicationsContainer: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderColorLight,
-    paddingTop: globalHeight(19),
     position: 'relative',
   },
   changeContent: {

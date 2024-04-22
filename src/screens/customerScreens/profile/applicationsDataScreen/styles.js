@@ -22,6 +22,11 @@ export const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? globalWidth(20) : 0,
     paddingTop: globalHeight(13),
   },
+   headerPaddingText: {
+    paddingHorizontal: globalWidth(20),
+    marginTop: Platform.OS === 'ios' ? globalWidth(0) : 0,
+    paddingTop: globalHeight(1),
+  },
   contentStyleText: {
     marginVertical: globalHeight(4),
   },
@@ -123,5 +128,12 @@ export const styles = StyleSheet.create({
   },
   priceText: {
     marginTop: globalHeight(11),
+  },
+  marginToBoom: {
+    marginBottom: globalHeight(20),
+  },
+  marginToTop: {
+    marginTop: globalHeight(5),
+
   },
 });

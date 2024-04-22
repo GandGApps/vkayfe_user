@@ -27,6 +27,8 @@ import giftIconPink from '../../../assets/images/giftIconPink.png';
 import {removeTokens, setTokens} from '../../../utils';
 import {useDispatch, useSelector} from 'react-redux';
 import SelectDropdown from 'react-native-select-dropdown';
+import AsyncStorage from '@react-native-community/async-storage';
+import messaging from '@react-native-firebase/messaging';
 
 export const SignupScreen = ({navigation, route}) => {
   let dispatch = useDispatch();
@@ -115,12 +117,32 @@ export const SignupScreen = ({navigation, route}) => {
     }
   };
 
+  const getFcmToken = async () => {
+    try {
+      const fcmToken = await messaging().getToken();
+      console.log('get fcm token', fcmToken);
+      if (!!fcmToken) {
+        await AsyncStorage.setItem('fcmToken', fcmToken);
+      }
+      return fcmToken;
+    } catch (error) {
+      alert(error?.message);
+    }
+  };
   const axiosFunc = async (data, nav) => {
     setLoading(true);
     try {
       const response = !Object.keys(user_data).length
         ? await axiosInstance.post('/users/register/seller', data)
         : await axiosInstance.put('/users/profile/seller', data);
+
+      let checkToken = await getFcmToken();
+      console.log('await getFcmToken ', checkToken);
+      const res = await axiosInstance.post('/users/fcm', {
+        is_seller: false,
+        token: checkToken,
+      });
+      console.log('res', res);
       await setTokens(response.data.token);
       dispatch({
         type: SET_CUSTOMER,

@@ -6,7 +6,10 @@ import {
   BaseUrl,
   globalStyles,
   GoodsDataName,
+  imageUrl,
 } from '../../../constants';
+
+import dntLike from '../../../assets/images/dntLike.png';
 import like from '../../../assets/images/likeTifany.png';
 
 export const ApplicationsForm = ({item, navigation}, index) => {
@@ -20,7 +23,7 @@ export const ApplicationsForm = ({item, navigation}, index) => {
         onPress={() => {
           let a = item.good_id.photo_list.map(item => {
             return {
-              uri: BaseUrl + '/' + item,
+              uri: imageUrl + '/' + item,
             };
           });
           navigation.navigate(GoodsDataName, {
@@ -28,11 +31,12 @@ export const ApplicationsForm = ({item, navigation}, index) => {
               ...item.good_id,
               store_id: item.store_id,
               photo_list: a,
+              ...item,
             },
           });
         }}>
         <View style={[globalStyles.row, styles.rowCont]}>
-          <Image source={{uri: BaseUrl + '/' + img}} style={styles.imgForm} />
+          <Image source={{uri: imageUrl + '/' + img}} style={styles.imgForm} />
         </View>
         <Image source={like} style={styles.likeIc} />
         <View style={styles.foot}>
@@ -48,10 +52,11 @@ export const ApplicationsForm = ({item, navigation}, index) => {
               {item.good_id.title}
             </Text>
           </View>
+ 
           <View style={styles.applicationsContent}>
             <View style={styles.shopCont}>
               <Image
-                source={{uri: BaseUrl + '/' + item.store_id.logo_url}}
+                source={{uri: imageUrl + '/' + item.store_id.logo_url}}
                 style={styles.logo}
               />
               <Text

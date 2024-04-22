@@ -15,7 +15,7 @@ import {
   AppInput,
   ChooseImage,
 } from '../../../../components';
-import {globalStyles, BaseUrl} from '../../../../constants';
+import {globalStyles, BaseUrl, imageUrl} from '../../../../constants';
 import sendIcon from '../../../../assets/images/sendIcon.png';
 import ChatPlus from '../../../../assets/images/ChatPlus.png';
 import {checkTokens} from '../../../../utils';
@@ -24,6 +24,7 @@ import io from 'socket.io-client';
 
 import {useDispatch, useSelector} from 'react-redux';
 import ImageView from 'react-native-image-viewing';
+import axiosInstance from '../../../../networking/axiosInstance';
 
 let socketNew = null;
 
@@ -42,11 +43,17 @@ export const MessagesScreen = ({navigation, route}) => {
   const user = route.params?.item;
   const state = route.params?.state;
   const [textWidth, setTextWidth] = useState(0);
-  const url = 'ws://194.58.121.218:3001/chat/messages';
-  const url1 = 'ws://194.58.121.218:3001/chat/user';
+  const sellerId = user.seller_id._id || user.seller_id;
+  const url1 = 'https://podariadminkavsem.online/api/chat/user';
 
   useEffect(() => {
     setTokFunc();
+    socketConnectFunc();
+    return () => {
+      if (socketNew) {
+        socketNew.disconnect();
+      }
+    };
   }, []);
 
   const setTokFunc = async () => {
@@ -59,21 +66,19 @@ export const MessagesScreen = ({navigation, route}) => {
     socketNew = io(url1, {
       query: {
         token: token,
-        seller_id: user.seller_id._id ? user.seller_id._id : user.seller_id,
+        seller_id: sellerId,
         buyer_id: store._id,
         roomId: user.chatID,
       },
     });
     socketNew.on('connect', () => {
       socketNew.emit('getMessage');
-      console.log('token', token)
-      console.log('seller._id', user.seller_id._id)
-      console.log('buyer_id', store._id)
-      console.log('roomId',  user.chatID)
-      console.log('store', store)
-      console.log('user', user)
-
-
+       console.log('token', token);
+      // console.log('seller._id', sellerId);
+      // console.log('buyer_id', store._id);
+      // console.log('roomId', user.chatID);
+      // console.log('store', store);
+      // console.log('user', user);
     });
 
     getMessageFunc();
@@ -89,6 +94,16 @@ export const MessagesScreen = ({navigation, route}) => {
       setChat([...arr]);
       setVisible(false);
       setScrollToEnd(true);
+
+      const lastMessageId = arr[arr.length - 1]?._id;
+      socketNew.emit('isRead', {
+        message: lastMessageId,
+        userToken: token,
+        role: 'user',
+      });
+      socketNew.on('messageRead', data => {
+        console.log(data, 'ЛОГАЮСООБЩЕНИЕ');
+      });
     });
   };
 
@@ -135,7 +150,7 @@ export const MessagesScreen = ({navigation, route}) => {
               <TouchableOpacity
                 onPress={() => {
                   if (!item.play) {
-                    setActiveImage([{uri: BaseUrl + item.text}]);
+                    setActiveImage([{uri: imageUrl + item.text}]);
                     setActive(true);
                   }
                 }}>
@@ -166,7 +181,7 @@ export const MessagesScreen = ({navigation, route}) => {
                     item.play = false;
                     setChat([...chat]);
                   }}
-                  source={{uri: BaseUrl + item.text}}
+                  source={{uri: imageUrl + item.text}}
                   style={styles.imgMsg}
                 />
               </TouchableOpacity>
@@ -178,10 +193,9 @@ export const MessagesScreen = ({navigation, route}) => {
                     globalStyles.titleTextBig,
                     {color: 'white'},
                   ]}
-                  onLayout={(event) => {
+                  onLayout={event => {
                     setTextWidth(event.nativeEvent.layout.width);
-                  }}
-                  >
+                  }}>
                   {item.text}
                 </Text>
                 <Text
@@ -196,7 +210,7 @@ export const MessagesScreen = ({navigation, route}) => {
                       color: 'black',
                     },
                   ]}>
-          {item.time.slice(0,5)}
+                  {item.time.slice(0, 5)}
                 </Text>
               </View>
             )}
@@ -209,7 +223,7 @@ export const MessagesScreen = ({navigation, route}) => {
   return (
     <View style={styles.chatScrool}>
       <BackButton
-        text={user.name}
+        text={user.seller_id.legal_name || user.legal_name}
         navigation={navigation}
         stylesBack={styles.backContainer}
       />

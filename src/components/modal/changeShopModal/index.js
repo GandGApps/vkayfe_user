@@ -7,6 +7,7 @@ import axiosInstance from '../../../networking/axiosInstance';
 import {
   BaseUrl,
   globalStyles,
+  imageUrl,
   SET_SHOP,
   ShopDataName,
 } from '../../../constants';
@@ -83,7 +84,7 @@ export function ChangeShopModal(props) {
                     key={index}
                     style={[globalStyles.row, styles.contentShop]}>
                     <Image
-                      source={{uri: BaseUrl + '/' + item.logo_url}}
+                      source={{uri: imageUrl + '/' + item.logo_url}}
                       style={styles.shopIcon}
                     />
                     <View style={styles.containerHeaderText}>

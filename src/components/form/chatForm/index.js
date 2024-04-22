@@ -9,6 +9,7 @@ export const ChatForm = ({item, navigation, index}) => {
   const time = item.time.slice(0, 5);
 
 
+
   return (
     <TouchableOpacity
       style={styles.chatContainer}

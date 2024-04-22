@@ -5,6 +5,7 @@ import {
   BaseUrl,
   globalStyles,
   GoodsDataName,
+  imageUrl,
   ShopName,
 } from '../../../constants';
 import dntLike from '../../../assets/images/dntLike.png';
@@ -20,7 +21,7 @@ export function ShopDataForm({item, addFavoriteFunc, navigation, shop}) {
       }}>
       <View style={[globalStyles.row, styles.rowCont]}>
         <Image
-          source={{uri: BaseUrl + '/' + item.store_id.logo_url}}
+          source={{uri: imageUrl + '/' + item.store_id.logo_url}}
           style={styles.imgForm}
         />
       </View>

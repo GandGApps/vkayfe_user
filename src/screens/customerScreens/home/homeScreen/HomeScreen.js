@@ -248,8 +248,8 @@ export const HomeScreen = ({navigation}) => {
       setGoodsData([]);
       setGoodsData(response.data);
     } catch (e) {
-      console.log(e);
-      navigation.navigate(CategoryDataName, {data: []});
+      Alert.alert('В данной категории отсутствуют товары');
+      console.log('e', e);
     }
   };
 
@@ -397,27 +397,27 @@ export const HomeScreen = ({navigation}) => {
             ) : (
               <View>
                 <View style={styles.headerTextContainer}>
-                  <Image
-                    source={{uri:banner}}
-                    style={styles.mask}
-                  />
+                  <Image source={{uri: banner}} style={styles.mask} />
                 </View>
                 <View>
-                  <TouchableOpacity
-                    style={styles.HeaderFooter}
-                    onPress={() => navigation.navigate('maps name')}>
-                    <Image source={place} style={styles.winIconStyle} />
+                  <View >
+                    <TouchableOpacity
+                      style={styles.HeaderFooter}
+                      onPress={() => navigation.navigate('maps name')}>
+                      <Image source={place} style={styles.winIconStyle} />
 
-                    <Text
-                      numberOfLines={2}
-                      style={[
-                        styles.headerFooterText,
-                        globalStyles.titleText,
-                        globalStyles.titleTextSmall,
-                      ]}>
-                      Адрес доставки: {store.city} / {store.address}{' '}
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        numberOfLines={2}
+                        style={[
+                          styles.headerFooterText,
+                          globalStyles.titleText,
+                          globalStyles.titleTextSmall,
+                        ]}>
+                        Адрес доставки: {store.city} / {store.address}{' '}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
                   <View style={styles.headerContent}>
                     <Text
                       style={[

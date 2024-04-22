@@ -1,7 +1,7 @@
 import React from 'react';
 import {styles} from './styles';
 import {Image, Text, View} from 'react-native';
-import {BaseUrl, globalStyles} from '../../../constants';
+import {BaseUrl, globalStyles, imageUrl} from '../../../constants';
 
 export const ApplicationsChangeForm = ({item, navigation, index}) => {
   return (
@@ -18,7 +18,7 @@ export const ApplicationsChangeForm = ({item, navigation, index}) => {
         </Text>
         <View style={[globalStyles.row]}>
           <Image
-            source={{uri: BaseUrl + '/' + item.photo_list[0]}}
+            source={{uri: imageUrl + '/' + item.photo_list[0]}}
             style={styles.imgForm}
           />
           <View style={styles.textCont}>

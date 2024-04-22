@@ -7,7 +7,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {BaseUrl, globalStyles, GoodsDataName} from '../../../constants';
+import {BaseUrl, globalStyles, GoodsDataName, imageUrl} from '../../../constants';
 import dntLike from '../../../assets/images/dntLike.png';
 import like from '../../../assets/images/likeTifany.png';
 import {globalHeight, globalWidth} from '../../dimensions';
@@ -24,7 +24,7 @@ export function FormGoods({item, addFavoriteFunc, navigation, index}) {
         if (!loading) {
           let a = item.photo_list.map(item => {
             return {
-              uri: BaseUrl + '/' + item,
+              uri: imageUrl + '/' + item,
             };
           });
           navigation.navigate(GoodsDataName, {
@@ -58,7 +58,7 @@ export function FormGoods({item, addFavoriteFunc, navigation, index}) {
             setLoading(false);
           }}
           onLoadEnd={e => setLoading(false)}
-          source={{uri: BaseUrl + '/' + img}}
+          source={{uri: imageUrl + '/' + img}}
           style={styles.imgForm}
         />
       </View>

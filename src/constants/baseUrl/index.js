@@ -1,1 +1,3 @@
-export const BaseUrl = 'http://194.58.121.218:3001';
+export const BaseUrl = 'https://podariadminkavsem.online/api';
+export const imageUrl = 'https://podariadminkavsem.online';
+

@@ -4,6 +4,7 @@ import {
   AddTrushName,
   BaseUrl,
   globalStyles,
+  imageUrl,
   ShopName,
 } from '../../../../constants';
 import {
@@ -54,7 +55,6 @@ export const GoodsDataScreen = ({navigation, route}) => {
     }
   };
   const addFavoriteFunc = async () => {
-    // console.log(data);
     const arr = data;
     if (!arr.is_favorite) {
       try {
@@ -281,7 +281,7 @@ export const GoodsDataScreen = ({navigation, route}) => {
             style={styles.shopContAll}>
             <View style={styles.shopCont}>
               <Image
-                source={{uri: BaseUrl + '/' + data.store_id.logo_url}}
+                source={{uri: imageUrl + '/' + data.store_id.logo_url}}
                 style={styles.imgShop}
               />
               <View>

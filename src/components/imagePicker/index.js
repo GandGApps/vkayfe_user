@@ -1,17 +1,21 @@
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {Alert, PermissionsAndroid, Platform} from 'react-native';
-import {openPicker} from '@baronha/react-native-multiple-image-picker';
+import {StyleSheet, Dimensions} from 'react-native';
+import {globalHeight} from '../dimensions';
+
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
 
 export const requestCameraPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA,
       {
-        title: 'App Camera Permission',
-        message: 'App needs access to your camera ',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
+        title: 'Запрос на использование камеры',
+        message: 'Дать доступ к приложению Камера? ',
+        buttonNeutral: 'Спросить позже',
+        buttonNegative: 'Отмена',
+        buttonPositive: 'Да',
       },
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -40,14 +44,28 @@ export function ChooseImage(callBack) {
             },
             response => {
               if (!response.didCancel) {
-                callBack(response);
+                Alert.alert(
+                  'Подтверждение',
+                  'Вы уверены, что хотите загрузить это фото?',
+                  [
+                    {
+                      text: 'Отмена',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Да',
+                      onPress: () => callBack(response),
+                    },
+                  ],
+                  {cancelable: false},
+                );
               }
             },
           );
         },
       },
       {
-        text: 'сделать фото',
+        text: 'Сделать фото',
         onPress: async () => {
           if (Platform.OS === 'ios') {
             await launchCamera(
@@ -76,7 +94,21 @@ export function ChooseImage(callBack) {
                 },
                 response => {
                   if (!response.didCancel) {
-                    callBack(response);
+                    Alert.alert(
+                      'Подтверждение',
+                      'Вы уверены, что хотите загрузить эти фото?',
+                      [
+                        {
+                          text: 'Отмена',
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Да',
+                          onPress: () => callBack(response),
+                        },
+                      ],
+                      {cancelable: false},
+                    );
                   }
                 },
               );
@@ -90,7 +122,6 @@ export function ChooseImage(callBack) {
     {cancelable: true},
   );
 }
-
 export async function MultipleImage(callBack) {
   await launchImageLibrary(
     {

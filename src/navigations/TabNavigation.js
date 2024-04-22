@@ -47,12 +47,17 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   const user = useSelector(st => st.customer);
+  console.log('user tab', user)
+
   const [messages, setMessages] = useState(0);
   const socket = io.connect(
-    `http://194.58.121.218:3001/count/messages/buyer?buyer_id=${user._id}`,
+    `https://podariadminkavsem.online/api/count/messages/buyer?buyer_id=${user._id}`,
+    console.log('connect')
   );
   socket.on('count', data => {
     setMessages(data.count);
+    console.log('messages count', data.count)
+
   });
 
   return (

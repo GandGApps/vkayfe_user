@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import {useDispatch} from 'react-redux';
 import {checkUser, setTokens} from '../../../utils';
@@ -39,12 +39,28 @@ import line from '../../../assets/images/line.png';
 import pinkMonster from '../../../assets/images/pinkMonster.png';
 import giftIconPink from '../../../assets/images/giftIconPink.png';
 import SwitchToggle from 'react-native-switch-toggle';
+import AsyncStorage from '@react-native-community/async-storage';
+import messaging from '@react-native-firebase/messaging';
+import axios from 'axios';
 
 export const SignIn = ({navigation}) => {
   const [phone, setPhone] = useState('+7');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(false);
+  const [jwtToken, setJwtToken] = useState('');
+
+  const getFcmToken = async () => {
+    try {
+      const fcmToken = await messaging().getToken();
+      if (!!fcmToken) {
+        await AsyncStorage.setItem('fcmToken', fcmToken);
+      }
+      return fcmToken;
+    } catch (error) {
+      alert(error?.message);
+    }
+  };
 
   const onChangeTextFunc = (e, set) => {
     setError('');
@@ -58,7 +74,11 @@ export const SignIn = ({navigation}) => {
         '/users/register/buyer/call',
         data,
       );
-      // console.log(response);
+      console.log('navigationFunc ', response.data);
+      setJwtToken(response.data.token);
+      await postFcmToken(response.data.token);
+      await axiosFunc();
+      
       navigation.navigate(VerifyPhoneName, {phone});
       setLoading(false);
     } catch (e) {
@@ -77,6 +97,46 @@ export const SignIn = ({navigation}) => {
       );
     }
   };
+  const axiosFunc = async response => {
+    try {
+      if (Object.keys(response?.storesList).length) {
+        navigation.replace('TabNavigation');
+
+      } else {
+        checkUser(response?.user_data, navigation);
+      }
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+
+  const postFcmToken = async (token) => {
+    let checkToken = await getFcmToken();
+    console.log(' await Fcm Token:', checkToken); 
+
+    try {
+      const res = await axios.post(
+        'https://podariadminkavsem.online/api/users/fcm',
+        {
+          is_seller: "false",
+          token: checkToken,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log('res of users/fcm', res.data);
+    } catch (e) {
+      if (e.response && e.response.data && e.response.data.message) {
+        console.log('Error message:', e.response.data.message);
+      } else {
+        console.log('Error:', e);
+      }    }
+  };
+
   return (
     <ScrollView
       style={[

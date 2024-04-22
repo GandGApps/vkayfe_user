@@ -38,14 +38,14 @@ export const styles = StyleSheet.create({
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: globalHeight(15),
+    paddingTop: globalHeight(5),
     paddingBottom: globalHeight(15),
     justifyContent: 'space-between',
-    marginBottom: globalHeight(20),
+    marginBottom: globalHeight(10),
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderColor: Colors.borderGray,
-    marginVertical: globalHeight(14),
+    marginVertical: globalHeight(4),
     marginHorizontal: globalWidth(20),
   },
   bottomIconStyle: {
@@ -59,6 +59,7 @@ export const styles = StyleSheet.create({
   winIconStyle: {
     width: globalWidth(12),
     height: globalWidth(16),
+    
     resizeMode: 'contain',
     tintColor: '#0BC5BA',
   },
@@ -78,7 +79,7 @@ export const styles = StyleSheet.create({
     width: width - globalWidth(30),
   },
   filterCont: {
-    marginBottom: globalHeight(10),
+    marginBottom: globalHeight(0),
   },
   noneBtmWdth: {
     borderTopWidth: 0,

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
-import {BaseUrl, globalStyles, SubCategoryName} from '../../../constants';
+import {BaseUrl, globalStyles, imageUrl, SubCategoryName} from '../../../constants';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 
 import rightIcn from '../../../assets/images/rightIcon.png';
@@ -17,7 +17,7 @@ export function FormCategory({item, index, navigation, checkSubCategory}) {
       <View style={[globalStyles.row]}>
         <View>
           <Image
-            source={{uri: BaseUrl + '/' + item.photo_url}}
+            source={{uri: imageUrl + '/' + item.photo_url}}
             style={styles.img}
           />
         </View>

@@ -14,6 +14,7 @@ import {
   BaseUrl,
   Colors,
   globalStyles,
+  imageUrl,
   MessagesName,
   ShopName,
 } from '../../../../constants';
@@ -55,6 +56,7 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
           user_id: item?.user_id?._id,
           seller_id: item.store_id.seller_user_id,
           chatID: response?.data?.chatID,
+          ...item.seller,
         },
       });
     } catch (e) {
@@ -108,7 +110,7 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
             {item.state}
           </Text>
         </View>
-        <View style={[styles.headerTextContainer, styles.headerPadding]}>
+        <View style={[styles.headerTextContainer, styles.headerPaddingText]}>
           {item?.count.map(it => (
             <Text
               style={[
@@ -223,7 +225,7 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
       <View style={styles.shopContAll}>
         <View style={styles.shopCont}>
           <Image
-            source={{uri: BaseUrl + '/' + item.store_id.logo_url}}
+            source={{uri: imageUrl + '/' + item.store_id.logo_url}}
             style={styles.imgShop}
           />
           <View>
@@ -265,11 +267,8 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
       })}
       <View style={styles.applicationsContainer}>
         <View style={styles.changeContent}>
-          <View style={[globalStyles.row]}>
-            <Image
-              source={{uri: BaseUrl + '/' + route.params?.banner}}
-              style={styles.imgForm}
-            />
+          <View>
+       
             <View style={styles.textCont}>
               <Text
                 style={[
@@ -277,6 +276,7 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
                   globalStyles.weightLight,
                   globalStyles.titleTextSmall,
                   globalStyles.textAlignLeft,
+                  styles.marginToTop
                 ]}>
                 Текст на открытке:
               </Text>
@@ -287,6 +287,8 @@ export const ApplicationsDataScreen = ({navigation, route}) => {
                   globalStyles.titleTextSmall,
                   globalStyles.textAlignLeft,
                   styles.priceText,
+                  styles.marginToBoom,
+
                 ]}>
                 {item?.postcard}
               </Text>

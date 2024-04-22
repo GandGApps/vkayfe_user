@@ -4,6 +4,7 @@ import {
   BaseUrl,
   CategoryDataName,
   globalStyles,
+  imageUrl,
   SubCategoryName,
 } from '../../../constants';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
@@ -18,16 +19,14 @@ export function FormCategoryHorizontal({
 }) {
   return (
     <TouchableOpacity
-      style={[styles.containerForm]}
+      style={[styles.containerFormCat]}
       onPress={() => ChangePageCategory(item)}>
       <Image
-        source={{uri: BaseUrl + '/' + item.photo_url}}
-        style={styles.img}
+        source={{uri: imageUrl + '/' + item.photo_url}}
+        style={styles.catImg}
       />
       <Text
         style={[
-          globalStyles.titleText,
-          globalStyles.textAlignLeft,
           styles.title,
         ]}>
         {item.title}

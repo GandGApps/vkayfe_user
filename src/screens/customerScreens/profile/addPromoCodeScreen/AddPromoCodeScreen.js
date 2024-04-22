@@ -169,6 +169,10 @@ export const AddPromoCodeScreen = ({navigation, route}) => {
         modal
         mode="date"
         open={open}
+        locale={'ru'}
+        confirmText="OK" 
+        cancelText="Отмена" 
+        is24hourSource={'locale'}
         date={date}
         onConfirm={date => {
           setOpen(false);

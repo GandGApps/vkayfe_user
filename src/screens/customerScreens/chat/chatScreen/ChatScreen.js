@@ -15,7 +15,7 @@ import axiosInstance from '../../../../networking/axiosInstance';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 export const ChatScreen = ({navigation}) => {
-  const [active, setActive] = useState('За сегодня');
+  const [active, setActive] = useState('Сегодня');
   const [data, setData] = useState([]);
   const [dataState, setDataState] = useState([]);
 
@@ -30,10 +30,10 @@ export const ChatScreen = ({navigation}) => {
   const axiosFunc = async () => {
     try {
       const response = await axiosInstance.get('/chat/im');
-       console.log(response.data);
+      //  console.log(response.data);
       const filterArr = response.data.filter(it => it.priority === 'admin');
       setData(response.data);
-      changeStateFunc('За сегодня', response.data);
+      changeStateFunc('Сегодня', response.data);
       setLoading(false);
     } catch (e) {
       // console.log(e);
@@ -50,7 +50,7 @@ export const ChatScreen = ({navigation}) => {
     } else if (st === 'Все') {
       setDataState([...dataFunc]);
       setLoading(false);
-    } else if (st === 'За сегодня') {
+    } else if (st === 'Сегодня') {
       const newDate = new Date().toLocaleDateString('en-GB');
       const filterArr = dataFunc.filter(it => {
         let a = new Date(it.date).toLocaleDateString('en-GB');
@@ -62,7 +62,6 @@ export const ChatScreen = ({navigation}) => {
     setActive(st);
   };
 
-  //  console.log('dataState',dataState)
 
   return (
     <View
@@ -93,17 +92,17 @@ export const ChatScreen = ({navigation}) => {
         </Text>
         <View style={[globalStyles.row, styles.headerFooter]}>
           <TouchableOpacity
-            style={active === 'За сегодня' && styles.activeText}
-            onPress={() => changeStateFunc('За сегодня', data)}>
+            style={active === 'Сегодня' && styles.activeText}
+            onPress={() => changeStateFunc('Сегодня', data)}>
             <Text
               style={[
                 globalStyles.titleText,
                 globalStyles.weightLight,
                 globalStyles.titleTextSmall,
                 styles.headerFooterText,
-                active === 'За сегодня' && styles.activeTextContent,
+                active === 'Сегодня' && styles.activeTextContent,
               ]}>
-              За сегодня
+              Сегодня
             </Text>
           </TouchableOpacity>
           <TouchableOpacity

@@ -15,15 +15,11 @@ export const styles = StyleSheet.create({
   },
   content: {},
   left: {
-    paddingLeft: '1%',
-    paddingTop : '1%',
     minWidth : globalWidth(60),
     backgroundColor: '#136A8A',
     borderRadius: 8,
   },
   right: {
-    paddingLeft: '1%',
-    paddingTop : '1%',
     minWidth : globalWidth(60),
     backgroundColor: 'gray',
     borderRadius: 8,
@@ -86,4 +82,10 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'transparent',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  }
 });

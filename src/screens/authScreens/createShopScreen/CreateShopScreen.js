@@ -13,7 +13,7 @@ import {
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
 import closeIcon from '../../../assets/images/closeIcon.png';
-import {BaseUrl, globalStyles, SET_SHOP} from '../../../constants';
+import {BaseUrl, globalStyles, imageUrl, SET_SHOP} from '../../../constants';
 import SelectDropdown from 'react-native-select-dropdown';
 
 export const CreateShopScreen = ({navigation, route}) => {
@@ -34,7 +34,7 @@ export const CreateShopScreen = ({navigation, route}) => {
   }, []);
   useEffect(() => {
     if (routeShop) {
-      setPhoto(BaseUrl + '/' + routeShop.logo_url);
+      setPhoto(imageUrl + '/' + routeShop.logo_url);
       setName(routeShop.title);
       setStreet(routeShop.address);
       setSelectedCountry(route.city_id);

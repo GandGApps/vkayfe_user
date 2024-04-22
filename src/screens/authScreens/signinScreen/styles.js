@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     position: 'relative',
   },
   switchContainer: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

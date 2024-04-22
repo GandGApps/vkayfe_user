@@ -5,6 +5,7 @@ import {
   BaseUrl,
   globalStyles,
   GoodsImgName,
+  imageUrl,
   SaveItemName,
 } from '../../../constants';
 import {AppInput} from '../../core';
@@ -13,8 +14,16 @@ import minusC from '../../../assets/images/minusC.png';
 import deleteIcon from '../../../assets/images/delete.png';
 import axiosInstance from '../../../networking/axiosInstance';
 
-export function TrushForm({item, index, navigation, setAllCount, allCount}) {
+export function TrushForm({
+  item,
+  index,
+  navigation,
+  setAllCount,
+  allCount,
+  fullCount,
+}) {
   const [count, setCount] = useState(item.items[0].count);
+  // console.log('trush form item', item)
   const addNumFunc = pr => {
     axiosFunc(false, pr);
   };
@@ -42,16 +51,16 @@ export function TrushForm({item, index, navigation, setAllCount, allCount}) {
         }
       }
     } else {
-      try {
-        const response = await axiosInstance.post('/carts/add', dat);
+       if (count >= fullCount) {
+          Alert.alert('Превышено максимальное количество товара');
+        }
+        else {
+          const response = await axiosInstance.post('/carts/add', dat);
         setCount(`${+count + 1}`);
         setAllCount(allCount + price);
-      } catch (e) {
-        // console.log(e);
-        if (e?.response?.data?.error) {
-          Alert.alert('', e?.response?.data?.error);
+     
         }
-      }
+        
     }
   };
 
@@ -81,7 +90,7 @@ export function TrushForm({item, index, navigation, setAllCount, allCount}) {
           Товар {index + 1}
         </Text>
         <View style={[globalStyles.row]}>
-          <Image source={{uri: BaseUrl + '/' + img}} style={styles.imgForm} />
+          <Image source={{uri: imageUrl + '/' + img}} style={styles.imgForm} />
           <View style={styles.textCont}>
             <Text
               style={[

@@ -14,7 +14,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2E9C7E162B5D4AB20070F5AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E9C7E152B5D4AB10070F5AA /* GoogleService-Info.plist */; };
 		2EB56A052B5D5D8400C2F7A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EB56A042B5D5D8400C2F7A1 /* LaunchScreen.storyboard */; };
-		2EB56A072B5D614500C2F7A1 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 2EB56A062B5D614500C2F7A1 /* main.jsbundle */; };
 		7699B88040F8A987B510C191 /* libPods-gift_uder-gift_uderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-gift_uder-gift_uderTests.a */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +41,6 @@
 		2E5C33AB2B53F99F0034675C /* gift_uder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = gift_uder.entitlements; path = gift_uder/gift_uder.entitlements; sourceTree = "<group>"; };
 		2E9C7E152B5D4AB10070F5AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "gift_uder/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2EB56A042B5D5D8400C2F7A1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = gift_uder/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2EB56A062B5D614500C2F7A1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-gift_uder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gift_uder.debug.xcconfig"; path = "Target Support Files/Pods-gift_uder/Pods-gift_uder.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-gift_uder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gift_uder.release.xcconfig"; path = "Target Support Files/Pods-gift_uder/Pods-gift_uder.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-gift_uder-gift_uderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gift_uder-gift_uderTests.debug.xcconfig"; path = "Target Support Files/Pods-gift_uder-gift_uderTests/Pods-gift_uder-gift_uderTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 		13B07FAE1A68108700A75B9A /* gift_uder */ = {
 			isa = PBXGroup;
 			children = (
-				2EB56A062B5D614500C2F7A1 /* main.jsbundle */,
 				2EB56A042B5D5D8400C2F7A1 /* LaunchScreen.storyboard */,
 				2E5C33AB2B53F99F0034675C /* gift_uder.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -222,11 +219,12 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "gift_uder" */;
 			compatibilityVersion = "Xcode 12.0";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -254,7 +252,6 @@
 				2EB56A052B5D5D8400C2F7A1 /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				2E9C7E162B5D4AB20070F5AA /* GoogleService-Info.plist in Resources */,
-				2EB56A072B5D614500C2F7A1 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +507,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = gift_uder/gift_uder.entitlements;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = 5VRZ68G4M3;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = gift_uder/Info.plist;
@@ -540,7 +537,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = gift_uder/gift_uder.entitlements;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = 5VRZ68G4M3;
 				INFOPLIST_FILE = gift_uder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

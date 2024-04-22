@@ -33,6 +33,7 @@ import {
   globalStyles,
   HomeName,
   HomeScreenName,
+  imageUrl,
   SaveItemName,
 } from '../../../../constants';
 import axiosInstance from '../../../../networking/axiosInstance';
@@ -83,16 +84,44 @@ export const AddScreen = ({navigation, route}) => {
   const [value, setValue] = useState('');
   const [postcard, setPostCard] = useState('');
   const [allCount, setAllCount] = useState(0);
+  const [fullCount, setFullCount] = useState(0);
+  const [timeToGetReady, setTimeToGetReady] = useState('');
+  const [promoCodeNumber, setPromoCodeNumber] = useState();
+  const [workDay, setWorkDay] = useState();
   const newDate = new Date();
   newDate.setFullYear(newDate.getFullYear() + 1);
   const stateLoad = route?.params?.st;
+  const [currentTime, setCurrentTime] = useState('');
+  const [userTimeZone, setUserTimeZone] = useState('');
 
   useEffect(() => {
-    if(data[0]?.user.address){
-      setAddressAll(data[0].user.address)
-    }
+    const getCurrentTime = () => {
+      const date = new Date();
+      setCurrentTime(date.toISOString());
+    };
 
-  },[data[0]?.user.address])
+    getCurrentTime();
+
+    const getUserTimeZone = () => {
+      const offsetInMinutes = new Date().getTimezoneOffset();
+      console.log('offsetInMinutes', offsetInMinutes);
+
+      const sign = offsetInMinutes < 0 ? '+' : '-';
+      const offsetInHours = Math.abs(offsetInMinutes) / 60;
+      console.log('offsetInHours', offsetInHours);
+
+      setUserTimeZone(`GMT${sign}${offsetInHours}:00`);
+    };
+
+    getUserTimeZone();
+  }, []);
+
+  useEffect(() => {
+    if (data[0]?.user.address) {
+      setAddressAll(data[0].user.address);
+    }
+  }, [data[0]?.user.address]);
+
   const onPressFunc = () => {
     if (Object.keys(data).length) {
       if (name && phone && dateDate && dateTime && addressAll && km) {
@@ -128,19 +157,14 @@ export const AddScreen = ({navigation, route}) => {
         it.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components[4]
           .name,
     });
-    // console.log('location',location)
   };
 
-  console.log('date', dateDate);
   let components = dateDate.split('-');
 
-  // Получаем значения года, месяца и дня
   let year = components[0];
   let month = components[1];
   let day = components[2];
-
-  // Форматируем дату в необходимый формат "день, месяц, год"
-  let formattedDate = day + '.' + month + '.' + year;
+  let formattedDate = [day, month, year].join('.');
 
   const startDataYandex = () => {
     axios
@@ -162,7 +186,6 @@ export const AddScreen = ({navigation, route}) => {
       startDataYandex();
     }
   }, [userPlace]);
-
 
   useEffect(() => {
     if (addressAll.length > 4) {
@@ -192,7 +215,6 @@ export const AddScreen = ({navigation, route}) => {
               res.data.response.GeoObjectCollection.featureMember[1].GeoObject
                 .name;
 
-        // Получаем город из адреса
         const cityFromAddress =
           res.data.response.GeoObjectCollection.featureMember.length === 1
             ? res.data.response.GeoObjectCollection.featureMember[0].GeoObject
@@ -200,11 +222,7 @@ export const AddScreen = ({navigation, route}) => {
             : res.data.response.GeoObjectCollection.featureMember[1].GeoObject
                 .description;
 
-        console.log('cityFromAddress', cityFromAddress);
-        console.log('loc', loc);
-
         if (!cityFromAddress.includes(store.city)) {
-          // Адрес находится в другом городе
           Alert.alert('', 'Выбранный адрес находится в другом городе');
           return;
         }
@@ -237,7 +255,6 @@ export const AddScreen = ({navigation, route}) => {
             }
 
             setPoints([...polylineRes]);
-            console.log('points', points);
           })
           .catch(e => {
             Alert.alert('', 'не найдено');
@@ -251,11 +268,12 @@ export const AddScreen = ({navigation, route}) => {
   const getValue = async () => {
     try {
       const response = await axiosInstance.post('/orders/for_payment');
-      console.log('/orders/for_payment');
+      console.log('orders for payment', response.data)
+
       setValue(response.data.full_amount.$numberDecimal);
       return response.data.full_amount.$numberDecimal;
     } catch (e) {
-      // console.log(e);
+      console.log(e);
     }
   };
   const axiosFunc = async () => {
@@ -274,28 +292,31 @@ export const AddScreen = ({navigation, route}) => {
         comment,
         addressAll: addressAll,
         delivery: km <= 5 ? 0 : km,
+        localTime: currentTime,
+        timeZone: userTimeZone,
       };
+      console.log('localTime', data.localTime);
+      console.log('time zone ', data.timeZone);
+
       if (promoFlag) {
         data.promocode = promoCode;
       }
       if (postcard) {
         data.postcard = postcard;
       }
+
       const response = await axiosInstance.post('/orders', data);
-      // console.log('response post: /orders', response.data);
-      // console.log('DATA', data);
+      console.log('orders', response.data)
 
       const value = await getValue();
       paymentFunc(value);
-      // navigation.navigate(HomeScreenName)
       setLoading(false);
     } catch (e) {
       setLoading(false);
       if (e?.response?.data?.message) {
         setError(e?.response?.data?.message);
-        // console.log('axios func error');
+        console.log('axios func error');
       }
-      // console.log(e);
     }
   };
 
@@ -304,12 +325,11 @@ export const AddScreen = ({navigation, route}) => {
       const response = await axiosInstance.post('/orders/payment', {
         value: value,
       });
-      console.log('/orders/payment');
+      console.log('orders payment', response.data)
 
       setUrl(response.data.data);
     } catch (e) {
-      // console.log('payment func error');
-      // console.log(e);
+      console.log('payment func', e);
     }
   };
 
@@ -326,6 +346,7 @@ export const AddScreen = ({navigation, route}) => {
 
   useEffect(() => {
     getBanner();
+    getFav();
   }, []);
 
   const getBanner = async () => {
@@ -342,12 +363,14 @@ export const AddScreen = ({navigation, route}) => {
       const response = await axiosInstance.post('/promocodes/check', {
         text: promoCode,
       });
+      console.log('response', response.data)
       setPromoFlag(response.data);
+      setPromoCodeNumber(response.data.promoCom)
       if (!response.data) {
         setPromoText('Неверный промокод');
       }
     } catch (e) {
-      // console.log(e);
+      console.log('promocodes check',e);
     }
   };
 
@@ -355,11 +378,21 @@ export const AddScreen = ({navigation, route}) => {
     setError('');
     set(e);
   };
+  const localTime = new Date();
+  const dayOfWeek = localTime.getDay();
+  const hours = localTime.getHours();
 
   const getFav = async () => {
     try {
       const response = await axiosInstance.get('/carts');
       if (Object.keys(response.data).length) {
+        setFullCount(response.data[0].items[0].good_id.count);
+        setTimeToGetReady(response.data[0].items[0].good_id.time_to_get_ready);
+        setWorkDay({
+          weekdays: response.data[0].items[0].store_id.weekdays,
+          weekends: response.data[0].items[0].store_id.weekends,
+        });
+
         setData(response.data);
         setUserPlace(
           response.data[0]?.items[0]?.store_id.city +
@@ -382,7 +415,7 @@ export const AddScreen = ({navigation, route}) => {
       }
     } catch (e) {
       setLoading(false);
-      // console.log(e, 'fff');
+      console.log(e, 'fff');
     }
   };
 
@@ -395,8 +428,9 @@ export const AddScreen = ({navigation, route}) => {
     if (event?.nativeEvent?.url?.includes('success')) {
       try {
         const response = axiosInstance.post('/orders/confirm');
+        console.log('orders confirm', response)
       } catch (e) {
-        // console.log('successFuncч func error');
+        console.log('successFuncч func error', e);
         // console.log(e);
       }
       navigation.goBack();
@@ -409,19 +443,27 @@ export const AddScreen = ({navigation, route}) => {
   };
 
   const [deliveryPrice, setDeliveryPrice] = useState();
-
-  console.log('km', km);
-  console.log('deliveryPrice', deliveryPrice);
-  console.log('delivery', delivery);
-
-  console.log('location ', location);
-  console.log('location end ', locationEnd);
-
   useEffect(() => {
     if (km > 5 && km && delivery) {
       setDeliveryPrice(km * delivery);
     }
   }, [km, delivery]);
+
+  const discountedTotal = promoFlag
+    ? (allCount + (km > 5 ? deliveryPrice : 0)) * 0.95
+    : allCount + (km > 5 ? deliveryPrice : 0);
+
+    const subtotal = allCount;
+const deliveryTotal = km > 5 ? deliveryPrice : 0; 
+
+const discountPercentage = promoFlag ? (promoCodeNumber === 15 ? 0.15 : 0.05) : 0;
+
+const discount = subtotal * discountPercentage;
+
+const discountedSubtotal = subtotal - discount;
+
+const total = discountedSubtotal + deliveryTotal;
+
 
   return (
     <View
@@ -486,7 +528,7 @@ export const AddScreen = ({navigation, route}) => {
                         <Image
                           source={{
                             uri:
-                              BaseUrl +
+                              imageUrl +
                               '/' +
                               data[0]?.items[0]?.store_id?.logo_url,
                           }}
@@ -524,6 +566,7 @@ export const AddScreen = ({navigation, route}) => {
                         setAllCount={setAllCount}
                         setLoading={setLoading}
                         allCount={allCount}
+                        fullCount={fullCount}
                         // plusMinus={getFav}
                       />
                     );
@@ -533,9 +576,9 @@ export const AddScreen = ({navigation, route}) => {
                       <View style={[globalStyles.row]}>
                         <Image
                           source={{uri: BaseUrl + '/' + banner}}
-                          style={styles.imgForm}
+                          style={styles.imgForm2}
                         />
-                        <View style={styles.textCont}>
+                        <View style={styles.OpenerCont}>
                           <Text
                             style={[
                               globalStyles.titleText,
@@ -603,7 +646,7 @@ export const AddScreen = ({navigation, route}) => {
                           globalStyles.weightLight,
                           styles.proTextActive,
                         ]}>
-                        общая цена -5 %
+                        Промокод Активирован
                       </Text>
                     ) : (
                       <>
@@ -633,6 +676,27 @@ export const AddScreen = ({navigation, route}) => {
                       {promoText}
                     </Text>
                   )}
+                </View>
+                <View style={[globalStyles.row, styles.footHead]}>
+                  <Text
+                    style={[
+                      globalStyles.titleText,
+                      globalStyles.weightLight,
+                      globalStyles.titleTextSmall,
+                      globalStyles.textAlignLeft,
+                    ]}>
+                    Итоговая сумма:{' '}
+                    <Text style={[globalStyles.weightBold]}>
+                      {total} р
+                    </Text>
+                  </Text>
+                  <Text
+                    style={[
+                      globalStyles.titleText,
+                      globalStyles.weightLight,
+                      globalStyles.titleTextSmall,
+                      globalStyles.textAlignLeft,
+                    ]}></Text>
                 </View>
                 <View>
                   <View style={styles.contAdd}>
@@ -666,12 +730,16 @@ export const AddScreen = ({navigation, route}) => {
                       ]}>
                       Адрес
                     </Text>
-                    <AppInput
-                      placeholder={'Адрес'}
-                      value={addressAll}
-                      style={styles.addressStyle}
-                      onChangeText={e => onChangeFunc(e, setAddressAll)}
-                    />
+                    <Text
+                      style={[
+                        globalStyles.titleText,
+                        globalStyles.weightLight,
+                        globalStyles.titleTextSmall,
+                        globalStyles.textAlignLeft,
+                        styles.text,
+                      ]}>
+                      {store.address}
+                    </Text>
                   </View>
                   <View style={styles.flatmateCont}>
                     <View>
@@ -816,7 +884,7 @@ export const AddScreen = ({navigation, route}) => {
                         globalStyles.textAlignLeft,
                         styles.textCont,
                       ]}>
-                      Коментарий
+                      Комментарий
                     </Text>
                     <AppInput
                       style={styles.inputBig}
